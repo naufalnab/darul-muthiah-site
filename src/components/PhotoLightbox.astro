@@ -1,0 +1,86 @@
+---
+---
+<dialog class="lightbox" id="image-viewer" aria-label="Paparan gambar besar">
+  <button type="button" id="close-viewer" aria-label="Tutup gambar">
+    Tutup ✕
+  </button>
+  <img id="image-large" alt="" src="" />
+  <p id="image-caption"></p>
+</dialog>
+
+<script>
+  const viewer = document.getElementById('image-viewer') as HTMLDialogElement | null;
+  const largeImg = document.getElementById('image-large') as HTMLImageElement | null;
+  const captionEl = document.getElementById('image-caption');
+  const closeBtn = document.getElementById('close-viewer');
+  let openerElement: HTMLElement | null = null;
+
+  function openLightbox(card: HTMLElement) {
+    if (!viewer || !largeImg) return;
+    openerElement = card;
+    const img = card.querySelector('img');
+    const boldTitle = card.querySelector('figcaption b');
+    
+    if (img) {
+      largeImg.src = img.src;
+      largeImg.alt = img.alt || '';
+    }
+    if (captionEl && boldTitle) {
+      captionEl.textContent = boldTitle.textContent;
+    }
+
+    if (typeof viewer.showModal === 'function') {
+      viewer.showModal();
+    } else {
+      viewer.classList.add('open');
+    }
+    document.body.style.overflow = 'hidden';
+    closeBtn?.focus();
+  }
+
+  function closeLightbox() {
+    if (!viewer || !largeImg) return;
+    if (typeof viewer.close === 'function') {
+      viewer.close();
+    }
+    viewer.classList.remove('open');
+    largeImg.removeAttribute('src');
+    document.body.style.overflow = '';
+    if (openerElement) {
+      openerElement.focus();
+      openerElement = null;
+    }
+  }
+
+  // Bind cards
+  document.querySelectorAll<HTMLElement>('.gallery-card').forEach(card => {
+    card.addEventListener('click', () => openLightbox(card));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openLightbox(card);
+      }
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeLightbox);
+
+  // Close on backdrop click
+  viewer?.addEventListener('click', (e) => {
+    if (e.target === viewer) {
+      closeLightbox();
+    }
+  });
+
+  // Native cancel/esc listener
+  viewer?.addEventListener('cancel', (e) => {
+    e.preventDefault();
+    closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && viewer && (viewer.open || viewer.classList.contains('open'))) {
+      closeLightbox();
+    }
+  });
+</script>

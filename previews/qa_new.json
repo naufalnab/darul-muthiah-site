@@ -1,0 +1,336 @@
+[
+  {
+    "page": "index",
+    "path": "/",
+    "desktop": {
+      "width": 1440,
+      "height": 4549,
+      "overflow": false,
+      "h1Count": 1,
+      "title": "MADUM — Pratonton Website (Konsep UI/UX v1.0)"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 6747,
+      "overflow": false
+    },
+    "interactions": {
+      "mobileNav": {
+        "openDisplay": "block",
+        "closeDisplay": "none",
+        "ariaExpandedAfterOpen": "true",
+        "ariaExpandedAfterClose": "false",
+        "passed": true
+      }
+    },
+    "responsiveViewports": {
+      "320": {
+        "overflow": false,
+        "passed": true
+      },
+      "375": {
+        "overflow": false,
+        "passed": true
+      },
+      "768": {
+        "overflow": false,
+        "passed": true
+      },
+      "1024": {
+        "overflow": false,
+        "passed": true
+      },
+      "1280": {
+        "overflow": false,
+        "passed": true
+      }
+    },
+    "brokenAssets": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "page": "profil",
+    "path": "/profil",
+    "desktop": {
+      "width": 1440,
+      "height": 4176,
+      "overflow": false,
+      "h1Count": 1,
+      "title": "Profil Maahad — MADUM"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 6578,
+      "overflow": false
+    },
+    "interactions": {
+      "mobileNav": {
+        "openDisplay": "block",
+        "closeDisplay": "none",
+        "ariaExpandedAfterOpen": "true",
+        "ariaExpandedAfterClose": "false",
+        "passed": true
+      }
+    },
+    "responsiveViewports": {
+      "320": {
+        "overflow": false,
+        "passed": true
+      },
+      "375": {
+        "overflow": false,
+        "passed": true
+      },
+      "768": {
+        "overflow": false,
+        "passed": true
+      },
+      "1024": {
+        "overflow": false,
+        "passed": true
+      },
+      "1280": {
+        "overflow": false,
+        "passed": true
+      }
+    },
+    "brokenAssets": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "page": "pengajian",
+    "path": "/pengajian",
+    "desktop": {
+      "width": 1440,
+      "height": 3758,
+      "overflow": false,
+      "h1Count": 1,
+      "title": "Pengajian — MADUM"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 5829,
+      "overflow": false
+    },
+    "interactions": {
+      "mobileNav": {
+        "openDisplay": "block",
+        "closeDisplay": "none",
+        "ariaExpandedAfterOpen": "true",
+        "ariaExpandedAfterClose": "false",
+        "passed": true
+      }
+    },
+    "responsiveViewports": {
+      "320": {
+        "overflow": false,
+        "passed": true
+      },
+      "375": {
+        "overflow": false,
+        "passed": true
+      },
+      "768": {
+        "overflow": false,
+        "passed": true
+      },
+      "1024": {
+        "overflow": false,
+        "passed": true
+      },
+      "1280": {
+        "overflow": false,
+        "passed": true
+      }
+    },
+    "brokenAssets": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "page": "kemasukan",
+    "path": "/kemasukan",
+    "desktop": {
+      "width": 1440,
+      "height": 3885,
+      "overflow": false,
+      "h1Count": 1,
+      "title": "Kemasukan & Yuran | MADUM — Pratonton UI/UX"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 6576,
+      "overflow": false
+    },
+    "interactions": {
+      "mobileNav": {
+        "openDisplay": "block",
+        "closeDisplay": "none",
+        "ariaExpandedAfterOpen": "true",
+        "ariaExpandedAfterClose": "false",
+        "passed": true
+      },
+      "whatsappForm": {
+        "passed": true,
+        "href": "https://wa.me/60123108902?text=Assalamualaikum.%20Saya%20ingin%20bertanya%20tentang%20kemasukan%20MADUM%20sesi%202026%2F2027.%0A%0ANama%20penjaga%3A%20Encik%20Ahmad%20Razali%0ATelefon%3A%200123456789%0AUmur%20calon%20pelajar%3A%2012%0AProgram%20diminati%3A%20Hafazan%2030%20Juzuk%0APertanyaan%3A%20Ujian%20teknikal%20borang%20tanpa%20penghantaran%20sebenar.",
+        "fallbackVisible": true
+      }
+    },
+    "responsiveViewports": {
+      "320": {
+        "overflow": false,
+        "passed": true
+      },
+      "375": {
+        "overflow": false,
+        "passed": true
+      },
+      "768": {
+        "overflow": false,
+        "passed": true
+      },
+      "1024": {
+        "overflow": false,
+        "passed": true
+      },
+      "1280": {
+        "overflow": false,
+        "passed": true
+      }
+    },
+    "brokenAssets": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "page": "galeri",
+    "path": "/galeri",
+    "desktop": {
+      "width": 1440,
+      "height": 3732,
+      "overflow": false,
+      "h1Count": 1,
+      "title": "Galeri & Pencapaian — MADUM"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 4670,
+      "overflow": false
+    },
+    "interactions": {
+      "mobileNav": {
+        "openDisplay": "block",
+        "closeDisplay": "none",
+        "ariaExpandedAfterOpen": "true",
+        "ariaExpandedAfterClose": "false",
+        "passed": true
+      },
+      "galleryFilterTvet": {
+        "visibleCount": 2,
+        "passed": true
+      },
+      "galleryFilterAll": {
+        "visibleCount": 12,
+        "passed": true
+      },
+      "lightbox": {
+        "opened": true,
+        "hasImage": true,
+        "caption": "Tasmi’ & bacaan Al-Quran",
+        "closedOnEsc": true,
+        "bodyUnlocked": true,
+        "passed": true
+      }
+    },
+    "responsiveViewports": {
+      "320": {
+        "overflow": false,
+        "passed": true
+      },
+      "375": {
+        "overflow": false,
+        "passed": true
+      },
+      "768": {
+        "overflow": false,
+        "passed": true
+      },
+      "1024": {
+        "overflow": false,
+        "passed": true
+      },
+      "1280": {
+        "overflow": false,
+        "passed": true
+      }
+    },
+    "brokenAssets": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "page": "hubungi",
+    "path": "/hubungi",
+    "desktop": {
+      "width": 1440,
+      "height": 2979,
+      "overflow": false,
+      "h1Count": 1,
+      "title": "Hubungi Kami — MADUM"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 4653,
+      "overflow": false
+    },
+    "interactions": {
+      "mobileNav": {
+        "openDisplay": "block",
+        "closeDisplay": "none",
+        "ariaExpandedAfterOpen": "true",
+        "ariaExpandedAfterClose": "false",
+        "passed": true
+      },
+      "faq": {
+        "item1Closed": true,
+        "item2Opened": true,
+        "ariaExpanded": true,
+        "passed": true
+      }
+    },
+    "responsiveViewports": {
+      "320": {
+        "overflow": false,
+        "passed": true
+      },
+      "375": {
+        "overflow": false,
+        "passed": true
+      },
+      "768": {
+        "overflow": false,
+        "passed": true
+      },
+      "1024": {
+        "overflow": false,
+        "passed": true
+      },
+      "1280": {
+        "overflow": false,
+        "passed": true
+      }
+    },
+    "brokenAssets": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "page": "404",
+    "path": "/non-existent-page",
+    "httpStatus": 404,
+    "h1": "Halaman tidak ditemui.",
+    "passed": true
+  }
+]

@@ -1,0 +1,27 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const title = "Halaman Tidak Ditemui (404) — MADUM";
+const description = "Halaman yang anda cari tidak wujud atau telah dipindahkan.";
+---
+<SiteLayout title={title} description={description} activeRoute="/404">
+  <section class="plain-hero" style="min-height:50vh;display:flex;align-items:center;">
+    <div class="container" style="text-align:center;max-width:680px;margin:40px auto;">
+      <div class="eyebrow">RALAT 404</div>
+      <h1 style="margin:16px 0 18px;">
+        Halaman tidak <em>ditemui.</em>
+      </h1>
+      <p class="inner-lead" style="margin:0 auto 28px;">
+        Maaf, pautan yang anda tuju tidak wujud atau mungkin telah dipindahkan. Sila kembali ke laman utama atau gunakan pautan di bawah untuk meneruskan carian.
+      </p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a href="/" class="btn btn-primary">
+          Kembali ke Utama <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="/hubungi" class="btn btn-outline">
+          Hubungi Kami <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</SiteLayout>

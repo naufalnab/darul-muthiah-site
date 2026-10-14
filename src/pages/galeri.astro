@@ -1,0 +1,173 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PrimaryCTA from '../components/PrimaryCTA.astro';
+import PhotoLightbox from '../components/PhotoLightbox.astro';
+import { siteConfig } from '../content/siteConfig';
+import { galleryPhotos, galleryVideos, galleryFilters } from '../content/gallery';
+
+const title = "Galeri & Pencapaian — MADUM";
+const description = "Dokumentasi autentik suasana pembelajaran, hafazan, TVET, sukan, dan rakaman video aktiviti pelajar Maahad Darul Muthiah.";
+
+const isPublic = siteConfig.publicationMode === 'public';
+const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
+---
+<SiteLayout title={title} description={description} activeRoute="/galeri">
+  <!-- Plain Hero -->
+  <section class="plain-hero" aria-labelledby="galeri-hero-title">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Utama</a><b>/</b><span>Galeri &amp; Pencapaian</span>
+      </nav>
+      <div class="eyebrow">DOKUMENTASI SEBENAR MADUM</div>
+      <h1 id="galeri-hero-title">
+        Melihat kehidupan <em>di Darul Muthiah.</em>
+      </h1>
+      <p class="inner-lead">
+        Sorotan aktiviti Al-Quran, pembelajaran, kemahiran, sukan dan lawatan daripada bahan yang dibekalkan oleh pihak maahad.
+      </p>
+      <span class="pending">Pratonton dalaman · Kebenaran penerbitan foto/video diperlukan</span>
+    </div>
+  </section>
+
+  <!-- Galeri Terpilih -->
+  <section class="section-compact surface-cream" aria-labelledby="galeri-terpilih-title">
+    <div class="container">
+      <div class="section-top">
+        <div>
+          <div class="eyebrow">GALERI TERPILIH</div>
+          <h2 class="section-title" id="galeri-terpilih-title">Kegiatan yang membentuk pengalaman pelajar.</h2>
+          <p class="section-sub">Gunakan penapis kategori atau pilih gambar untuk melihat paparan lebih besar.</p>
+        </div>
+        <span style="font-size:11px;color:#758477">Dokumentasi asal klien · Bukan gambar stok</span>
+      </div>
+
+      {isPublic && !mediaApproved ? (
+        <div class="review-note" style="background:#fff;border-color:#dce5db;padding:36px 28px;text-align:center;margin:30px 0;">
+          <h3 style="font:400 24px var(--serif);margin:0 0 12px;color:var(--deep)">Dokumentasi Pelajar Sedang Disemak</h3>
+          <p style="font-size:13px;color:var(--muted);max-width:540px;margin:0 auto 18px;line-height:1.8">
+            Foto dan rakaman video aktiviti pelajar Maahad Darul Muthiah sedang melalui proses kebenaran bertulis ibu bapa dan pihak pengurusan institusi sebelum diterbitkan ke khalayak umum.
+          </p>
+          <a class="btn btn-primary" href="/kemasukan#pertanyaan">Hubungi Pentadbiran ↗</a>
+        </div>
+      ) : (
+        <>
+          <!-- Filter Controls -->
+          <div class="gallery-controls" role="group" aria-label="Penapis galeri">
+            {galleryFilters.map((f, idx) => (
+              <button
+                type="button"
+                class={`filter-button ${idx === 0 ? 'active' : ''}`}
+                data-filter={f.key}
+                aria-pressed={idx === 0 ? 'true' : 'false'}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+
+          <!-- Gallery Grid -->
+          <div class="gallery-grid-full">
+            {galleryPhotos.map(photo => (
+              <figure
+                class="gallery-card"
+                data-cat={photo.cat}
+                tabindex="0"
+                role="button"
+                aria-label={`Lihat gambar: ${photo.title}`}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  width="380"
+                  height="240"
+                />
+                <figcaption>
+                  <b>{photo.title}</b>
+                  <small>{photo.catLabel}</small>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  </section>
+
+  <!-- Video Section -->
+  <section class="section-compact surface-white" aria-labelledby="video-title">
+    <div class="container">
+      <div class="eyebrow">VIDEO AKTIVITI</div>
+      <h2 class="section-title" id="video-title">Momen MADUM dalam video.</h2>
+      <p class="section-sub">Video hanya dimainkan apabila dipilih pengunjung; bunyi tidak dimainkan secara automatik.</p>
+      
+      {isPublic && !mediaApproved ? (
+        <div class="review-note" style="background:#fff;border-color:#dce5db;padding:32px 24px;text-align:center;margin:25px 0;">
+          <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.8">
+            Rakaman video persembahan dan aktiviti pelajar ditahan sementara sehingga kebenaran pelepasan rasmi disahkan.
+          </p>
+        </div>
+      ) : (
+        <div class="video-grid-new">
+          {galleryVideos.map(vid => (
+            <div class="video-card">
+              <video
+                controls
+                playsinline
+                preload="none"
+                poster={vid.poster}
+                aria-label={vid.title}
+              >
+                <source src={vid.src} type="video/mp4" />
+                Pelayar anda tidak menyokong tag video HTML5.
+              </video>
+              <div>
+                <b>{vid.title}</b>
+                <p>{vid.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Lightbox Modal -->
+  {(!isPublic || mediaApproved) && <PhotoLightbox />}
+
+  <!-- Final CTA -->
+  <PrimaryCTA
+    eyebrow="LANGKAH SETERUSNYA"
+    title="Ingin mengetahui suasana pendidikan MADUM dengan lebih lanjut?"
+    description="Hubungi pihak maahad untuk bertanya tentang pengajian atau mengatur lawatan yang dipersetujui."
+    ctaText="Tanya Kemasukan"
+    ctaHref="/kemasukan#pertanyaan"
+    disclaimer="Pratonton dalaman · Pengesahan diperlukan"
+  />
+</SiteLayout>
+
+<script>
+  // Filter button interactivity
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-button');
+  const cards = document.querySelectorAll<HTMLElement>('.gallery-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+
+      const filter = btn.dataset.filter || 'all';
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.cat === filter) {
+          card.hidden = false;
+        } else {
+          card.hidden = true;
+        }
+      });
+    });
+  });
+</script>

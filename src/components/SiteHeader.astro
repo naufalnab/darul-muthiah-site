@@ -1,0 +1,82 @@
+---
+import { siteConfig } from '../content/siteConfig';
+
+interface Props {
+  activeRoute?: '/' | '/profil' | '/pengajian' | '/kemasukan' | '/galeri' | '/hubungi' | string;
+}
+
+const { activeRoute = '/' } = Astro.props;
+
+const navItems = [
+  { href: '/', label: 'Utama' },
+  { href: '/profil', label: 'Profil Maahad' },
+  { href: '/pengajian', label: 'Pengajian' },
+  { href: '/kemasukan', label: 'Kemasukan & Yuran' },
+  { href: '/galeri', label: 'Galeri' },
+  { href: '/hubungi', label: 'Hubungi Kami' }
+];
+
+const normalizeRoute = (r: string) => r.replace(/\/$/, '') || '/';
+const current = normalizeRoute(activeRoute);
+---
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="logo-lockup" href="/" aria-label={`${siteConfig.brandName} — Laman Utama`}>
+      <img src="/assets/logo-madum.webp" alt="Logo rasmi MADUM" width="61" height="61" loading="eager" />
+      <span>
+        <span class="brand-name">{siteConfig.brandName}</span>
+        <span class="brand-under">{siteConfig.brandSubtitle}</span>
+      </span>
+    </a>
+
+    <nav class="main-nav" aria-label="Navigasi utama">
+      {navItems.map(item => {
+        const isActive = current === normalizeRoute(item.href);
+        return (
+          <a
+            href={item.href}
+            class={isActive ? 'is-active' : ''}
+            aria-current={isActive ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        );
+      })}
+    </nav>
+
+    <a class="btn header-cta" href="/kemasukan#pertanyaan">
+      Tanya Kemasukan <span class="arrow" aria-hidden="true">↗</span>
+    </a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-label="Buka menu"
+      aria-controls="mobile-nav"
+      aria-expanded="false"
+      id="menu-toggle-btn"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+    </button>
+  </div>
+
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Navigasi mudah alih">
+    {navItems.map(item => {
+      const isActive = current === normalizeRoute(item.href);
+      return (
+        <a
+          href={item.href}
+          class={isActive ? 'is-active' : ''}
+          aria-current={isActive ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      );
+    })}
+    <a href="/kemasukan#pertanyaan">
+      Tanya Kemasukan ↗
+    </a>
+  </nav>
+</header>

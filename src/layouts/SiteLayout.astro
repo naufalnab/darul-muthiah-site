@@ -1,0 +1,104 @@
+---
+import '../styles/global.css';
+import '../styles/components.css';
+import PreviewBanner from '../components/PreviewBanner.astro';
+import AnnouncementBar from '../components/AnnouncementBar.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import MobileStickyBar from '../components/MobileStickyBar.astro';
+import { siteConfig } from '../content/siteConfig';
+
+interface Props {
+  title?: string;
+  description?: string;
+  activeRoute?: string;
+  isHome?: boolean;
+}
+
+const {
+  title = `${siteConfig.institutionName} — Membesar bersama Al-Quran`,
+  description = 'Pendidikan tahfiz dan pembinaan sahsiah untuk pelajar perempuan berumur 10 hingga 17 tahun di Shah Alam, Selangor.',
+  activeRoute = '/',
+  isHome = false
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, siteConfig.canonicalBase).href;
+const isInternalMode = siteConfig.publicationMode === 'internal';
+const robotsDirective = isInternalMode ? 'noindex, nofollow' : 'index, follow';
+---
+<!doctype html>
+<html lang="ms-MY">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#123F35" />
+    <meta name="robots" content={robotsDirective} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph / Meta -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={siteConfig.brandName} />
+    <meta property="og:locale" content="ms_MY" />
+    <meta property="og:image" content={`${siteConfig.canonicalBase}/assets/hero-kelas.webp`} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="/assets/logo-madum.webp" />
+  </head>
+  <body>
+    <a href="#main-content" class="sr-only">Langkau ke kandungan utama</a>
+
+    <PreviewBanner />
+    <AnnouncementBar />
+    <SiteHeader activeRoute={activeRoute} />
+
+    <main id="main-content" class={isHome ? '' : 'inner'}>
+      <slot />
+    </main>
+
+    <SiteFooter />
+    <MobileStickyBar />
+
+    <script>
+      // Keep copyright year synchronized
+      document.querySelectorAll('.year').forEach(el => {
+        el.textContent = String(new Date().getFullYear());
+      });
+
+      // Mobile Menu Controller
+      const toggle = document.getElementById('menu-toggle-btn') as HTMLButtonElement | null;
+      const mobileNav = document.getElementById('mobile-nav');
+
+      const closeMenu = () => {
+        if (!mobileNav || !toggle) return;
+        mobileNav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Buka menu');
+      };
+
+      if (toggle && mobileNav) {
+        toggle.addEventListener('click', () => {
+          const state = mobileNav.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', String(state));
+          toggle.setAttribute('aria-label', state ? 'Tutup menu' : 'Buka menu');
+        });
+
+        mobileNav.querySelectorAll('a').forEach(a => {
+          a.addEventListener('click', closeMenu);
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
+            closeMenu();
+            toggle.focus();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

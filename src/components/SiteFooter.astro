@@ -1,0 +1,54 @@
+---
+import { siteConfig } from '../content/siteConfig';
+
+const currentYear = new Date().getFullYear();
+---
+<footer class="site-footer" id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="/assets/logo-madum.webp" alt={`Logo ${siteConfig.brandName}`} width="58" height="58" loading="lazy" />
+          <span>
+            <strong>{siteConfig.brandName}</strong>
+            <small>{siteConfig.brandSubtitle}</small>
+          </span>
+        </div>
+        <p>Pengajian Al-Quran, ilmu dan tarbiah untuk membina generasi berilmu dan berakhlak.</p>
+      </div>
+
+      <div>
+        <h4>Pautan</h4>
+        <ul>
+          <li><a href="/">Utama</a></li>
+          <li><a href="/profil">Profil Maahad</a></li>
+          <li><a href="/pengajian">Pengajian</a></li>
+          <li><a href="/kemasukan">Kemasukan &amp; Yuran</a></li>
+          <li><a href="/galeri">Galeri</a></li>
+          <li><a href="/hubungi">Hubungi Kami</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Hubungi kami</h4>
+        <div class="footer-contact">
+          {siteConfig.address.street},<br />
+          {siteConfig.address.subdistrict},<br />
+          {siteConfig.address.cityStatePostcode}.<br /><br />
+          WhatsApp: <a href={`https://wa.me/${siteConfig.whatsappE164}`} target="_blank" rel="noopener noreferrer">{siteConfig.whatsappDisplay}</a><br />
+          Pejabat: <a href={`tel:${siteConfig.phoneOffice.replace(/[^0-9]/g, '')}`}>{siteConfig.phoneOffice}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span class="year">{currentYear}</span> {siteConfig.institutionName}. Hak cipta terpelihara.</span>
+      <span>
+        Website ini dibangunkan oleh{' '}
+        <a href={siteConfig.developerUrl} target="_blank" rel="noopener noreferrer">
+          {siteConfig.developerName}
+        </a>
+      </span>
+    </div>
+  </div>
+</footer>

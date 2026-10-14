@@ -1,0 +1,194 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PrimaryCTA from '../components/PrimaryCTA.astro';
+import { claimsRegistry } from '../content/claimsRegistry';
+
+const title = "Profil Maahad — MADUM";
+const description = "Pengenalan, matlamat pendidikan, sejarah ringkas, dan status pendaftaran Maahad Tahfiz Al Quran Darul Muthiah (1).";
+---
+<SiteLayout title={title} description={description} activeRoute="/profil">
+  <!-- Inner Hero -->
+  <section class="inner-hero" aria-labelledby="profil-hero-title">
+    <div class="container inner-hero-inner">
+      <div>
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="/">Utama</a><b>/</b><span>Profil Maahad</span>
+        </nav>
+        <div class="eyebrow">PROFIL INSTITUSI</div>
+        <h1 id="profil-hero-title">
+          Mengenali <em>Darul Muthiah.</em>
+        </h1>
+        <p class="inner-lead">
+          Mengenali asas penubuhan, matlamat pendidikan serta suasana pembelajaran Maahad Tahfiz Al Quran Darul Muthiah (1).
+        </p>
+        <a class="btn btn-primary" href="#tentang">
+          Terokai Profil <span class="arrow" aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <div class="inner-hero-image">
+        <img
+          src="/assets/aktiviti-maahad.webp"
+          alt="Dokumentasi asal warga MADUM"
+          loading="eager"
+          width="485"
+          height="385"
+        />
+        <span class="inner-photo-tag">
+          Warga MADUM
+          <small>Dokumentasi sebenar maahad</small>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pengenalan -->
+  <section id="tentang" class="section-compact surface-white" aria-labelledby="pengenalan-title">
+    <div class="container two-cols wide-copy">
+      <div>
+        <div class="eyebrow">PENGENALAN MAAHAD</div>
+        <h2 class="section-title" id="pengenalan-title">Pendidikan berteraskan Al-Quran, ilmu &amp; tarbiah.</h2>
+        <div class="prose">
+          <p>Maahad Tahfiz Al Quran Darul Muthiah (1) di Shah Alam memberi penekanan kepada hafazan Al-Quran, pembinaan akhlak, pengajian agama serta pembelajaran akademik asas dan kemahiran.</p>
+          <p>Pengajian dan aktiviti disusun untuk membantu pelajar membina disiplin serta membiasakan kehidupan bersama Al-Quran.</p>
+        </div>
+        <blockquote class="hanging-quote">
+          “Pendidikan bukan sekadar mengejar pencapaian akademik.”
+        </blockquote>
+        <a class="text-link" href="/pengajian">
+          Ketahui program pengajian ↗
+        </a>
+      </div>
+      <div>
+        <img
+          src="/assets/belajar-halaqah.webp"
+          alt="Sesi bacaan Al-Quran"
+          class="editorial-visual"
+          loading="lazy"
+          width="480"
+          height="440"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Hala Tuju -->
+  <section class="section-compact surface-soft" aria-labelledby="halatuju-title">
+    <div class="container">
+      <div class="eyebrow">HALA TUJU INSTITUSI</div>
+      <h2 class="section-title" id="halatuju-title">Matlamat &amp; objektif pendidikan</h2>
+      <div class="value-cards">
+        <article class="value-card">
+          <span class="num">01</span>
+          <h3>Membina huffaz</h3>
+          <p>Memberi tumpuan kepada hafazan, penguasaan bacaan dan penghayatan Al-Quran.</p>
+        </article>
+        <article class="value-card">
+          <span class="num">02</span>
+          <h3>Mengukuhkan sahsiah</h3>
+          <p>Memupuk adab, disiplin, tanggungjawab dan amalan harian pelajar.</p>
+        </article>
+        <article class="value-card">
+          <span class="num">03</span>
+          <h3>Meluaskan ilmu</h3>
+          <p>Mengimbangi pendidikan agama dengan akademik asas dan kemahiran yang bermanfaat.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sejarah -->
+  <section class="section-compact surface-cream" aria-labelledby="sejarah-title">
+    <div class="container two-cols">
+      <div>
+        <div class="eyebrow">SEJARAH RINGKAS</div>
+        <h2 class="section-title" id="sejarah-title">Perjalanan pendidikan MADUM.</h2>
+        <p class="section-sub">Susunan sejarah berikut diringkaskan daripada dokumen profil klien, dan memerlukan semakan editorial akhir.</p>
+        <div class="timeline">
+          <div class="time-item">
+            <strong>Asal penubuhan</strong>
+            <p>Dokumen profil merakam permulaan usaha pendidikan tahfiz puteri yang kemudian berkembang menjadi MADUM.</p>
+          </div>
+          <div class="time-item">
+            <strong>20 Februari 2018</strong>
+            <p>Dokumen profil menyebut penggunaan nama Maahad Tahfiz Al Quran Darul Muthiah (1).</p>
+          </div>
+          <div class="time-item">
+            <strong>Hari ini</strong>
+            <p>Tumpuan kepada hafazan, tarbiah dan laluan pembelajaran pelajar perempuan.</p>
+          </div>
+        </div>
+        <div class="review-note">
+          {claimsRegistry.institution_timeline.disclaimerText}
+        </div>
+      </div>
+      <img
+        src="/assets/majlis-ilmu.webp"
+        class="editorial-visual"
+        alt="Majlis ilmu pelajar"
+        loading="lazy"
+        width="480"
+        height="440"
+      />
+    </div>
+  </section>
+
+  <!-- Pengurusan -->
+  <section class="section-compact surface-white" aria-labelledby="pengurusan-title">
+    <div class="container">
+      <div class="eyebrow">WARGA &amp; PENGURUSAN</div>
+      <h2 class="section-title" id="pengurusan-title">Pengurusan dan warga pendidik</h2>
+      <p class="section-sub">Peranan utama dijelaskan tanpa menerbitkan maklumat peribadi kakitangan yang belum memperoleh kebenaran.</p>
+      <div class="role-grid">
+        <div class="role">
+          <b>Pengurusan Maahad</b>
+          <p>Hal ehwal pentadbiran, kemasukan pelajar serta operasi institusi.</p>
+        </div>
+        <div class="role">
+          <b>Tenaga Pengajar</b>
+          <p>Bimbingan hafazan, pengajian agama, asas akademik dan tarbiah.</p>
+        </div>
+        <div class="role">
+          <b>Kebajikan &amp; Jawatankuasa</b>
+          <p>Sokongan kebajikan pelajar dan pembangunan institusi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Legaliti -->
+  <section class="section-compact surface-soft" aria-labelledby="legaliti-title">
+    <div class="container">
+      <div class="eyebrow">MAKLUMAT PENDAFTARAN INSTITUSI</div>
+      <h2 class="section-title" id="legaliti-title">Status pendaftaran &amp; pengiktirafan</h2>
+      <div class="legal-row">
+        <div class="legal-card">
+          <span class="eyebrow">JABATAN AGAMA ISLAM SELANGOR</span>
+          <h3>Pendaftaran JAIS</h3>
+          <p>Kod sekolah BZH8026 tercatat pada salinan perakuan dalam profil MADUM.</p>
+          <div style="margin-top:17px">
+            <span class="pending">{claimsRegistry.jais_registration.disclaimerText}</span>
+          </div>
+        </div>
+        <div class="legal-card">
+          <span class="eyebrow">LEMBAGA ZAKAT SELANGOR</span>
+          <h3>Penolong Amil IPIS</h3>
+          <p>Dokumen profil memuatkan keterangan pelantikan institusi. Fungsi kutipan dalam talian bukan sebahagian daripada versi 1.0.</p>
+          <div style="margin-top:17px">
+            <span class="pending">{claimsRegistry.lzs_amil.disclaimerText}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <PrimaryCTA
+    eyebrow="LANGKAH SETERUSNYA"
+    title="Ketahui pengalaman pengajian di MADUM."
+    description="Terokai pilihan pengajian dan suasana pembelajaran sebelum menghubungi pihak maahad."
+    ctaText="Tanya Kemasukan"
+    ctaHref="/kemasukan#pertanyaan"
+    disclaimer="Pratonton dalaman · Pengesahan diperlukan"
+  />
+</SiteLayout>

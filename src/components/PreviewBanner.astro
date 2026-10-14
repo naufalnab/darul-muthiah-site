@@ -1,0 +1,17 @@
+---
+import { siteConfig } from '../content/siteConfig';
+
+interface Props {
+  forceShow?: boolean;
+}
+
+const { forceShow = false } = Astro.props;
+const shouldShow = forceShow || siteConfig.publicationMode === 'internal';
+---
+{shouldShow && (
+  <div class="preview-bar" role="status" aria-label="Status pratonton dalaman">
+    <span class="preview-dot" aria-hidden="true"></span>
+    Konsep UI/UX v1.0 — Pratonton dalaman sahaja, bukan laman web rasmi
+    <span class="preview-dot" aria-hidden="true"></span>
+  </div>
+)}

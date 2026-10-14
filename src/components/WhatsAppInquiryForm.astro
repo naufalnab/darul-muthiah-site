@@ -1,0 +1,155 @@
+---
+import { siteConfig } from '../content/siteConfig';
+
+interface Props {
+  whatsappNumber?: string;
+  admissionsSession?: string;
+}
+
+const {
+  whatsappNumber = siteConfig.whatsappE164,
+  admissionsSession = siteConfig.admissionsSession
+} = Astro.props;
+---
+<form id="inquiry" class="form-shell" data-wa={whatsappNumber} data-session={admissionsSession}>
+  <h3>Maklumat pertanyaan</h3>
+  <div class="form-grid">
+    <div class="field">
+      <label for="parent">Nama penjaga *</label>
+      <input
+        id="parent"
+        name="parent"
+        type="text"
+        required
+        maxlength="80"
+        autocomplete="name"
+        placeholder="Nama ibu / bapa / penjaga"
+      />
+    </div>
+
+    <div class="field">
+      <label for="phone">Nombor telefon penjaga *</label>
+      <input
+        id="phone"
+        name="phone"
+        type="tel"
+        inputmode="tel"
+        autocomplete="tel"
+        required
+        maxlength="24"
+        placeholder="Contoh: 012-345 6789"
+      />
+    </div>
+
+    <div class="field">
+      <label for="age">Umur calon pelajar *</label>
+      <select id="age" name="age" required>
+        <option value="">Pilih umur</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="program">Program diminati *</label>
+      <select id="program" name="program" required>
+        <option value="">Pilih program</option>
+        <option value="Hafazan 30 Juzuk">Hafazan 30 Juzuk</option>
+        <option value="Syahadah Al-Quran">Syahadah Al-Quran</option>
+        <option value="SPM Fast Track JAIS">SPM Fast Track JAIS</option>
+        <option value="Belum pasti">Belum pasti</option>
+      </select>
+    </div>
+
+    <div class="field wide">
+      <label for="question">Pertanyaan tambahan (pilihan)</label>
+      <textarea
+        name="question"
+        id="question"
+        maxlength="450"
+        placeholder="Tanyakan tentang yuran, program atau lawatan maahad"
+      ></textarea>
+      <small>Elakkan menghantar maklumat peribadi kanak-kanak yang tidak diperlukan.</small>
+    </div>
+  </div>
+
+  <div id="form-error" role="alert" style="display:none;margin-top:12px;padding:8px 12px;background:#fde8e8;border-left:3px solid #c81e1e;color:#9b1c1c;font-size:12px;border-radius:6px;"></div>
+
+  <button class="btn btn-primary" type="submit">
+    Teruskan ke WhatsApp <span class="arrow" aria-hidden="true">↗</span>
+  </button>
+
+  <p style="font-size:10px;color:#78887b;margin:12px 0 0">
+    Nombor WhatsApp dipaparkan sebagai baseline Cik Yatt dan perlu disahkan sebelum penerbitan.
+  </p>
+
+  <div id="popup-fallback" style="display:none;margin-top:10px;font-size:11px;color:var(--deep);text-align:center;">
+    WhatsApp tidak terbuka secara automatik? <a id="wa-fallback-link" href="#" target="_blank" rel="noopener noreferrer" style="text-decoration:underline;font-weight:700;color:var(--emerald);">Klik di sini untuk membuka draf</a>.
+  </div>
+</form>
+
+<script>
+  const form = document.getElementById('inquiry') as HTMLFormElement | null;
+  const errorBox = document.getElementById('form-error');
+  const fallbackBox = document.getElementById('popup-fallback');
+  const fallbackLink = document.getElementById('wa-fallback-link') as HTMLAnchorElement | null;
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (errorBox) errorBox.style.display = 'none';
+
+      const parentInput = form.querySelector('#parent') as HTMLInputElement;
+      const phoneInput = form.querySelector('#phone') as HTMLInputElement;
+      const ageSelect = form.querySelector('#age') as HTMLSelectElement;
+      const programSelect = form.querySelector('#program') as HTMLSelectElement;
+      const questionArea = form.querySelector('#question') as HTMLTextAreaElement;
+
+      if (!parentInput.value.trim() || !phoneInput.value.trim() || !ageSelect.value || !programSelect.value) {
+        if (!form.reportValidity && errorBox) {
+          errorBox.textContent = 'Sila lengkapkan semua medan mandatori yang bertanda *.';
+          errorBox.style.display = 'block';
+        } else if (form.reportValidity) {
+          form.reportValidity();
+        }
+        return;
+      }
+
+      const waNumber = form.dataset.wa || '60123108902';
+      const session = form.dataset.session || '2026/2027';
+
+      const sanitizedParent = parentInput.value.trim().slice(0, 80);
+      const sanitizedPhone = phoneInput.value.trim().slice(0, 24);
+      const sanitizedAge = ageSelect.value;
+      const sanitizedProgram = programSelect.value;
+      const sanitizedQuestion = questionArea?.value.trim().slice(0, 450) || 'Tiada';
+
+      const lines = [
+        `Assalamualaikum. Saya ingin bertanya tentang kemasukan MADUM sesi ${session}.`,
+        '',
+        `Nama penjaga: ${sanitizedParent}`,
+        `Telefon: ${sanitizedPhone}`,
+        `Umur calon pelajar: ${sanitizedAge}`,
+        `Program diminati: ${sanitizedProgram}`,
+        `Pertanyaan: ${sanitizedQuestion}`
+      ];
+
+      const fullWaUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(lines.join('\n'))}`;
+
+      if (fallbackLink) {
+        fallbackLink.href = fullWaUrl;
+      }
+
+      const newTab = window.open(fullWaUrl, '_blank', 'noopener,noreferrer');
+      if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
+        if (fallbackBox) fallbackBox.style.display = 'block';
+      }
+    });
+  }
+</script>

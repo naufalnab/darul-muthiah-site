@@ -1,0 +1,61 @@
+---
+import { faqList } from '../content/faq';
+
+interface Props {
+  items?: typeof faqList;
+}
+
+const { items = faqList } = Astro.props;
+---
+<div class="faqs" role="region" aria-label="Soalan Lazim">
+  {items.map((faq, index) => {
+    const isFirst = index === 0;
+    const answerId = `faq-ans-${faq.id}`;
+    return (
+      <div class={`faq-item ${isFirst ? 'open' : ''}`}>
+        <button
+          class="faq-q"
+          type="button"
+          aria-expanded={isFirst ? 'true' : 'false'}
+          aria-controls={answerId}
+          id={`faq-btn-${faq.id}`}
+        >
+          <span>{faq.question}</span>
+          <span aria-hidden="true">{isFirst ? '−' : '+'}</span>
+        </button>
+        <div class="faq-answer" id={answerId} role="region" aria-labelledby={`faq-btn-${faq.id}`}>
+          {faq.answer}
+        </div>
+      </div>
+    );
+  })}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const parent = btn.closest('.faq-item');
+      if (!parent) return;
+      const isAlreadyOpen = parent.classList.contains('open');
+
+      // Close all items
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('open');
+        const b = item.querySelector<HTMLButtonElement>('.faq-q');
+        if (b) {
+          b.setAttribute('aria-expanded', 'false');
+          const indicator = b.querySelector('span:last-child');
+          if (indicator) indicator.textContent = '+';
+        }
+      });
+
+      // Toggle current item
+      if (!isAlreadyOpen) {
+        parent.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        const indicator = btn.querySelector('span:last-child');
+        if (indicator) indicator.textContent = '−';
+      }
+    });
+  });
+</script>

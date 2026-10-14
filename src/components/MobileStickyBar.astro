@@ -1,0 +1,13 @@
+---
+interface Props {
+  href?: string;
+  label?: string;
+}
+
+const { href = '/kemasukan#pertanyaan', label = 'Tanya Kemasukan' } = Astro.props;
+---
+<div class="mobile-sticky" aria-label="Tindakan pantas mudah alih">
+  <a href={href} class="btn btn-primary">
+    {label} <span class="arrow" aria-hidden="true">↗</span>
+  </a>
+</div>

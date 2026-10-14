@@ -1,0 +1,23 @@
+{
+  "name": "darul-muthiah",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "prebuild": "node scripts/prebuild.mjs",
+    "build": "astro build",
+    "postbuild": "node scripts/postbuild.mjs",
+    "preview": "astro preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.32.1",
+  "devDependencies": {
+    "astro": "^7.3.8",
+    "puppeteer-core": "^25.13.0",
+    "typescript": "^7.0.2"
+  }
+}

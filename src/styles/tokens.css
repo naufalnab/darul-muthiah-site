@@ -1,0 +1,22 @@
+:root {
+  /* Brand palette */
+  --deep: #123f35;
+  --dark: #0b3329;
+  --emerald: #206452;
+  --gold: #d2ad6a;
+  --goldlight: #e4cb96;
+  --cream: #fbf8f0;
+  --paper: #f5f1e6;
+  --soft: #f1f4ee;
+  
+  /* Text and borders */
+  --ink: #1e332b;
+  --muted: #637369;
+  --line: #dedfd3;
+  --white: #ffffff;
+  
+  /* Layout and typography */
+  --max: 1200px;
+  --sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --serif: Georgia, "Times New Roman", Cambria, serif;
+}

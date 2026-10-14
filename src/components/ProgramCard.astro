@@ -1,0 +1,30 @@
+---
+interface Props {
+  num: string;
+  title: string;
+  description: string;
+  duration: string;
+  href?: string;
+  circleAriaLabel?: string;
+}
+
+const {
+  num,
+  title,
+  description,
+  duration,
+  href = '/kemasukan#pertanyaan',
+  circleAriaLabel = `Maklumat ${title.replace(/<[^>]+>/g, ' ')}`
+} = Astro.props;
+---
+<article class="program-card">
+  <div class="program-number">{num}</div>
+  <h3 set:html={title} />
+  <p>{description}</p>
+  <div class="program-bottom">
+    <span class="duration">{duration}</span>
+    <a aria-label={circleAriaLabel} class="circle-arrow" href={href}>
+      ↗
+    </a>
+  </div>
+</article>

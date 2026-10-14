@@ -1,0 +1,136 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PrimaryCTA from '../components/PrimaryCTA.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import { siteConfig } from '../content/siteConfig';
+
+const title = "Hubungi Kami — MADUM";
+const description = "Maklumat perhubungan rasmi, nombor WhatsApp, lokasi Shah Alam, serta jawapan kepada soalan lazim Maahad Darul Muthiah.";
+---
+<SiteLayout title={title} description={description} activeRoute="/hubungi">
+  <!-- Plain Hero -->
+  <section class="plain-hero" aria-labelledby="hubungi-hero-title">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Utama</a><b>/</b><span>Hubungi Kami</span>
+      </nav>
+      <div class="eyebrow">HUBUNGI DARUL MUTHIAH</div>
+      <h1 id="hubungi-hero-title">
+        Kami sedia membantu <em>pertanyaan anda.</em>
+      </h1>
+      <p class="inner-lead">
+        Hubungi pihak maahad bagi pertanyaan tentang pengajian, kemasukan, yuran atau lawatan. Saluran berikut berdasarkan maklumat yang dibekalkan klien dan perlu disemak sebelum penerbitan.
+      </p>
+      <a
+        class="btn btn-primary"
+        href={`https://wa.me/${siteConfig.whatsappE164}?text=Assalamualaikum.%20Saya%20ingin%20bertanya%20mengenai%20MADUM.`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        WhatsApp MADUM <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Saluran Perhubungan -->
+  <section class="section-compact surface-white" aria-labelledby="saluran-title">
+    <div class="container">
+      <div class="eyebrow">SALURAN PERHUBUNGAN</div>
+      <h2 class="section-title" id="saluran-title">Hubungi melalui saluran yang sesuai.</h2>
+      <div class="contact-grid">
+        <article class="contact-card">
+          <div class="contact-icon" aria-hidden="true">↗</div>
+          <h3>WhatsApp Kemasukan</h3>
+          <p>{siteConfig.whatsappDisplay}</p>
+          <a href={`https://wa.me/${siteConfig.whatsappE164}`} target="_blank" rel="noopener noreferrer">
+            Mulakan pertanyaan ↗
+          </a>
+        </article>
+
+        <article class="contact-card">
+          <div class="contact-icon" aria-hidden="true">☎</div>
+          <h3>Telefon Pejabat</h3>
+          <p>{siteConfig.phoneOffice}</p>
+          <a href={`tel:${siteConfig.phoneOffice.replace(/[^0-9]/g, '')}`}>
+            Hubungi pejabat ↗
+          </a>
+        </article>
+
+        <article class="contact-card">
+          <div class="contact-icon" aria-hidden="true">✉</div>
+          <h3>E-mel</h3>
+          <p>{siteConfig.emailOffice}</p>
+          <a href={`mailto:${siteConfig.emailOffice}`}>
+            Hantar e-mel ↗
+          </a>
+          <p style="font-size:10px;color:#86632d;margin-top:6px;">
+            Alamat e-mel menunggu pengesahan institusi.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lokasi Maahad & Map Panel -->
+  <section class="section-compact surface-soft" aria-labelledby="lokasi-title">
+    <div class="container two-cols">
+      <div>
+        <div class="eyebrow">LOKASI MAAHAD</div>
+        <h2 class="section-title" id="lokasi-title">Temui kami di Shah Alam.</h2>
+        <p class="prose">{siteConfig.address.full}</p>
+        <a
+          class="btn btn-primary"
+          href={siteConfig.googleMapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Buka Google Maps <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+        <div class="review-note">
+          Ilustrasi lokasi di sebelah bukan peta navigasi sebenar. Alamat pengunjung dan pin destinasi perlu disahkan dengan pihak maahad.
+        </div>
+      </div>
+
+      <div class="map-panel" role="img" aria-label="Ilustrasi lokasi Maahad Darul Muthiah di Shah Alam">
+        <div class="map-pin">
+          {siteConfig.brandName}
+          <small style="display:block;font-size:10px;font-weight:500">Shah Alam</small>
+        </div>
+        <div class="map-notice">Ilustrasi kawasan · Klik Google Maps untuk navigasi</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion -->
+  <section class="section-compact surface-white" aria-labelledby="faq-title">
+    <div class="container two-cols wide-copy">
+      <div>
+        <div class="eyebrow">PERTANYAAN LAZIM</div>
+        <h2 class="section-title" id="faq-title">Soalan yang sering ditanyakan.</h2>
+        <p class="section-sub">
+          Jawapan ringkas untuk memudahkan wali murid sebelum menghubungi pihak maahad.
+        </p>
+        <FAQAccordion />
+      </div>
+
+      <img
+        src="/assets/aktiviti-maahad.webp"
+        class="editorial-visual"
+        alt="Aktiviti pelajar di MADUM"
+        loading="lazy"
+        width="480"
+        height="440"
+      />
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <PrimaryCTA
+    eyebrow="LANGKAH SETERUSNYA"
+    title="Pertanyaan anda dialu-alukan."
+    description="Salurkan soalan kepada pihak maahad melalui borang pertanyaan WhatsApp yang ringkas."
+    ctaText="Tanya Kemasukan"
+    ctaHref="/kemasukan#pertanyaan"
+    disclaimer="Pratonton dalaman · Pengesahan diperlukan"
+  />
+</SiteLayout>

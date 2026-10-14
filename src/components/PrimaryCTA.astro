@@ -1,0 +1,47 @@
+---
+import { siteConfig } from '../content/siteConfig';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  isExternal?: boolean;
+  disclaimer?: string;
+  sectionClass?: string;
+}
+
+const {
+  eyebrow = 'LANGKAH SETERUSNYA',
+  title = 'Ingin mengetahui suasana pendidikan MADUM dengan lebih lanjut?',
+  description = 'Hubungi pihak maahad untuk bertanya tentang pengajian atau mengatur lawatan yang dipersetujui.',
+  ctaText = 'Tanya Kemasukan',
+  ctaHref = '/kemasukan#pertanyaan',
+  isExternal = false,
+  disclaimer = 'Pratonton dalaman · Pengesahan diperlukan',
+  sectionClass = 'section-ending'
+} = Astro.props;
+---
+<section class={sectionClass} aria-labelledby="cta-heading">
+  <div class="container">
+    <div class="final-cta">
+      <div>
+        <div class="eyebrow">{eyebrow}</div>
+        <h2 id="cta-heading">{title}</h2>
+        <p>{description}</p>
+      </div>
+      <div class="cta-actions">
+        <a
+          class="btn btn-gold"
+          href={ctaHref}
+          target={isExternal ? '_blank' : undefined}
+          rel={isExternal ? 'noopener noreferrer' : undefined}
+        >
+          {ctaText} <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+        <small>{disclaimer}</small>
+      </div>
+    </div>
+  </div>
+</section>

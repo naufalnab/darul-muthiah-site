@@ -1,0 +1,15 @@
+---
+import { siteConfig } from '../content/siteConfig';
+
+interface Props {
+  session?: string;
+}
+
+const { session = siteConfig.admissionsSession } = Astro.props;
+---
+<aside class="announcement" aria-label="Pengumuman kemasukan">
+  <strong>Pengambilan Pelajar Sesi {session}</strong>
+  <span>·</span>
+  Maklumat kemasukan tertakluk kepada pengesahan
+  <a href="/kemasukan">Lihat maklumat →</a>
+</aside>
