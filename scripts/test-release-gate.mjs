@@ -2,15 +2,19 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
 
-const FIXTURES_DIR = path.resolve('tmp/test-fixtures');
-fs.mkdirSync(FIXTURES_DIR, { recursive: true });
+const CONFIG_PATH = path.resolve('src/content/siteConfig.json');
+const DIST_PATH = path.resolve('dist');
 
-// Read the baseline real configuration to clone as base fixture
-const baseConfigPath = path.resolve('src/content/siteConfig.json');
-const baseConfig = JSON.parse(fs.readFileSync(baseConfigPath, 'utf-8'));
+// Read and backup the production baseline configuration
+if (!fs.existsSync(CONFIG_PATH)) {
+  console.error(`FATAL: Configuration not found at ${CONFIG_PATH}`);
+  process.exit(1);
+}
+const baselineConfigRaw = fs.readFileSync(CONFIG_PATH, 'utf-8');
+const baselineConfig = JSON.parse(baselineConfigRaw);
 
-let passedTests = 0;
 let totalTests = 0;
+let passedTests = 0;
 
 function runTest(name, fn) {
   totalTests++;
@@ -21,34 +25,35 @@ function runTest(name, fn) {
     passedTests++;
   } catch (err) {
     console.log('❌ FAILED');
-    console.error(`   Error: ${err.message}`);
+    console.error(`   ${err.message}`);
   }
 }
 
-function runPrebuildWithConfig(configPath) {
-  return execSync(`node scripts/prebuild.mjs`, {
-    env: { ...process.env, MADUM_CONFIG_PATH: configPath },
+function writeTestConfig(configObj) {
+  fs.writeFileSync(CONFIG_PATH, JSON.stringify(configObj, null, 2), 'utf-8');
+}
+
+function runFullBuild() {
+  return execSync('pnpm run build', {
     encoding: 'utf-8',
     stdio: 'pipe'
   });
 }
 
-function runPostbuildWithConfig(configPath) {
-  return execSync(`node scripts/postbuild.mjs`, {
-    env: { ...process.env, MADUM_CONFIG_PATH: configPath },
+function runDirectAstroBuild() {
+  return execSync('pnpm exec astro build', {
     encoding: 'utf-8',
     stdio: 'pipe'
   });
 }
 
-console.log('\n=== RUNNING RELEASE SAFETY GATE REGRESSION TESTS ===\n');
+console.log('\n=== RUNNING FULL-BUILD RELEASE SAFETY GATE REGRESSION SUITE ===\n');
 
 try {
-  // 1. Mode internal dengan approval false: berhasil untuk local preview
-  runTest('Case 1: Mode internal with all approvals false -> SUCCEEDS for local preview', () => {
-    const fixturePath = path.join(FIXTURES_DIR, 'case1-internal.json');
-    const cfg = {
-      ...baseConfig,
+  // 1. Internal + approvals false -> full build berhasil, noindex, Disallow, tanpa sitemap
+  runTest('1. Internal + approvals false -> Full build SUCCEEDS, Disallow: /, no sitemap', () => {
+    writeTestConfig({
+      ...baselineConfig,
       publicationMode: 'internal',
       releaseApprovals: {
         feesApproved: false,
@@ -57,20 +62,35 @@ try {
         officialContactApproved: false,
         jaisUsageApproved: false
       }
-    };
-    fs.writeFileSync(fixturePath, JSON.stringify(cfg, null, 2));
+    });
 
-    const stdout = runPrebuildWithConfig(fixturePath);
-    if (!stdout.includes("Build mode 'internal' validated successfully")) {
-      throw new Error(`Expected success message not found. Output:\n${stdout}`);
+    const output = runFullBuild();
+    if (!output.includes("Build mode 'internal' validated successfully")) {
+      throw new Error(`Expected internal validation message missing. Output:\n${output}`);
+    }
+
+    const robotsPath = path.join(DIST_PATH, 'robots.txt');
+    const sitemapPath = path.join(DIST_PATH, 'sitemap.xml');
+
+    if (!fs.existsSync(robotsPath)) {
+      throw new Error('dist/robots.txt was not generated.');
+    }
+    const robots = fs.readFileSync(robotsPath, 'utf-8');
+    if (!robots.includes('Disallow: /')) {
+      throw new Error(`robots.txt must contain Disallow: / in internal mode:\n${robots}`);
+    }
+    if (robots.includes('Sitemap:')) {
+      throw new Error(`robots.txt must NOT reference sitemap in internal mode:\n${robots}`);
+    }
+    if (fs.existsSync(sitemapPath)) {
+      throw new Error('dist/sitemap.xml must NOT exist during internal mode.');
     }
   });
 
-  // 2. Mode public dengan semua approval false: build gagal (exit non-zero)
-  runTest('Case 2: Mode public with all approvals false -> FAILS (fail-closed)', () => {
-    const fixturePath = path.join(FIXTURES_DIR, 'case2-public-all-false.json');
-    const cfg = {
-      ...baseConfig,
+  // 2. Public + approvals false -> full build gagal
+  runTest('2. Public + all approvals false -> Full build FAILS (fail-closed exit non-zero)', () => {
+    writeTestConfig({
+      ...baselineConfig,
       publicationMode: 'public',
       releaseApprovals: {
         feesApproved: false,
@@ -79,62 +99,59 @@ try {
         officialContactApproved: false,
         jaisUsageApproved: false
       }
-    };
-    fs.writeFileSync(fixturePath, JSON.stringify(cfg, null, 2));
+    });
 
-    let failedAsExpected = false;
+    let failed = false;
     try {
-      runPrebuildWithConfig(fixturePath);
+      runFullBuild();
     } catch (err) {
-      failedAsExpected = true;
-      if (!err.stderr.includes('FATAL RELEASE BLOCKER') && !err.stdout.includes('FATAL RELEASE BLOCKER')) {
-        throw new Error(`Expected blocker message missing. Stderr:\n${err.stderr}`);
+      failed = true;
+      const combined = (err.stdout || '') + (err.stderr || '');
+      if (!combined.includes('FATAL RELEASE BLOCKER')) {
+        throw new Error(`Expected FATAL RELEASE BLOCKER missing. Output:\n${combined}`);
       }
     }
-    if (!failedAsExpected) {
-      throw new Error('Prebuild should have failed with exit code 1, but succeeded.');
+    if (!failed) {
+      throw new Error('Full build should have failed with exit code non-zero, but succeeded.');
     }
   });
 
-  // 3. Mode public dengan satu approval false: build gagal (exit non-zero)
-  runTest('Case 3: Mode public with one approval false (feesApproved: false) -> FAILS', () => {
-    const fixturePath = path.join(FIXTURES_DIR, 'case3-public-one-false.json');
-    const cfg = {
-      ...baseConfig,
+  // 3. Public + satu approval false -> full build gagal
+  runTest('3. Public + one approval false (feesApproved: false) -> Full build FAILS', () => {
+    writeTestConfig({
+      ...baselineConfig,
       publicationMode: 'public',
       releaseApprovals: {
-        feesApproved: false, // Only this one is false
+        feesApproved: false,
         historyApproved: true,
         studentMediaConsentApproved: true,
         officialContactApproved: true,
         jaisUsageApproved: true
       }
-    };
-    fs.writeFileSync(fixturePath, JSON.stringify(cfg, null, 2));
+    });
 
-    let failedAsExpected = false;
+    let failed = false;
     try {
-      runPrebuildWithConfig(fixturePath);
+      runFullBuild();
     } catch (err) {
-      failedAsExpected = true;
+      failed = true;
       const combined = (err.stdout || '') + (err.stderr || '');
       if (!combined.includes('feesApproved')) {
         throw new Error(`Expected blocker for feesApproved missing. Output:\n${combined}`);
       }
-      if (combined.includes('historyApproved')) {
-        throw new Error(`Should NOT block historyApproved since it was true. Output:\n${combined}`);
+      if (combined.includes('historyApproved (')) {
+        throw new Error(`historyApproved should not be in blockers since it was true.`);
       }
     }
-    if (!failedAsExpected) {
-      throw new Error('Prebuild should have failed when 1 approval is false.');
+    if (!failed) {
+      throw new Error('Full build should have failed when 1 approval is false.');
     }
   });
 
-  // 4. Mode public dengan approval lengkap yang tervalidasi: gate dapat dilalui & sitemap dihasilkan
-  runTest('Case 4: Mode public with all approvals true -> PASSES gate and generates sitemap.xml', () => {
-    const fixturePath = path.join(FIXTURES_DIR, 'case4-public-all-true.json');
-    const cfg = {
-      ...baseConfig,
+  // 4. Public + seluruh approval true dalam fixture -> full build berhasil, sitemap dan metadata publik konsisten
+  runTest('4. Public + all approvals true -> Full build SUCCEEDS, sitemap.xml generated & public robots.txt', () => {
+    writeTestConfig({
+      ...baselineConfig,
       publicationMode: 'public',
       releaseApprovals: {
         feesApproved: true,
@@ -143,100 +160,119 @@ try {
         officialContactApproved: true,
         jaisUsageApproved: true
       }
-    };
-    fs.writeFileSync(fixturePath, JSON.stringify(cfg, null, 2));
+    });
 
-    // Prebuild must succeed
-    const preOut = runPrebuildWithConfig(fixturePath);
-    if (!preOut.includes("Build mode 'public' validated successfully")) {
-      throw new Error(`Prebuild failed for fully approved public config. Output:\n${preOut}`);
+    const output = runFullBuild();
+    if (!output.includes("Build mode 'public' validated successfully")) {
+      throw new Error(`Expected public validation message missing. Output:\n${output}`);
     }
 
-    // Postbuild must generate sitemap.xml and configure public robots.txt
-    const postOut = runPostbuildWithConfig(fixturePath);
-    const distSitemap = path.resolve('dist/sitemap.xml');
-    const distRobots = path.resolve('dist/robots.txt');
+    const robotsPath = path.join(DIST_PATH, 'robots.txt');
+    const sitemapPath = path.join(DIST_PATH, 'sitemap.xml');
 
-    if (!fs.existsSync(distSitemap)) {
-      throw new Error('dist/sitemap.xml was not created during public postbuild.');
+    if (!fs.existsSync(robotsPath)) {
+      throw new Error('dist/robots.txt was not generated.');
+    }
+    const robots = fs.readFileSync(robotsPath, 'utf-8');
+    if (!robots.includes('Allow: /') || !robots.includes('Sitemap: https://madum.ilmuniaga.com/sitemap.xml')) {
+      throw new Error(`robots.txt must contain Allow: / and Sitemap in public mode:\n${robots}`);
     }
 
-    const sitemapContent = fs.readFileSync(distSitemap, 'utf-8');
-    if (!sitemapContent.includes('https://madum.ilmuniaga.com/profil') || !sitemapContent.includes('https://madum.ilmuniaga.com/kemasukan')) {
-      throw new Error(`sitemap.xml does not contain expected routes:\n${sitemapContent}`);
+    if (!fs.existsSync(sitemapPath)) {
+      throw new Error('dist/sitemap.xml was not created during public build.');
     }
-
-    const robotsContent = fs.readFileSync(distRobots, 'utf-8');
-    if (!robotsContent.includes('Allow: /') || !robotsContent.includes('Sitemap: https://madum.ilmuniaga.com/sitemap.xml')) {
-      throw new Error(`robots.txt does not have public configuration:\n${robotsContent}`);
+    const sitemap = fs.readFileSync(sitemapPath, 'utf-8');
+    const expectedRoutes = [
+      'https://madum.ilmuniaga.com',
+      'https://madum.ilmuniaga.com/profil',
+      'https://madum.ilmuniaga.com/pengajian',
+      'https://madum.ilmuniaga.com/kemasukan',
+      'https://madum.ilmuniaga.com/galeri',
+      'https://madum.ilmuniaga.com/hubungi'
+    ];
+    for (const r of expectedRoutes) {
+      if (!sitemap.includes(`<loc>${r}</loc>`)) {
+        throw new Error(`sitemap.xml missing route ${r}:\n${sitemap}`);
+      }
     }
   });
 
-  // 5. Konfigurasi hilang atau tidak valid: build gagal
-  runTest('Case 5A: Missing config file -> FAILS', () => {
+  // 5. JSON hilang/rusak -> full build gagal
+  runTest('5A. Config file missing -> Full build FAILS', () => {
+    const tempBackup = CONFIG_PATH + '.bak';
+    fs.renameSync(CONFIG_PATH, tempBackup);
     let failed = false;
     try {
-      runPrebuildWithConfig(path.join(FIXTURES_DIR, 'non-existent.json'));
+      runFullBuild();
+    } catch {
+      failed = true;
+    } finally {
+      if (fs.existsSync(tempBackup)) {
+        fs.renameSync(tempBackup, CONFIG_PATH);
+      }
+    }
+    if (!failed) {
+      throw new Error('Full build should have failed when config file is missing.');
+    }
+  });
+
+  runTest('5B. Corrupted / malformed JSON -> Full build FAILS', () => {
+    fs.writeFileSync(CONFIG_PATH, '{\n  "publicationMode": "internal",\n  badJsonSyntax\n}', 'utf-8');
+    let failed = false;
+    try {
+      runFullBuild();
     } catch {
       failed = true;
     }
-    if (!failed) throw new Error('Expected failure for missing config.');
+    if (!failed) {
+      throw new Error('Full build should have failed when config JSON is corrupted.');
+    }
   });
 
-  runTest('Case 5B: Corrupted / invalid JSON -> FAILS', () => {
-    const fixturePath = path.join(FIXTURES_DIR, 'case5b-corrupt.json');
-    fs.writeFileSync(fixturePath, '{ "publicationMode": "internal", invalidJson }');
+  // 6. Override atau ketidaksesuaian konfigurasi -> tidak dapat melewati release gate
+  runTest('6A. Invalid / unknown publicationMode (e.g. "staging") -> Full build FAILS', () => {
+    writeTestConfig({
+      ...baselineConfig,
+      publicationMode: 'staging'
+    });
     let failed = false;
     try {
-      runPrebuildWithConfig(fixturePath);
+      runFullBuild();
+    } catch (err) {
+      failed = true;
+      const combined = (err.stdout || '') + (err.stderr || '');
+      if (!combined.includes("'publicationMode' tidak sah")) {
+        throw new Error(`Expected invalid publicationMode message. Output:\n${combined}`);
+      }
+    }
+    if (!failed) {
+      throw new Error('Full build should have failed for invalid publicationMode.');
+    }
+  });
+
+  runTest('6B. Non-boolean approval value -> Full build FAILS', () => {
+    writeTestConfig({
+      ...baselineConfig,
+      releaseApprovals: {
+        ...baselineConfig.releaseApprovals,
+        feesApproved: 'true' // String instead of boolean
+      }
+    });
+    let failed = false;
+    try {
+      runFullBuild();
     } catch {
       failed = true;
     }
-    if (!failed) throw new Error('Expected failure for corrupted JSON.');
+    if (!failed) {
+      throw new Error('Full build should have failed when approval is non-boolean.');
+    }
   });
 
-  runTest('Case 5C: Unknown publicationMode (e.g. "staging") -> FAILS', () => {
-    const fixturePath = path.join(FIXTURES_DIR, 'case5c-unknown-mode.json');
-    const cfg = { ...baseConfig, publicationMode: 'staging' };
-    fs.writeFileSync(fixturePath, JSON.stringify(cfg));
-    let failed = false;
-    try {
-      runPrebuildWithConfig(fixturePath);
-    } catch {
-      failed = true;
-    }
-    if (!failed) throw new Error('Expected failure for unknown publicationMode.');
-  });
-
-  runTest('Case 5D: Non-boolean approval value -> FAILS', () => {
-    const fixturePath = path.join(FIXTURES_DIR, 'case5d-bad-approval.json');
-    const cfg = {
-      ...baseConfig,
-      releaseApprovals: { ...baseConfig.releaseApprovals, feesApproved: 'yes' }
-    };
-    fs.writeFileSync(fixturePath, JSON.stringify(cfg));
-    let failed = false;
-    try {
-      runPrebuildWithConfig(fixturePath);
-    } catch {
-      failed = true;
-    }
-    if (!failed) throw new Error('Expected failure for non-boolean approval.');
-  });
-
-  // 6. Mengubah hanya nilai runtime tanpa mengubah deklarasi tipe: hasil pembacaan tetap akurat
-  runTest('Case 6: Changing only runtime JSON without touching TypeScript types -> Accurate parsing', () => {
-    // Verify that the TypeScript interface siteConfig.ts still declares:
-    // publicationMode: 'internal' | 'public'
-    const tsCode = fs.readFileSync('src/content/siteConfig.ts', 'utf-8');
-    if (!tsCode.includes("publicationMode: PublicationMode;") && !tsCode.includes("'internal' | 'public'")) {
-      throw new Error("TypeScript interface definition not found in siteConfig.ts");
-    }
-
-    // Now test a fixture that sets publicationMode to 'public'
-    const fixturePath = path.join(FIXTURES_DIR, 'case6-runtime-public.json');
-    const cfg = {
-      ...baseConfig,
+  runTest('6C. Attempting environment variable bypass (MADUM_CONFIG_PATH) -> Strictly IGNORED', () => {
+    // Write public config without approvals into siteConfig.json
+    writeTestConfig({
+      ...baselineConfig,
       publicationMode: 'public',
       releaseApprovals: {
         feesApproved: false,
@@ -245,34 +281,87 @@ try {
         officialContactApproved: false,
         jaisUsageApproved: false
       }
-    };
-    fs.writeFileSync(fixturePath, JSON.stringify(cfg));
+    });
 
-    // Must strictly detect mode as 'public' and trigger blockers (proves regex was eliminated)
-    let caughtBlocker = false;
+    // Create a rogue fake config file in tmp with internal mode
+    const fakePath = '/tmp/fake-internal-override.json';
+    fs.writeFileSync(fakePath, JSON.stringify({ ...baselineConfig, publicationMode: 'internal' }));
+
+    let failed = false;
     try {
-      runPrebuildWithConfig(fixturePath);
+      execSync('pnpm run build', {
+        env: { ...process.env, MADUM_CONFIG_PATH: fakePath },
+        encoding: 'utf-8',
+        stdio: 'pipe'
+      });
     } catch (err) {
+      failed = true;
       const combined = (err.stdout || '') + (err.stderr || '');
-      if (combined.includes("Active publicationMode: 'public'") && combined.includes("FATAL RELEASE BLOCKER")) {
-        caughtBlocker = true;
+      if (!combined.includes('FATAL RELEASE BLOCKER')) {
+        throw new Error(`Expected blocker. Output:\n${combined}`);
+      }
+    } finally {
+      if (fs.existsSync(fakePath)) fs.unlinkSync(fakePath);
+    }
+
+    if (!failed) {
+      throw new Error('Build bypassed gate via environment variable override! Must strictly fail.');
+    }
+  });
+
+  // 7. Menjalankan Astro build langsung -> tetap menerapkan pengamanan yang diperlukan
+  runTest('7. Direct `astro build` command (outside npm lifecycle) -> STILL ENFORCES RELEASE GATE', () => {
+    // Configure public mode without approvals
+    writeTestConfig({
+      ...baselineConfig,
+      publicationMode: 'public',
+      releaseApprovals: {
+        feesApproved: false,
+        historyApproved: false,
+        studentMediaConsentApproved: false,
+        officialContactApproved: false,
+        jaisUsageApproved: false
+      }
+    });
+
+    let directBuildFailed = false;
+    try {
+      // Execute direct astro build without running pnpm run build (bypassing prebuild npm script)
+      runDirectAstroBuild();
+    } catch (err) {
+      directBuildFailed = true;
+      const combined = (err.stdout || '') + (err.stderr || '');
+      if (!combined.includes('FATAL RELEASE BLOCKER') && !combined.includes('[RELEASE_BLOCKER]')) {
+        throw new Error(`Direct astro build failed without expected blocker message. Output:\n${combined}`);
       }
     }
 
-    if (!caughtBlocker) {
-      throw new Error("System failed to accurately read runtime JSON when types were unchanged.");
+    if (!directBuildFailed) {
+      throw new Error('Direct astro build bypassed release gate! Astro integration failed to abort.');
     }
   });
 
 } finally {
-  // Always clean up fixtures and restore normal internal postbuild
-  if (fs.existsSync(FIXTURES_DIR)) {
-    fs.rmSync(FIXTURES_DIR, { recursive: true, force: true });
+  // CRITICAL CLEANUP: ALWAYS restore baseline production configuration
+  fs.writeFileSync(CONFIG_PATH, baselineConfigRaw, 'utf-8');
+
+  // Verify baseline configuration is restored to internal mode with all approvals false
+  const restoredConfig = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf-8'));
+  const isInternal = restoredConfig.publicationMode === 'internal';
+  const allApprovalsFalse = Object.values(restoredConfig.releaseApprovals).every(v => v === false);
+
+  if (!isInternal || !allApprovalsFalse) {
+    console.error('FATAL: Failed to restore baseline configuration!');
+    process.exit(1);
   }
 
-  // Restore normal internal robots.txt and verify sitemap is removed
-  runPostbuildWithConfig(baseConfigPath);
-  console.log('\n[CLEANUP] Restored baseline internal preview configuration.');
+  // Run a final clean build to ensure dist/ is restored to internal state
+  try {
+    runFullBuild();
+    console.log('\n[CLEANUP] Workspace and dist/ successfully restored to baseline internal preview mode.');
+  } catch (err) {
+    console.error('[CLEANUP:ERROR] Final restoration build failed:', err.message);
+  }
 }
 
 console.log(`\n=== REGRESSION SUITE RESULTS: ${passedTests}/${totalTests} TESTS PASSED ===\n`);

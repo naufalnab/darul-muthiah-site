@@ -1,26 +1,28 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+export const CONFIG_PATH = path.resolve('src/content/siteConfig.json');
+
 /**
- * Loads, parses, and strictly validates site configuration from JSON.
- * Replaces all brittle regex-based parsing with deterministic structured validation.
+ * Loads, parses, and strictly validates site configuration from the single
+ * authoritative JSON source (src/content/siteConfig.json).
  *
- * @param {string} [customPath] Optional custom path for regression testing with fixtures
+ * Ensures NO environment variables or disparate sources can cause discrepancy
+ * between what the release gate checks and what Astro builds into pages.
+ *
  * @returns {object} The validated configuration object
  */
-export function loadAndValidateConfig(customPath = null) {
-  const configPath = customPath ? path.resolve(customPath) : path.resolve('src/content/siteConfig.json');
-
-  if (!fs.existsSync(configPath)) {
-    throw new Error(`[CONFIG_ERROR] Fail konfigurasi tidak dijumpai di: ${configPath}`);
+export function loadAndValidateConfig() {
+  if (!fs.existsSync(CONFIG_PATH)) {
+    throw new Error(`[CONFIG_ERROR] Fail konfigurasi tidak dijumpai di: ${CONFIG_PATH}`);
   }
 
   let raw;
   try {
-    const content = fs.readFileSync(configPath, 'utf-8');
+    const content = fs.readFileSync(CONFIG_PATH, 'utf-8');
     raw = JSON.parse(content);
   } catch (err) {
-    throw new Error(`[CONFIG_ERROR] Gagal menghuraikan JSON konfigurasi (${configPath}): ${err.message}`);
+    throw new Error(`[CONFIG_ERROR] Gagal menghuraikan JSON konfigurasi (${CONFIG_PATH}): ${err.message}`);
   }
 
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
