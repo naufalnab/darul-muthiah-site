@@ -23,9 +23,9 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
         Melihat kehidupan <em>di Darul Muthiah.</em>
       </h1>
       <p class="inner-lead">
-        {mediaApproved ? 'Sorotan aktiviti Al-Quran, pembelajaran, kemahiran, sukan dan lawatan daripada bahan yang dibekalkan oleh pihak maahad.' : 'Paparan aktiviti kini menggunakan placeholder rasmi berjenama bagi melindungi privasi pelajar sementara proses kebenaran pelepasan foto/video disahkan.'}
+        Sorotan aktiviti Al-Quran, pembelajaran, kemahiran, sukan dan lawatan daripada bahan yang dibekalkan oleh pihak maahad.
       </p>
-      <span class="pending">Pratonton dalaman · Kebenaran penerbitan foto/video diperlukan</span>
+      <span class="pending">Pratonton dokumentasi rasmi MADUM</span>
     </div>
   </section>
 
@@ -38,7 +38,7 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
           <h2 class="section-title" id="galeri-terpilih-title">Kegiatan yang membentuk pengalaman pelajar.</h2>
           <p class="section-sub">Gunakan penapis kategori atau pilih gambar untuk melihat paparan lebih besar.</p>
         </div>
-        <span style="font-size:11px;color:#758477">{mediaApproved ? 'Dokumentasi asal pihak maahad' : 'Placeholder berjenama rasmi · Menunggu kebenaran media'}</span>
+        <span style="font-size:11px;color:#758477">Dokumentasi asal pihak maahad</span>
       </div>
 
       {isPublic && !mediaApproved ? (
@@ -84,7 +84,7 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
                 />
                 <figcaption>
                   <b>{photo.title}</b>
-                  <small>{mediaApproved ? photo.catLabel : `${photo.catLabel} · Placeholder`}</small>
+                  <small>{photo.catLabel}</small>
                 </figcaption>
               </figure>
             ))}

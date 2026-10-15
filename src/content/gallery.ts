@@ -30,7 +30,7 @@ export const galleryPhotos: GalleryPhoto[] = [
     cat: 'kelas',
     catLabel: 'Hafazan & Kelas',
     title: 'Tasmi’ & bacaan Al-Quran',
-    alt: 'Placeholder aktiviti: Tasmi’ dan bacaan Al-Quran'
+    alt: 'Tasmi’ dan bacaan Al-Quran pelajar MADUM'
   },
   {
     id: 'photo-2',
@@ -38,7 +38,7 @@ export const galleryPhotos: GalleryPhoto[] = [
     cat: 'kelas',
     catLabel: 'Hafazan & Kelas',
     title: 'Suasana kelas pengajian',
-    alt: 'Placeholder aktiviti: Suasana kelas pengajian MADUM'
+    alt: 'Suasana kelas pengajian dan pembelajaran MADUM'
   },
   {
     id: 'photo-3',
@@ -46,7 +46,7 @@ export const galleryPhotos: GalleryPhoto[] = [
     cat: 'kelas',
     catLabel: 'Hafazan & Kelas',
     title: 'Pembelajaran akademik',
-    alt: 'Placeholder aktiviti: Pembelajaran subjek akademik'
+    alt: 'Pembelajaran subjek akademik pelajar MADUM'
   },
   {
     id: 'photo-4',
@@ -54,7 +54,7 @@ export const galleryPhotos: GalleryPhoto[] = [
     cat: 'ilmiah',
     catLabel: 'Majlis & Ilmiah',
     title: 'Majlis ilmu pelajar',
-    alt: 'Placeholder aktiviti: Majlis ilmu dan perjumpaan pengajian'
+    alt: 'Majlis ilmu dan perjumpaan pengajian warga MADUM'
   },
   {
     id: 'photo-5',
@@ -62,7 +62,7 @@ export const galleryPhotos: GalleryPhoto[] = [
     cat: 'ilmiah',
     catLabel: 'Majlis & Ilmiah',
     title: 'Penglibatan dalam program ilmiah',
-    alt: 'Placeholder aktiviti: Program seminar dan motivasi ilmiah'
+    alt: 'Program seminar dan motivasi ilmiah pelajar MADUM'
   },
   {
     id: 'photo-6',
@@ -70,7 +70,7 @@ export const galleryPhotos: GalleryPhoto[] = [
     cat: 'tvet',
     catLabel: 'TVET & Latihan',
     title: 'Aktiviti kemahiran TVET',
-    alt: 'Placeholder aktiviti: Amali kemahiran TVET vokasional'
+    alt: 'Amali kemahiran TVET vokasional pelajar MADUM'
   },
   {
     id: 'photo-7',
@@ -78,7 +78,7 @@ export const galleryPhotos: GalleryPhoto[] = [
     cat: 'tvet',
     catLabel: 'TVET & Latihan',
     title: 'Taklimat keselamatan',
-    alt: 'Placeholder aktiviti: Taklimat dan latihan keselamatan bomba'
+    alt: 'Taklimat dan latihan keselamatan bomba di maahad'
   },
   {
     id: 'photo-8',
@@ -86,7 +86,7 @@ export const galleryPhotos: GalleryPhoto[] = [
     cat: 'sukan',
     catLabel: 'Sukan & Rehlah',
     title: 'Riadah & bola tampar',
-    alt: 'Placeholder aktiviti: Riadah dan sukan kokurikulum'
+    alt: 'Riadah dan aktiviti sukan pelajar MADUM'
   },
   {
     id: 'photo-9',
@@ -94,7 +94,7 @@ export const galleryPhotos: GalleryPhoto[] = [
     cat: 'sukan',
     catLabel: 'Sukan & Rehlah',
     title: 'Lawatan sambil belajar',
-    alt: 'Placeholder aktiviti: Lawatan sambil belajar dan rehlah'
+    alt: 'Lawatan sambil belajar dan rehlah pelajar MADUM'
   },
   {
     id: 'photo-10',
@@ -102,7 +102,7 @@ export const galleryPhotos: GalleryPhoto[] = [
     cat: 'sukan',
     catLabel: 'Sukan & Rehlah',
     title: 'Aktiviti luar berkumpulan',
-    alt: 'Placeholder aktiviti: Aktiviti luar dan pembinaan sahsiah'
+    alt: 'Aktiviti luar dan pembinaan sahsiah berkumpulan'
   },
   {
     id: 'photo-11',
@@ -110,7 +110,7 @@ export const galleryPhotos: GalleryPhoto[] = [
     cat: 'ilmiah',
     catLabel: 'Majlis & Ilmiah',
     title: 'Kunjungan ilmiah',
-    alt: 'Placeholder aktiviti: Kunjungan dan ziarah pendidikan ilmiah'
+    alt: 'Kunjungan dan ziarah pendidikan ilmiah pelajar MADUM'
   },
   {
     id: 'photo-12',
@@ -118,7 +118,7 @@ export const galleryPhotos: GalleryPhoto[] = [
     cat: 'kelas',
     catLabel: 'Hafazan & Kelas',
     title: 'Perbincangan & tarbiah',
-    alt: 'Placeholder aktiviti: Perbincangan halaqah dan tarbiah'
+    alt: 'Perbincangan halaqah dan tarbiah pelajar MADUM'
   }
 ];
 
