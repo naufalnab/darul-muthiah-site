@@ -209,14 +209,14 @@
     "path": "/galeri",
     "desktop": {
       "width": 1440,
-      "height": 3732,
+      "height": 3783,
       "overflow": false,
       "h1Count": 1,
       "title": "Galeri & Pencapaian — MADUM"
     },
     "mobile": {
       "width": 390,
-      "height": 4670,
+      "height": 4749,
       "overflow": false
     },
     "interactions": {

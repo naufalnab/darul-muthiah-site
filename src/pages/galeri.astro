@@ -18,12 +18,12 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
       <nav class="crumbs" aria-label="Breadcrumb">
         <a href="/">Utama</a><b>/</b><span>Galeri &amp; Pencapaian</span>
       </nav>
-      <div class="eyebrow">DOKUMENTASI SEBENAR MADUM</div>
+      <div class="eyebrow">DOKUMENTASI &amp; AKTIVITI MADUM</div>
       <h1 id="galeri-hero-title">
         Melihat kehidupan <em>di Darul Muthiah.</em>
       </h1>
       <p class="inner-lead">
-        Sorotan aktiviti Al-Quran, pembelajaran, kemahiran, sukan dan lawatan daripada bahan yang dibekalkan oleh pihak maahad.
+        {mediaApproved ? 'Sorotan aktiviti Al-Quran, pembelajaran, kemahiran, sukan dan lawatan daripada bahan yang dibekalkan oleh pihak maahad.' : 'Paparan aktiviti kini menggunakan placeholder rasmi berjenama bagi melindungi privasi pelajar sementara proses kebenaran pelepasan foto/video disahkan.'}
       </p>
       <span class="pending">Pratonton dalaman · Kebenaran penerbitan foto/video diperlukan</span>
     </div>
@@ -38,7 +38,7 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
           <h2 class="section-title" id="galeri-terpilih-title">Kegiatan yang membentuk pengalaman pelajar.</h2>
           <p class="section-sub">Gunakan penapis kategori atau pilih gambar untuk melihat paparan lebih besar.</p>
         </div>
-        <span style="font-size:11px;color:#758477">Dokumentasi asal klien · Bukan gambar stok</span>
+        <span style="font-size:11px;color:#758477">{mediaApproved ? 'Dokumentasi asal pihak maahad' : 'Placeholder berjenama rasmi · Menunggu kebenaran media'}</span>
       </div>
 
       {isPublic && !mediaApproved ? (
@@ -84,7 +84,7 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
                 />
                 <figcaption>
                   <b>{photo.title}</b>
-                  <small>{photo.catLabel}</small>
+                  <small>{mediaApproved ? photo.catLabel : `${photo.catLabel} · Placeholder`}</small>
                 </figcaption>
               </figure>
             ))}

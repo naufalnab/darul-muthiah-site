@@ -9,7 +9,10 @@
     "build": "astro build",
     "postbuild": "node scripts/postbuild.mjs",
     "preview": "astro preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:gate": "node scripts/test-release-gate.mjs",
+    "test:qa": "node scripts/run-qa.mjs",
+    "test:cwv": "node scripts/audit_cwv.mjs"
   },
   "keywords": [],
   "author": "",
