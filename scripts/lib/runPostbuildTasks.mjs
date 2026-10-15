@@ -147,7 +147,34 @@ ${publicPages
       `# Public Production\nUser-agent: *\nAllow: /\n\nSitemap: ${baseUrl}/sitemap.xml\n`,
       'utf-8'
     );
-    console.log(`[postbuild] Configured public robots.txt with sitemap reference: ${baseUrl}/sitemap.xml`);
+  }
+
+  // 5. If building with a subpath base (e.g. /darul-muthiah-site for GitHub Pages),
+  // rewrite root-relative links in all generated HTML files to respect the base prefix
+  const rawBase = process.env.ASTRO_BASE || (process.env.GITHUB_PAGES ? '/darul-muthiah-site' : '');
+  const cleanBase = rawBase ? '/' + rawBase.replace(/^\/+|\/+$/g, '') : '';
+  if (cleanBase && cleanBase !== '/') {
+    function prefixRelativePaths(dir) {
+      if (!fs.existsSync(dir)) return;
+      const entries = fs.readdirSync(dir, { withFileTypes: true });
+      for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          prefixRelativePaths(fullPath);
+        } else if (entry.name.endsWith('.html')) {
+          let content = fs.readFileSync(fullPath, 'utf-8');
+          // Replace href="/assets/...", src="/assets/...", poster="/assets/..."
+          content = content.replace(/(href|src|poster)="\/(assets\/[^"]+)"/g, `$1="${cleanBase}/$2"`);
+          // Replace page route hrefs
+          content = content.replace(/href="\/(profil|pengajian|kemasukan|galeri|hubungi|404)(\b[^"]*)"/g, `href="${cleanBase}/$1$2"`);
+          // Replace home href="/"
+          content = content.replace(/href="\/"/g, `href="${cleanBase}/"`);
+          fs.writeFileSync(fullPath, content, 'utf-8');
+        }
+      }
+    }
+    prefixRelativePaths(distDir);
+    console.log(`[postbuild] Rewrote root-relative links for base prefix: '${cleanBase}'`);
   }
 
   console.log('[postbuild] Post-build completed successfully.\n');

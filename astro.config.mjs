@@ -22,9 +22,14 @@ function madumReleaseGateIntegration() {
   };
 }
 
+const isGitHubPages = Boolean(process.env.GITHUB_ACTIONS && !process.env.CUSTOM_DOMAIN);
+const site = process.env.ASTRO_SITE || (isGitHubPages ? 'https://naufalnab.github.io' : 'https://madum.ilmuniaga.com');
+const base = process.env.ASTRO_BASE || (isGitHubPages ? '/darul-muthiah-site' : '/');
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://madum.ilmuniaga.com',
+  site,
+  base,
   output: 'static',
   build: {
     format: 'directory'
