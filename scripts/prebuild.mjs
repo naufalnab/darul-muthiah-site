@@ -1,30 +1,43 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { loadAndValidateConfig } from './lib/loadConfig.mjs';
 
 console.log('[prebuild] Starting pre-build validation & publication safety checks...');
 
-// Read siteConfig.ts content directly to inspect publicationMode and releaseApprovals
-const siteConfigPath = path.resolve('src/content/siteConfig.ts');
-const siteConfigCode = fs.readFileSync(siteConfigPath, 'utf-8');
+let siteConfig;
+try {
+  // Support custom config path via environment variable for automated testing
+  const customConfigPath = process.env.MADUM_CONFIG_PATH || null;
+  siteConfig = loadAndValidateConfig(customConfigPath);
+} catch (err) {
+  console.error('\n' + '='.repeat(78));
+  console.error('❌ FATAL CONFIGURATION ERROR: BUILD REJECTED');
+  console.error('='.repeat(78));
+  console.error(err.message);
+  console.error('='.repeat(78) + '\n');
+  process.exit(1);
+}
 
-const isPublicMatch = siteConfigCode.match(/publicationMode:\s*['"](internal|public)['"]/);
-const publicationMode = isPublicMatch ? isPublicMatch[1] : 'internal';
-
-const feesApproved = /feesApproved:\s*true/.test(siteConfigCode);
-const historyApproved = /historyApproved:\s*true/.test(siteConfigCode);
-const studentMediaConsentApproved = /studentMediaConsentApproved:\s*true/.test(siteConfigCode);
-const officialContactApproved = /officialContactApproved:\s*true/.test(siteConfigCode);
-const jaisUsageApproved = /jaisUsageApproved:\s*true/.test(siteConfigCode);
-
+const { publicationMode, releaseApprovals } = siteConfig;
 console.log(`[prebuild] Active publicationMode: '${publicationMode}'`);
 
 if (publicationMode === 'public') {
   const pendingBlockers = [];
-  if (!feesApproved) pendingBlockers.push('feesApproved (Jadual & kadar yuran pengajian rasmi belum diluluskan)');
-  if (!historyApproved) pendingBlockers.push('historyApproved (Kronologi penubuhan institusi belum disahkan)');
-  if (!studentMediaConsentApproved) pendingBlockers.push('studentMediaConsentApproved (Persetujuan bertulis/parental consent media pelajar bawah umur belum disahkan)');
-  if (!officialContactApproved) pendingBlockers.push('officialContactApproved (Saluran rasmi WhatsApp/telefon/emel belum disahkan)');
-  if (!jaisUsageApproved) pendingBlockers.push('jaisUsageApproved (Kebenaran penggunaan perakuan JAIS/LZS belum disahkan)');
+  if (!releaseApprovals.feesApproved) {
+    pendingBlockers.push('feesApproved (Jadual & kadar yuran pengajian rasmi belum diluluskan)');
+  }
+  if (!releaseApprovals.historyApproved) {
+    pendingBlockers.push('historyApproved (Kronologi penubuhan institusi belum disahkan)');
+  }
+  if (!releaseApprovals.studentMediaConsentApproved) {
+    pendingBlockers.push('studentMediaConsentApproved (Persetujuan bertulis/parental consent media pelajar bawah umur belum disahkan)');
+  }
+  if (!releaseApprovals.officialContactApproved) {
+    pendingBlockers.push('officialContactApproved (Saluran rasmi WhatsApp/telefon/emel belum disahkan)');
+  }
+  if (!releaseApprovals.jaisUsageApproved) {
+    pendingBlockers.push('jaisUsageApproved (Kebenaran penggunaan perakuan JAIS/LZS belum disahkan)');
+  }
 
   if (pendingBlockers.length > 0) {
     console.error('\n' + '='.repeat(78));
@@ -35,7 +48,7 @@ if (publicationMode === 'public') {
     console.error('\nSebab: Sesuai dengan dasar keselamatan penerbitan MADUM, website dilarang');
     console.error('dipublikasikan ke khalayak umum tanpa kelulusan institusi yang lengkap.');
     console.error('\nUntuk menjana build pratonton Owner Review secara selamat, kekalkan:');
-    console.error("  siteConfig.publicationMode = 'internal'");
+    console.error("  \"publicationMode\": \"internal\" dalam src/content/siteConfig.json");
     console.error('='.repeat(78) + '\n');
     process.exit(1);
   }

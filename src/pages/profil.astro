@@ -2,6 +2,7 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PrimaryCTA from '../components/PrimaryCTA.astro';
 import { claimsRegistry } from '../content/claimsRegistry';
+import { siteConfig } from '../content/siteConfig';
 
 const title = "Profil Maahad — MADUM";
 const description = "Pengenalan, matlamat pendidikan, sejarah ringkas, dan status pendaftaran Maahad Tahfiz Al Quran Darul Muthiah (1).";
@@ -29,14 +30,14 @@ const description = "Pengenalan, matlamat pendidikan, sejarah ringkas, dan statu
       <div class="inner-hero-image">
         <img
           src="/assets/aktiviti-maahad.webp"
-          alt="Dokumentasi asal warga MADUM"
+          alt="Placeholder berjenama warga MADUM (menunggu kelulusan penyiaran)"
           loading="eager"
           width="485"
           height="385"
         />
         <span class="inner-photo-tag">
           Warga MADUM
-          <small>Dokumentasi sebenar maahad</small>
+          <small>{siteConfig.releaseApprovals.studentMediaConsentApproved ? 'Dokumentasi sebenar maahad' : 'Placeholder rasmi · Menunggu izin media'}</small>
         </span>
       </div>
     </div>

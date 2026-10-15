@@ -45,7 +45,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
           <img
             src="/assets/hero-kelas.webp"
             class="hero-photo"
-            alt="Dokumentasi sebenar suasana kelas pelajar MADUM"
+            alt="Placeholder rasmi suasana kelas MADUM (menunggu kelulusan penyiaran)"
             loading="eager"
             width="510"
             height="490"
@@ -53,7 +53,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
         </div>
         <div class="photo-credit">
           Suasana Pengajian MADUM
-          <small>Dokumentasi asal pihak maahad</small>
+          <small>{siteConfig.releaseApprovals.studentMediaConsentApproved ? 'Dokumentasi asal pihak maahad' : 'Placeholder rasmi · Menunggu izin media'}</small>
         </div>
       </div>
     </div>
@@ -178,7 +178,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
         <div>
           <div class="eyebrow">SUASANA DI MADUM</div>
           <h2 class="section-title" id="galeri-title">Kehidupan pelajar dalam gambar.</h2>
-          <p class="section-sub">Sekilas suasana pembelajaran dan aktiviti berdasarkan dokumentasi sebenar yang dibekalkan oleh pihak maahad.</p>
+          <p class="section-sub">{siteConfig.releaseApprovals.studentMediaConsentApproved ? 'Sekilas suasana pembelajaran dan aktiviti berdasarkan dokumentasi sebenar yang dibekalkan oleh pihak maahad.' : 'Gambaran suasana pembelajaran dan aktiviti maahad — visual kini digantikan sementara dengan placeholder berjenama sehingga kelulusan rasmi disahkan.'}</p>
         </div>
         <a class="text-link" href="/hubungi">Pertanyaan mengenai maahad ↗</a>
       </div>
@@ -189,7 +189,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
             class="gallery-img gallery-tall"
             src="/assets/kelas-akademik.webp"
             loading="lazy"
-            alt="Pelajar belajar bersama dalam kelas akademik"
+            alt="Placeholder pembelajaran kelas akademik MADUM"
             width="400"
             height="398"
           />
@@ -201,7 +201,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
               class="gallery-img"
               src="/assets/kemahiran-tvet.webp"
               loading="lazy"
-              alt="Pelajar mempelajari kemahiran menghasilkan sabun"
+              alt="Placeholder aktiviti kemahiran vokasional TVET"
               width="300"
               height="191"
             />
@@ -212,7 +212,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
               class="gallery-img"
               src="/assets/sukan-pelajar.webp"
               loading="lazy"
-              alt="Pelajar menyertai aktiviti bola tampar"
+              alt="Placeholder aktiviti riadah dan sukan pelajar"
               width="300"
               height="191"
             />
@@ -224,7 +224,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
             class="gallery-img gallery-tall"
             src="/assets/rehlah-pelajar.webp"
             loading="lazy"
-            alt="Aktiviti lawatan sambil belajar pelajar MADUM"
+            alt="Placeholder aktiviti lawatan sambil belajar dan rehlah"
             width="400"
             height="398"
           />
@@ -233,7 +233,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
       </div>
 
       <div class="gallery-quote">
-        <p>Dokumentasi sebenar membantu ibu bapa mengenali suasana pembelajaran dan kehidupan di maahad. Penerbitan gambar pelajar tertakluk kepada keizinan pihak berkaitan.</p>
+        <p>{siteConfig.releaseApprovals.studentMediaConsentApproved ? 'Dokumentasi sebenar membantu ibu bapa mengenali suasana pembelajaran dan kehidupan di maahad.' : 'Visual di atas merupakan placeholder berjenama rasmi bagi melindungi privasi pelajar sementara proses kebenaran penyiaran media diselesaikan.'}</p>
         <a class="text-link" href="/hubungi">Hubungi pihak maahad ↗</a>
       </div>
     </div>
