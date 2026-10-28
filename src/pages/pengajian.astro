@@ -1,9 +1,9 @@
 ---
+import ConsentImage from '../components/ConsentImage.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PrimaryCTA from '../components/PrimaryCTA.astro';
 import ProgramCard from '../components/ProgramCard.astro';
 import { programsList, curriculumPillars, dailySchedule } from '../content/programs';
-import { siteConfig } from '../content/siteConfig';
 
 const title = "Pengajian — MADUM";
 const description = "Tiga laluan pengajian MADUM: Hafazan Al-Quran 30 Juzuk, Syahadah, dan SPM Fast Track JAIS bersama empat bidang pembelajaran menyeluruh.";
@@ -29,7 +29,7 @@ const description = "Tiga laluan pengajian MADUM: Hafazan Al-Quran 30 Juzuk, Sya
       </div>
 
       <div class="inner-hero-image">
-        <img
+        <ConsentImage
           src="/assets/belajar-halaqah.webp"
           alt="Sesi bacaan dan hafazan Al-Quran oleh pelajar MADUM"
           loading="eager"
@@ -38,7 +38,7 @@ const description = "Tiga laluan pengajian MADUM: Hafazan Al-Quran 30 Juzuk, Sya
         />
         <span class="inner-photo-tag">
           Sesi bacaan Al-Quran
-          <small>Dokumentasi asal pihak maahad</small>
+          <small>Visual neutral · Media dalam semakan</small>
         </span>
       </div>
     </div>
@@ -78,7 +78,7 @@ const description = "Tiga laluan pengajian MADUM: Hafazan Al-Quran 30 Juzuk, Sya
       <div class="pillars-light">
         {curriculumPillars.map(pillar => (
           <article class="pillar-light">
-            <span class="symbol">{pillar.symbol}</span>
+            <span class="symbol" aria-hidden="true">{pillar.symbol}</span>
             <h3>{pillar.title}</h3>
             <p>{pillar.description}</p>
           </article>
@@ -106,7 +106,7 @@ const description = "Tiga laluan pengajian MADUM: Hafazan Al-Quran 30 Juzuk, Sya
           ))}
         </div>
       </div>
-      <img
+      <ConsentImage
         class="editorial-visual"
         src="/assets/kelas-akademik.webp"
         alt="Pelajar mengikuti pembelajaran di dalam kelas"
@@ -120,7 +120,7 @@ const description = "Tiga laluan pengajian MADUM: Hafazan Al-Quran 30 Juzuk, Sya
   <!-- Pembelajaran Melalui Pengalaman -->
   <section class="section-compact surface-white" aria-labelledby="amali-title">
     <div class="container two-cols">
-      <img
+      <ConsentImage
         class="editorial-visual"
         src="/assets/kemahiran-tvet.webp"
         alt="Aktiviti kemahiran amali dan vokasional TVET di MADUM"

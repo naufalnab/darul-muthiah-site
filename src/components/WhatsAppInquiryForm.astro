@@ -11,8 +11,11 @@ const {
   admissionsSession = siteConfig.admissionsSession
 } = Astro.props;
 ---
-<form id="inquiry" class="form-shell" data-wa={whatsappNumber} data-session={admissionsSession}>
+<form id="inquiry" class="form-shell" data-contact-approved={String(siteConfig.releaseApprovals.officialContactApproved)} data-wa={whatsappNumber} data-session={admissionsSession}>
   <h3>Maklumat pertanyaan</h3>
+  {!siteConfig.releaseApprovals.officialContactApproved && <p class="review-note" id="contact-gate">Penghantaran ditahan sehingga nombor rasmi disahkan. Jangan masukkan maklumat peribadi dalam pratonton ini.</p>}
+  <fieldset disabled={!siteConfig.releaseApprovals.officialContactApproved} aria-describedby={!siteConfig.releaseApprovals.officialContactApproved ? 'contact-gate' : undefined}>
+  <legend class="sr-only">Maklumat pertanyaan penjaga</legend>
   <div class="form-grid">
     <div class="field">
       <label for="parent">Nama penjaga *</label>
@@ -82,10 +85,11 @@ const {
   <div id="form-error" role="alert" style="display:none;margin-top:12px;padding:8px 12px;background:#fde8e8;border-left:3px solid #c81e1e;color:#9b1c1c;font-size:12px;border-radius:6px;"></div>
 
   <button class="btn btn-primary" type="submit">
-    Teruskan ke WhatsApp <span class="arrow" aria-hidden="true">↗</span>
+    {siteConfig.releaseApprovals.officialContactApproved ? 'Teruskan ke WhatsApp' : 'Penghantaran belum diaktifkan'} <span class="arrow" aria-hidden="true">↗</span>
   </button>
+  </fieldset>
 
-  <p style="font-size:10px;color:#78887b;margin:12px 0 0">
+  <p style="font-size:10px;color:var(--muted);margin:12px 0 0">
     Nombor WhatsApp dipaparkan sebagai baseline Cik Yatt dan perlu disahkan sebelum penerbitan.
   </p>
 
@@ -103,6 +107,7 @@ const {
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      if (form.dataset.contactApproved !== 'true') return;
       if (errorBox) errorBox.style.display = 'none';
 
       const parentInput = form.querySelector('#parent') as HTMLInputElement;
@@ -122,7 +127,7 @@ const {
       }
 
       const waNumber = form.dataset.wa || '60123108902';
-      const session = form.dataset.session || '2026/2027';
+      const session = form.dataset.session || '2027';
 
       const sanitizedParent = parentInput.value.trim().slice(0, 80);
       const sanitizedPhone = phoneInput.value.trim().slice(0, 24);

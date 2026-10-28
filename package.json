@@ -9,7 +9,7 @@
     "build": "astro build",
     "postbuild": "node scripts/postbuild.mjs",
     "preview": "astro preview",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "astro check && tsc --noEmit",
     "test:gate": "node scripts/test-release-gate.mjs",
     "test:qa": "node scripts/run-qa.mjs",
     "test:cwv": "node scripts/audit_cwv.mjs"
@@ -19,8 +19,10 @@
   "license": "ISC",
   "packageManager": "pnpm@10.32.1",
   "devDependencies": {
+    "@astrojs/check": "^0.9.12",
     "astro": "^7.3.8",
+    "axe-core": "^4.14.0",
     "puppeteer-core": "^25.13.0",
-    "typescript": "^7.0.2"
+    "typescript": "^6.0.3"
   }
 }

@@ -1,4 +1,5 @@
 ---
+import ConsentImage from '../components/ConsentImage.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import ProgramCard from '../components/ProgramCard.astro';
 import PrimaryCTA from '../components/PrimaryCTA.astro';
@@ -42,7 +43,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
 
       <div class="hero-visual">
         <div class="hero-img-outer">
-          <img
+          <ConsentImage
             src="/assets/hero-kelas.webp"
             class="hero-photo"
             alt="Suasana kelas pengajian dan pembelajaran di MADUM"
@@ -52,8 +53,8 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
           />
         </div>
         <div class="photo-credit">
-          Suasana Pengajian MADUM
-          <small>Dokumentasi asal pihak maahad</small>
+          Mengenali MADUM
+          <small>Visual neutral · Media dalam semakan</small>
         </div>
       </div>
     </div>
@@ -90,7 +91,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
   <section class="section intro-section" id="profil" aria-labelledby="profil-title">
     <div class="container intro-grid">
       <div class="intro-images">
-        <img
+        <ConsentImage
           class="intro-image-main"
           src="/assets/aktiviti-tarbiah.webp"
           alt="Pelajar MADUM mengikuti aktiviti tarbiah berkumpulan"
@@ -98,7 +99,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
           width="420"
           height="420"
         />
-        <img
+        <ConsentImage
           class="intro-image-side"
           src="/assets/belajar-halaqah.webp"
           alt="Sesi bacaan Al-Quran oleh pelajar MADUM"
@@ -162,7 +163,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
       <div class="curriculum-grid">
         {curriculumPillars.map(pillar => (
           <div class="pillar">
-            <span class="pillar-symbol">{pillar.symbol}</span>
+            <span class="pillar-symbol" aria-hidden="true">{pillar.symbol}</span>
             <h3>{pillar.title}</h3>
             <p>{pillar.description}</p>
           </div>
@@ -178,14 +179,14 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
         <div>
           <div class="eyebrow">SUASANA DI MADUM</div>
           <h2 class="section-title" id="galeri-title">Kehidupan pelajar dalam gambar.</h2>
-          <p class="section-sub">Sekilas suasana pembelajaran dan aktiviti berdasarkan dokumentasi sebenar yang dibekalkan oleh pihak maahad.</p>
+          <p class="section-sub">Ruang sorotan pembelajaran dan aktiviti. Visual neutral digunakan sementara izin penerbitan dokumentasi disahkan.</p>
         </div>
         <a class="text-link" href="/hubungi">Pertanyaan mengenai maahad ↗</a>
       </div>
 
       <div class="gallery-layout">
         <div class="gallery-item">
-          <img
+          <ConsentImage
             class="gallery-img gallery-tall"
             src="/assets/kelas-akademik.webp"
             loading="lazy"
@@ -197,7 +198,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
         </div>
         <div class="gallery-pair">
           <div class="gallery-item">
-            <img
+            <ConsentImage
               class="gallery-img"
               src="/assets/kemahiran-tvet.webp"
               loading="lazy"
@@ -208,7 +209,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
             <span class="image-caption">Kemahiran &amp; TVET</span>
           </div>
           <div class="gallery-item">
-            <img
+            <ConsentImage
               class="gallery-img"
               src="/assets/sukan-pelajar.webp"
               loading="lazy"
@@ -220,7 +221,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
           </div>
         </div>
         <div class="gallery-item">
-          <img
+          <ConsentImage
             class="gallery-img gallery-tall"
             src="/assets/rehlah-pelajar.webp"
             loading="lazy"
@@ -233,7 +234,7 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
       </div>
 
       <div class="gallery-quote">
-        <p>Dokumentasi sebenar membantu ibu bapa mengenali suasana pembelajaran dan kehidupan di maahad.</p>
+        <p>Kenali pengajian dan kehidupan di maahad. Dokumentasi pelajar hanya akan dipaparkan selepas izin penerbitan disahkan.</p>
         <a class="text-link" href="/hubungi">Hubungi pihak maahad ↗</a>
       </div>
     </div>

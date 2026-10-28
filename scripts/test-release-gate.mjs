@@ -1,9 +1,24 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
+import assert from 'node:assert/strict';
 import { execSync } from 'node:child_process';
 
-const CONFIG_PATH = path.resolve('src/content/siteConfig.json');
-const DIST_PATH = path.resolve('dist');
+// Synthetic fixtures only: never mutate the actual site's approval configuration,
+// copy original pupil media, or produce a public build from the real workspace.
+const workspace = process.cwd();
+const fixture = fs.mkdtempSync(path.join(os.tmpdir(), 'madum-gate-'));
+for (const entry of ['src', 'scripts', 'astro.config.mjs', 'package.json', 'tsconfig.json']) {
+  fs.cpSync(path.join(workspace, entry), path.join(fixture, entry), { recursive: true });
+}
+fs.symlinkSync(path.join(workspace, 'node_modules'), path.join(fixture, 'node_modules'), 'dir');
+fs.mkdirSync(path.join(fixture, 'public/assets'), { recursive: true });
+for (const name of ['logo-madum.webp', 'preview-placeholder.svg']) {
+  fs.copyFileSync(path.join(workspace, 'public/assets', name), path.join(fixture, 'public/assets', name));
+}
+const CONFIG_PATH = path.join(fixture, 'src/content/siteConfig.json');
+const DIST_PATH = path.join(fixture, 'dist');
+const workspaceConfig = fs.readFileSync(path.join(workspace, 'src/content/siteConfig.json'), 'utf8');
 
 // Read and backup the production baseline configuration
 if (!fs.existsSync(CONFIG_PATH)) {
@@ -35,6 +50,7 @@ function writeTestConfig(configObj) {
 
 function runFullBuild() {
   return execSync('pnpm run build', {
+    cwd: fixture,
     encoding: 'utf-8',
     stdio: 'pipe'
   });
@@ -42,6 +58,7 @@ function runFullBuild() {
 
 function runDirectAstroBuild() {
   return execSync('pnpm exec astro build', {
+    cwd: fixture,
     encoding: 'utf-8',
     stdio: 'pipe'
   });
@@ -284,12 +301,13 @@ try {
     });
 
     // Create a rogue fake config file in tmp with internal mode
-    const fakePath = '/tmp/fake-internal-override.json';
+    const fakePath = path.join(fixture, 'fake-internal-override.json');
     fs.writeFileSync(fakePath, JSON.stringify({ ...baselineConfig, publicationMode: 'internal' }));
 
     let failed = false;
     try {
       execSync('pnpm run build', {
+        cwd: fixture,
         env: { ...process.env, MADUM_CONFIG_PATH: fakePath },
         encoding: 'utf-8',
         stdio: 'pipe'
@@ -306,6 +324,53 @@ try {
 
     if (!failed) {
       throw new Error('Build bypassed gate via environment variable override! Must strictly fail.');
+    }
+  });
+
+  runTest('New nested media excluded before copy; renamed and embedded media rejected', () => {
+    writeTestConfig(baselineConfig);
+    const unknown = path.join(fixture, 'public/assets/new/nested');
+    fs.mkdirSync(unknown, { recursive: true });
+    fs.writeFileSync(path.join(unknown, 'unapproved.JPG'), 'synthetic-unapproved-media');
+    runFullBuild();
+    assert.ok(!fs.existsSync(path.join(DIST_PATH, 'assets/new')));
+    fs.writeFileSync(path.join(DIST_PATH, 'rogue.png'), 'synthetic-media');
+    assert.throws(() => execSync('node scripts/postbuild.mjs', { cwd: fixture, stdio: 'pipe' }));
+    fs.unlinkSync(path.join(DIST_PATH, 'rogue.png'));
+    fs.appendFileSync(path.join(DIST_PATH, 'index.html'), '<img src="data:image/png;base64,TEST">');
+    assert.throws(() => execSync('node scripts/postbuild.mjs', { cwd: fixture, stdio: 'pipe' }));
+    runFullBuild();
+    fs.appendFileSync(path.join(DIST_PATH, 'index.html'), '<img src="https://example.invalid/unapproved.svg">');
+    assert.throws(() => execSync('node scripts/postbuild.mjs', { cwd: fixture, stdio: 'pipe' }));
+  });
+
+  runTest('Approved filename replacement rejected by content hash', () => {
+    writeTestConfig(baselineConfig);
+    const logo = path.join(fixture, 'public/assets/logo-madum.webp');
+    const original = fs.readFileSync(logo);
+    try {
+      fs.writeFileSync(logo, 'synthetic-unapproved-replacement');
+      assert.throws(runDirectAstroBuild);
+    } finally { fs.writeFileSync(logo, original); }
+  });
+
+  runTest('Sensitive document in public fails prebuild', () => {
+    writeTestConfig(baselineConfig);
+    const file = path.join(fixture, 'public/synthetic-internal.pdf');
+    try { fs.writeFileSync(file, 'synthetic-document'); assert.throws(runFullBuild); }
+    finally { fs.unlinkSync(file); }
+  });
+
+  runTest('Pages subpath build is private, has valid metadata, no raw contacts/Form/media', () => {
+    writeTestConfig(baselineConfig);
+    execSync('pnpm exec astro build', { cwd: fixture, env: { ...process.env, ASTRO_BASE: '/darul-muthiah-site', GITHUB_PAGES: 'true' }, stdio: 'pipe' });
+    for (const route of ['', 'profil/', 'pengajian/', 'kemasukan/', 'galeri/', 'hubungi/']) {
+      const html = fs.readFileSync(path.join(DIST_PATH, route, 'index.html'), 'utf8');
+      assert.match(html, /noindex, nofollow/);
+      assert.doesNotMatch(html, /href="(?:https:\/\/wa.me|tel:|mailto:|https:\/\/forms\.)/);
+      assert.doesNotMatch(html, /hero-kelas|intro-madum|nasyid-pelajar/);
+      assert.doesNotMatch(html, /(?:href|src)="\/assets/);
+      assert.match(html, /\/darul-muthiah-site\/assets\/preview-placeholder.svg|\/darul-muthiah-site\/assets\/logo-madum.webp/);
     }
   });
 
@@ -355,13 +420,9 @@ try {
     process.exit(1);
   }
 
-  // Run a final clean build to ensure dist/ is restored to internal state
-  try {
-    runFullBuild();
-    console.log('\n[CLEANUP] Workspace and dist/ successfully restored to baseline internal preview mode.');
-  } catch (err) {
-    console.error('[CLEANUP:ERROR] Final restoration build failed:', err.message);
-  }
+  assert.equal(fs.readFileSync(path.join(workspace, 'src/content/siteConfig.json'), 'utf8'), workspaceConfig);
+  fs.rmSync(fixture, { recursive: true, force: true });
+  console.log('\n[CLEANUP] Synthetic fixture removed; actual configuration and dist were never mutated.');
 }
 
 console.log(`\n=== REGRESSION SUITE RESULTS: ${passedTests}/${totalTests} TESTS PASSED ===\n`);

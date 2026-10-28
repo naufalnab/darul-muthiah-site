@@ -2,370 +2,150 @@ import puppeteer from 'puppeteer-core';
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
+import { createRequire } from 'node:module';
+import { auditPreviewOutput } from './lib/previewAssets.mjs';
 
-const distDir = path.resolve('dist');
-const previewsDir = path.resolve('previews/new');
-const baselineDir = path.resolve('previews');
-fs.mkdirSync(previewsDir, { recursive: true });
-
-const port = 4322;
-const chromePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-
-const mimeTypes = {
-  '.html': 'text/html; charset=utf-8',
-  '.css': 'text/css; charset=utf-8',
-  '.js': 'application/javascript; charset=utf-8',
-  '.mjs': 'application/javascript; charset=utf-8',
-  '.json': 'application/json; charset=utf-8',
-  '.webp': 'image/webp',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.svg': 'image/svg+xml',
-  '.mp4': 'video/mp4',
-  '.txt': 'text/plain; charset=utf-8'
-};
-
-// Start local server
-const server = http.createServer((req, res) => {
-  let parsedUrl = new URL(req.url || '/', `http://localhost:${port}`);
-  let pathname = decodeURIComponent(parsedUrl.pathname);
-
-  let filePath = path.join(distDir, pathname);
-
-  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
-    filePath = path.join(filePath, 'index.html');
-  } else if (!fs.existsSync(filePath) && fs.existsSync(filePath + '.html')) {
-    filePath = filePath + '.html';
-  }
-
-  if (!fs.existsSync(filePath)) {
-    filePath = path.join(distDir, '404.html');
-    res.statusCode = 404;
-  }
-
-  const ext = path.extname(filePath).toLowerCase();
-  const contentType = mimeTypes[ext] || 'application/octet-stream';
-
-  try {
-    const data = fs.readFileSync(filePath);
-    res.setHeader('Content-Type', contentType);
-    res.end(data);
-  } catch (err) {
-    res.statusCode = 500;
-    res.end('Server Error');
-  }
+const require = createRequire(import.meta.url);
+const dist = path.resolve('dist');
+const output = path.resolve('previews/phase2');
+const base = process.env.QA_BASE || '';
+const config = JSON.parse(fs.readFileSync('src/content/siteConfig.json', 'utf8'));
+if (config.publicationMode !== 'internal' || Object.values(config.releaseApprovals).some(Boolean)) throw new Error('QA requires internal/unapproved configuration');
+auditPreviewOutput(dist);
+fs.mkdirSync(output, { recursive: true });
+const mime = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css', '.svg':'image/svg+xml', '.webp':'image/webp', '.txt':'text/plain' };
+const server = http.createServer((req,res) => {
+  const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+  if (base && !pathname.startsWith(`${base}/`)) { res.writeHead(404); res.end(); return; }
+  let file = path.resolve(dist, `.${pathname.slice(base.length) || '/'}`);
+  if (!file.startsWith(`${dist}/`) && file !== dist) { res.writeHead(403); res.end(); return; }
+  if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file,'index.html');
+  if (!fs.existsSync(file)) { res.statusCode=404; file=path.join(dist,'404.html'); }
+  res.setHeader('Content-Type', mime[path.extname(file)] || 'application/octet-stream');
+  res.end(fs.readFileSync(file));
 });
-
-await new Promise(resolve => server.listen(port, resolve));
-console.log(`QA Test Server listening on http://localhost:${port}`);
-
-const browser = await puppeteer.launch({
-  executablePath: chromePath,
-  headless: true,
-  args: ['--no-sandbox', '--disable-setuid-sandbox']
-});
-
-const pages = [
-  { name: 'index', path: '/' },
-  { name: 'profil', path: '/profil' },
-  { name: 'pengajian', path: '/pengajian' },
-  { name: 'kemasukan', path: '/kemasukan' },
-  { name: 'galeri', path: '/galeri' },
-  { name: 'hubungi', path: '/hubungi' }
-];
-
-const testResults = [];
-let allPassed = true;
-
-console.log('\n--- STARTING COMPREHENSIVE QA AUDIT ---\n');
-
-for (const pg of pages) {
-  console.log(`Testing page: ${pg.name} (${pg.path})`);
-  const pageResult = {
-    page: pg.name,
-    path: pg.path,
-    desktop: {},
-    mobile: {},
-    interactions: {},
-    responsiveViewports: {},
-    brokenAssets: [],
-    consoleErrors: [],
-    pageErrors: []
-  };
-
-  const page = await browser.newPage();
-
-  page.on('console', msg => {
-    if (msg.type() === 'error') {
-      pageResult.consoleErrors.push(msg.text());
-    }
-  });
-
-  page.on('pageerror', err => {
-    pageResult.pageErrors.push(err.message);
-  });
-
-  page.on('requestfailed', req => {
-    pageResult.brokenAssets.push(`${req.url()} (${req.failure()?.errorText})`);
-  });
-
-  page.on('response', res => {
-    if (res.status() >= 400 && !res.url().includes('favicon')) {
-      pageResult.brokenAssets.push(`${res.url()} [HTTP ${res.status()}]`);
-    }
-  });
-
-  // 1. Desktop Test (1440x900)
-  await page.setViewport({ width: 1440, height: 900 });
-  await page.goto(`http://localhost:${port}${pg.path}`, { waitUntil: 'networkidle0' });
-
-  const desktopOverflow = await page.evaluate(() => {
-    return document.documentElement.scrollWidth > window.innerWidth;
-  });
-
-  const desktopHeight = await page.evaluate(() => document.documentElement.scrollHeight);
-  const desktopH1Count = await page.evaluate(() => document.querySelectorAll('h1').length);
-  const title = await page.title();
-
-  pageResult.desktop = {
-    width: 1440,
-    height: desktopHeight,
-    overflow: desktopOverflow,
-    h1Count: desktopH1Count,
-    title
-  };
-
-  const desktopScreenshotPath = path.join(previewsDir, `${pg.name}_Desktop_Full.png`);
-  await page.screenshot({ path: desktopScreenshotPath, fullPage: true });
-
-  // 2. Mobile Test (390x844)
-  await page.setViewport({ width: 390, height: 844 });
-  await page.goto(`http://localhost:${port}${pg.path}`, { waitUntil: 'networkidle0' });
-
-  const mobileOverflow = await page.evaluate(() => {
-    return document.documentElement.scrollWidth > window.innerWidth;
-  });
-
-  const mobileHeight = await page.evaluate(() => document.documentElement.scrollHeight);
-  pageResult.mobile = {
-    width: 390,
-    height: mobileHeight,
-    overflow: mobileOverflow
-  };
-
-  const mobileScreenshotPath = path.join(previewsDir, `${pg.name}_Mobile_Full.png`);
-  await page.screenshot({ path: mobileScreenshotPath, fullPage: true });
-
-  // 3. Test Mobile Navigation on this page
-  const menuToggle = await page.$('.menu-toggle');
-  if (menuToggle) {
-    await menuToggle.click();
-    const menuOpenDisplay = await page.evaluate(() => {
-      const el = document.getElementById('mobile-nav');
-      return el ? window.getComputedStyle(el).display : 'missing';
+await new Promise(resolve => server.listen(0,'127.0.0.1',resolve));
+const origin = `http://127.0.0.1:${server.address().port}`;
+let browser;
+const report = { base, viewports:[320,375,390,768,1024,1280,1440], pages:[], linkChecks:[], passed:false };
+const allLinks = new Set();
+try {
+  browser = await puppeteer.launch({ executablePath:process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless:true, args:['--no-sandbox'] });
+  for (const route of ['','profil','pengajian','kemasukan','galeri','hubungi','missing-phase2-page']) {
+    const is404 = route.startsWith('missing');
+    const result = { page:is404?'404':route||'index', checks:[], consoleErrors:[], pageErrors:[], failedRequests:[], accessibility:[], responsive:[], performance:[] };
+    const check = (name, passed, details) => result.checks.push({name,passed:Boolean(passed), ...(details ? {details}: {})});
+    const page = await browser.newPage();
+    page.on('console', msg=> { if(msg.type()==='error' && !msg.text().includes('404 (Not Found)')) result.consoleErrors.push(msg.text()); });
+    page.on('pageerror', err=> result.pageErrors.push(err.message));
+    page.on('requestfailed', req=> result.failedRequests.push(req.url()));
+    page.on('response', res=> { if(res.status()>=400 && !(is404 && res.request().isNavigationRequest())) result.failedRequests.push(`${res.status()} ${res.url()}`); });
+    // No external services contacted by the browser QA, including accidental submissions.
+    await page.setRequestInterception(true);
+    page.on('request', req=> req.url().startsWith(origin) || req.url().startsWith('data:') ? req.continue() : req.abort());
+    await page.evaluateOnNewDocument(()=> {
+      window.__metrics={lcp:0,cls:0};
+      new PerformanceObserver(list=> {for(const e of list.getEntries()) window.__metrics.lcp=e.startTime;}).observe({type:'largest-contentful-paint',buffered:true});
+      new PerformanceObserver(list=> {for(const e of list.getEntries()) if(!e.hadRecentInput)window.__metrics.cls+=e.value;}).observe({type:'layout-shift',buffered:true});
     });
-    const ariaExpandedAfterOpen = await page.evaluate(() => {
-      return document.querySelector('.menu-toggle')?.getAttribute('aria-expanded');
-    });
-
-    await page.keyboard.press('Escape');
-    const menuCloseDisplay = await page.evaluate(() => {
-      const el = document.getElementById('mobile-nav');
-      return el ? window.getComputedStyle(el).display : 'missing';
-    });
-    const ariaExpandedAfterClose = await page.evaluate(() => {
-      return document.querySelector('.menu-toggle')?.getAttribute('aria-expanded');
-    });
-
-    pageResult.interactions.mobileNav = {
-      openDisplay: menuOpenDisplay,
-      closeDisplay: menuCloseDisplay,
-      ariaExpandedAfterOpen,
-      ariaExpandedAfterClose,
-      passed: menuOpenDisplay === 'block' && menuCloseDisplay === 'none' && ariaExpandedAfterOpen === 'true' && ariaExpandedAfterClose === 'false'
-    };
-  }
-
-  // 4. Test Page-Specific Interactions
-  if (pg.name === 'galeri') {
-    // Switch back to desktop for filter & lightbox tests
-    await page.setViewport({ width: 1440, height: 900 });
-    await page.goto(`http://localhost:${port}/galeri`, { waitUntil: 'networkidle0' });
-
-    // Test filter buttons
-    const filterTvetBtn = await page.$('button[data-filter="tvet"]');
-    if (filterTvetBtn) {
-      await filterTvetBtn.click();
-      const visibleTvetCards = await page.evaluate(() => {
-        return Array.from(document.querySelectorAll('.gallery-card')).filter(c => !c.hidden).length;
+    for (const width of report.viewports) {
+      await page.setViewport({width,height:900});
+      const response = await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
+      await page.evaluate(async()=> {
+        document.querySelectorAll('img').forEach(img=>{ img.loading='eager'; });
+        for(let y=0;y<document.body.scrollHeight;y+=700) window.scrollTo({top:y,behavior:'instant'});
+        await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));
+        window.scrollTo({top:0,behavior:'instant'});
       });
-      pageResult.interactions.galleryFilterTvet = { visibleCount: visibleTvetCards, passed: visibleTvetCards === 2 };
-    }
-
-    const filterAllBtn = await page.$('button[data-filter="all"]');
-    if (filterAllBtn) {
-      await filterAllBtn.click();
-      const visibleAllCards = await page.evaluate(() => {
-        return Array.from(document.querySelectorAll('.gallery-card')).filter(c => !c.hidden).length;
-      });
-      pageResult.interactions.galleryFilterAll = { visibleCount: visibleAllCards, passed: visibleAllCards === 12 };
-    }
-
-    // Test Lightbox
-    const firstCard = await page.$('.gallery-card');
-    if (firstCard) {
-      await firstCard.click();
-      await new Promise(r => setTimeout(r, 200));
-
-      const lightboxState = await page.evaluate(() => {
-        const dialog = document.getElementById('image-viewer');
-        const img = document.getElementById('image-large');
-        const caption = document.getElementById('image-caption');
-        return {
-          isOpen: dialog ? (dialog.open || dialog.classList.contains('open')) : false,
-          imgSrc: img ? img.getAttribute('src') : null,
-          captionText: caption ? caption.textContent : ''
-        };
-      });
-
-      // Press Escape to close
-      await page.keyboard.press('Escape');
-      await new Promise(r => setTimeout(r, 200));
-
-      const closedState = await page.evaluate(() => {
-        const dialog = document.getElementById('image-viewer');
-        return {
-          isOpen: dialog ? (dialog.open || dialog.classList.contains('open')) : false,
-          isBodyScrollLocked: document.body.style.overflow === 'hidden'
-        };
-      });
-
-      pageResult.interactions.lightbox = {
-        opened: lightboxState.isOpen,
-        hasImage: Boolean(lightboxState.imgSrc),
-        caption: lightboxState.captionText,
-        closedOnEsc: !closedState.isOpen,
-        bodyUnlocked: !closedState.isBodyScrollLocked,
-        passed: lightboxState.isOpen && Boolean(lightboxState.imgSrc) && !closedState.isOpen && !closedState.isBodyScrollLocked
-      };
-    }
-  }
-
-  if (pg.name === 'hubungi') {
-    await page.setViewport({ width: 1440, height: 900 });
-    await page.goto(`http://localhost:${port}/hubungi`, { waitUntil: 'networkidle0' });
-
-    // Test FAQ Accordion
-    const secondFaqBtn = await page.$('#faq-btn-faq-2');
-    if (secondFaqBtn) {
-      await secondFaqBtn.click();
-      const faqState = await page.evaluate(() => {
-        const item1 = document.querySelector('.faq-item:nth-child(1)');
-        const item2 = document.querySelector('.faq-item:nth-child(2)');
-        const btn2 = document.getElementById('faq-btn-faq-2');
-        return {
-          item1Open: item1?.classList.contains('open'),
-          item2Open: item2?.classList.contains('open'),
-          item2AriaExpanded: btn2?.getAttribute('aria-expanded')
-        };
-      });
-      pageResult.interactions.faq = {
-        item1Closed: !faqState.item1Open,
-        item2Opened: faqState.item2Open,
-        ariaExpanded: faqState.item2AriaExpanded === 'true',
-        passed: !faqState.item1Open && faqState.item2Open && faqState.item2AriaExpanded === 'true'
-      };
-    }
-  }
-
-  if (pg.name === 'kemasukan') {
-    await page.setViewport({ width: 1440, height: 900 });
-    await page.goto(`http://localhost:${port}/kemasukan`, { waitUntil: 'networkidle0' });
-
-    // Test form validation and WhatsApp link generation
-    const formTestResult = await page.evaluate(() => {
-      const form = document.getElementById('inquiry');
-      if (!form) return { passed: false, reason: 'form missing' };
-
-      const parentInput = document.getElementById('parent');
-      const phoneInput = document.getElementById('phone');
-      const ageSelect = document.getElementById('age');
-      const programSelect = document.getElementById('program');
-      const questionArea = document.getElementById('question');
-
-      if (!parentInput || !phoneInput || !ageSelect || !programSelect) {
-        return { passed: false, reason: 'inputs missing' };
+      const state = await page.evaluate(()=> ({
+        overflow:document.documentElement.scrollWidth>innerWidth,
+        overflowingElements:[...document.querySelectorAll('main *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1).slice(0,8).map(e=>e.tagName+'.'+e.className),
+        brokenImages:[...document.images].filter(i=>!i.complete || !i.naturalWidth).map(i=>i.src),
+        media:[...document.querySelectorAll('img,video,source')].map(e=>e.getAttribute('src')).filter(Boolean),
+        title:document.title, description:document.querySelector('meta[name=description]')?.content,
+        canonical:document.querySelector('link[rel=canonical]')?.href, robots:document.querySelector('meta[name=robots]')?.content,
+        h1:document.querySelectorAll('h1').length,
+        links:[...document.querySelectorAll('a[href]')].map(a=>a.href),
+        unapprovedLinks:[...document.querySelectorAll('a[href]')].map(a=>a.href).filter(h=>/wa.me|forms.gle|docs.google.com\/forms|^tel:|^mailto:/.test(h)),
+        perf:{...window.__metrics, fcp:performance.getEntriesByName('first-contentful-paint')[0]?.startTime},
+      }));
+      result.responsive.push({width,overflow:state.overflow,overflowingElements:state.overflowingElements});
+      check(`HTTP ${width}`,response.status()===(is404?404:200));
+      check(`No overflow ${width}`,!state.overflow && state.overflowingElements.length===0);
+      check(`No broken images ${width}`,state.brokenImages.length===0,state.brokenImages);
+      check(`Media consent ${width}`,state.media.every(src=>/\/(logo-madum.webp|preview-placeholder.svg)$/.test(src)));
+      check(`No unverified contact/Form links ${width}`,state.unapprovedLinks.length===0);
+      check(`Metadata ${width}`,state.title && state.description && state.canonical?.startsWith(config.canonicalBase) && state.robots==='noindex, nofollow' && state.h1===1);
+      for(const href of state.links) if(href.startsWith(origin))allLinks.add(href);
+      if(width===390 || width===1440) {
+        await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
+        const axe = await page.evaluate(async()=> {
+          const r=await window.axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa','best-practice']}});
+          return {violations:r.violations.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),incomplete:r.incomplete.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))};
+        });
+        result.accessibility.push({width,...axe});
+        check(`axe ${width}`,axe.violations.length===0);
+        result.performance.push({width,...state.perf});
+        check(`Lab LCP/CLS ${width}`,state.perf.lcp>0 && state.perf.lcp<2500 && state.perf.cls<0.1);
+        await page.screenshot({path:path.join(output,`${result.page}_${width===1440?'Desktop':'Mobile'}_Full.png`),fullPage:true});
       }
-
-      // Fill in test data
-      parentInput.value = 'Encik Ahmad Razali';
-      phoneInput.value = '0123456789';
-      ageSelect.value = '12';
-      programSelect.value = 'Hafazan 30 Juzuk';
-      questionArea.value = 'Ujian teknikal borang tanpa penghantaran sebenar.';
-
-      // Trigger submit event
-      const submitEvent = new Event('submit', { cancelable: true });
-      form.dispatchEvent(submitEvent);
-
-      const fallbackLink = document.getElementById('wa-fallback-link');
-      const fallbackBox = document.getElementById('popup-fallback');
-
-      const href = fallbackLink ? fallbackLink.getAttribute('href') : '';
-      const isEncodedCorrectly = href.includes('wa.me') &&
-        href.includes(encodeURIComponent('Nama penjaga: Encik Ahmad Razali')) &&
-        href.includes(encodeURIComponent('Umur calon pelajar: 12'));
-
-      return {
-        passed: isEncodedCorrectly,
-        href,
-        fallbackVisible: fallbackBox ? fallbackBox.style.display !== 'none' : false
-      };
-    });
-
-    pageResult.interactions.whatsappForm = formTestResult;
+    }
+    // Keyboard navigation, focus restoration, and resize closure on every route.
+    await page.setViewport({width:390,height:844});
+    await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
+    await page.keyboard.press('Tab');
+    check('Keyboard skip link',await page.evaluate(()=>document.activeElement?.getAttribute('href')==='#main-content'));
+    await page.keyboard.press('Enter');
+    check('Skip focuses main',await page.evaluate(()=>document.activeElement?.id==='main-content'));
+    await page.focus('#menu-toggle-btn');
+    await page.keyboard.press('Enter');
+    check('Menu opens by keyboard',await page.$eval('#menu-toggle-btn',e=>e.getAttribute('aria-expanded')==='true'));
+    await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
+    const menuViolations=await page.evaluate(async()=> (await window.axe.run('#mobile-nav',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>v.id));
+    check('Expanded menu accessibility',menuViolations.length===0,menuViolations);
+    await page.keyboard.press('Escape');
+    check('Escape restores focus',await page.evaluate(()=>document.activeElement.id==='menu-toggle-btn' && document.activeElement.getAttribute('aria-expanded')==='false'));
+    await page.click('#menu-toggle-btn');
+    await page.setViewport({width:1440,height:900});
+    await page.waitForFunction(()=>document.getElementById('menu-toggle-btn').getAttribute('aria-expanded')==='false');
+    check('Resize closes menu',true);
+    if(route==='galeri') check('Six neutral alumni cards',await page.$$eval('.alumni-card',cards=>cards.length===6 && cards.every(c=>!c.querySelector('img'))));
+    if(route==='kemasukan') {
+      check('Registration held',await page.$eval('[data-registration-status]',e=>e.dataset.registrationStatus==='pending'));
+      check('Form disabled until contact verified',await page.$eval('#inquiry fieldset',e=>e.disabled));
+      const held=await page.evaluate(()=>{let calls=0;window.open=()=>{calls++;return null;};document.getElementById('inquiry').dispatchEvent(new Event('submit',{cancelable:true}));return calls===0 && document.getElementById('wa-fallback-link').getAttribute('href')==='#';});
+      check('Programmatic submit cannot bypass contact gate',held);
+    }
+    if(route==='hubungi') {
+      await page.focus('#faq-btn-faq-2'); await page.keyboard.press('Enter');
+      check('FAQ opens with keyboard',await page.$eval('#faq-btn-faq-2',e=>e.getAttribute('aria-expanded')==='true'));
+      await page.keyboard.press('Enter');
+      check('FAQ closes with keyboard',await page.$eval('#faq-btn-faq-2',e=>e.getAttribute('aria-expanded')==='false'));
+    }
+    if(route==='profil') check('Three text-only recognition cards',await page.$$eval('.legal-card',cards=>cards.length===3 && cards.every(c=>!c.querySelector('img'))));
+    check('No console errors',result.consoleErrors.length===0,result.consoleErrors);
+    check('No runtime exceptions',result.pageErrors.length===0,result.pageErrors);
+    check('No failed assets/requests',result.failedRequests.length===0,result.failedRequests);
+    result.passed=result.checks.every(c=>c.passed);
+    report.pages.push(result);
+    console.log(`${result.passed?'PASS':'FAIL'} ${result.page}: ${result.checks.filter(c=>c.passed).length}/${result.checks.length}`);
+    for(const c of result.checks.filter(c=>!c.passed))console.log(JSON.stringify(c));
+    await page.close();
   }
-
-  // 5. Test Responsive Viewports (320, 375, 768, 1024, 1280)
-  const viewports = [320, 375, 768, 1024, 1280];
-  for (const vp of viewports) {
-    await page.setViewport({ width: vp, height: 800 });
-    const overflow = await page.evaluate(() => {
-      return document.documentElement.scrollWidth > window.innerWidth;
-    });
-    pageResult.responsiveViewports[vp] = { overflow, passed: !overflow };
-    if (overflow) allPassed = false;
+  const linkPage=await browser.newPage();
+  for(const href of allLinks) {
+    const url=new URL(href);
+    const res=await linkPage.goto(url.origin+url.pathname+url.search,{waitUntil:'domcontentloaded'});
+    const status=res ? res.status() : (await fetch(url.origin+url.pathname+url.search)).status;
+    const target=url.hash ? await linkPage.evaluate(hash=>Boolean(document.getElementById(decodeURIComponent(hash.slice(1)))),url.hash) : true;
+    const expectedStatus=url.pathname===`${base}/missing-phase2-page` && url.hash ? 404 : 200;
+    report.linkChecks.push({path:url.pathname+url.hash,status,expectedStatus,target,passed:status===expectedStatus&&target});
   }
-
-  testResults.push(pageResult);
-  await page.close();
+  report.passed=report.pages.every(p=>p.passed)&&report.linkChecks.every(l=>l.passed);
+} finally {
+  if(browser)await browser.close();
+  await new Promise(resolve=>server.close(resolve));
+  fs.writeFileSync(path.join(output,base?'qa-pages.json':'qa.json'),JSON.stringify(report,null,2)+'\n');
 }
-
-// 6. Test 404 Route
-console.log('Testing 404 Page (/404)');
-const notFoundPage = await browser.newPage();
-await notFoundPage.setViewport({ width: 1440, height: 900 });
-const res404 = await notFoundPage.goto(`http://localhost:${port}/non-existent-page`, { waitUntil: 'networkidle0' });
-const status404 = res404.status();
-const notFoundH1 = await notFoundPage.evaluate(() => document.querySelector('h1')?.textContent);
-const notFoundScreenshot = path.join(previewsDir, '404_Desktop_Full.png');
-await notFoundPage.screenshot({ path: notFoundScreenshot, fullPage: true });
-
-testResults.push({
-  page: '404',
-  path: '/non-existent-page',
-  httpStatus: status404,
-  h1: notFoundH1,
-  passed: status404 === 404 && Boolean(notFoundH1)
-});
-
-await notFoundPage.close();
-await browser.close();
-server.close();
-
-// Save results
-const qaReportPath = path.join(baselineDir, 'qa_new.json');
-fs.writeFileSync(qaReportPath, JSON.stringify(testResults, null, 2));
-console.log(`\nQA Test Complete! Results written to ${qaReportPath}`);
-console.log(`New screenshots saved to ${previewsDir}/\n`);
+console.log(`QA ${report.passed?'PASSED':'FAILED'}: ${report.pages.length} routes, ${report.linkChecks.length} internal links.`);
+if(!report.passed)process.exitCode=1;

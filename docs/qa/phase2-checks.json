@@ -1,0 +1,25 @@
+{
+  "baseline": "7b38d1b",
+  "date": "2026-10-28",
+  "timezone": "Asia/Jakarta",
+  "publicationMode": "internal",
+  "releaseApprovals": {
+    "feesApproved": false,
+    "historyApproved": false,
+    "studentMediaConsentApproved": false,
+    "officialContactApproved": false,
+    "jaisUsageApproved": false
+  },
+  "siteConfigUnchanged": true,
+  "brandTokensUnchanged": true,
+  "releaseGate": {
+    "passed": 14,
+    "total": 14,
+    "isolatedSyntheticFixtures": true
+  },
+  "rootQA": true,
+  "pagesQA": true,
+  "cPanelUsed": false,
+  "deployed": false,
+  "merged": false
+}

@@ -1,0 +1,16 @@
+---
+import { siteConfig } from '../content/siteConfig';
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  width: string | number;
+  height: string | number;
+  loading?: 'eager' | 'lazy';
+}
+const { src, alt, loading = 'lazy', ...attributes } = Astro.props;
+const approved = siteConfig.releaseApprovals.studentMediaConsentApproved;
+---
+<img {...attributes} src={approved ? src : '/assets/preview-placeholder.svg'}
+  alt={approved ? alt : 'Visual neutral MADUM. Dokumentasi menunggu kebenaran penerbitan.'}
+  loading={loading} decoding="async" />

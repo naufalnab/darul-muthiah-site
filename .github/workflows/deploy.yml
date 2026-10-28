@@ -40,11 +40,19 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Typecheck and release regression
+        run: |
+          pnpm run typecheck
+          pnpm run test:gate
+
       - name: Build with Astro
         run: pnpm run build
         env:
           GITHUB_PAGES: 'true'
           ASTRO_BASE: '/darul-muthiah-site'
+
+      - name: Audit Pages preview before upload
+        run: CHROME_PATH=$(command -v google-chrome) QA_BASE=/darul-muthiah-site pnpm run test:qa
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

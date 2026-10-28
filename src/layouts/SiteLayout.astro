@@ -22,9 +22,12 @@ const {
   isHome = false
 } = Astro.props;
 
-const canonicalUrl = new URL(Astro.url.pathname, siteConfig.canonicalBase).href;
+const previewBase = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonicalPath = previewBase && Astro.url.pathname.startsWith(`${previewBase}/`)
+  ? Astro.url.pathname.slice(previewBase.length) : Astro.url.pathname;
+const canonicalUrl = new URL(canonicalPath, siteConfig.canonicalBase).href;
 const isInternalMode = siteConfig.publicationMode === 'internal';
-const robotsDirective = isInternalMode ? 'noindex, nofollow' : 'index, follow';
+const robotsDirective = (isInternalMode || activeRoute === '/404') ? 'noindex, nofollow' : 'index, follow';
 ---
 <!doctype html>
 <html lang="ms-MY">
@@ -45,7 +48,7 @@ const robotsDirective = isInternalMode ? 'noindex, nofollow' : 'index, follow';
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={siteConfig.brandName} />
     <meta property="og:locale" content="ms_MY" />
-    <meta property="og:image" content={`${siteConfig.canonicalBase}/assets/hero-kelas.webp`} />
+    <meta property="og:image" content={new URL(`${import.meta.env.BASE_URL}assets/preview-placeholder.svg`, Astro.site || siteConfig.canonicalBase).href} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/webp" href="/assets/logo-madum.webp" />
@@ -57,7 +60,7 @@ const robotsDirective = isInternalMode ? 'noindex, nofollow' : 'index, follow';
     <AnnouncementBar />
     <SiteHeader activeRoute={activeRoute} />
 
-    <main id="main-content" class={isHome ? '' : 'inner'}>
+    <main tabindex="-1" id="main-content" class={isHome ? '' : 'inner'}>
       <slot />
     </main>
 
@@ -82,6 +85,11 @@ const robotsDirective = isInternalMode ? 'noindex, nofollow' : 'index, follow';
       };
 
       if (toggle && mobileNav) {
+        const mobileBreakpoint = window.matchMedia('(max-width: 1060px)');
+        mobileBreakpoint.addEventListener('change', closeMenu);
+        document.addEventListener('click', (event) => {
+          if (event.target instanceof Node && !mobileNav.contains(event.target) && !toggle.contains(event.target)) closeMenu();
+        });
         toggle.addEventListener('click', () => {
           const state = mobileNav.classList.toggle('open');
           toggle.setAttribute('aria-expanded', String(state));

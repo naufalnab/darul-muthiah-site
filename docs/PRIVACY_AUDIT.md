@@ -1,3 +1,5 @@
+> **Pembaruan 28 Oktober 2026 — penilaian lama di bawah tidak mewakili kondisi sekarang.** Media asal dikembalikan pada commit `3d7753f`, repository kini PUBLIC. Binaan Pages semasa sudah menapis media, tetapi Git/source masih mengandunginya. Lihat [audit fasa 2](PHASE2_PRIVACY_AUDIT.md). Jangan gunakan verdict lama sebagai izin penerbitan.
+
 # Laporan Audit Privasi & Migrasi Repository Bersih (MADUM)
 
 **Tarikh Audit:** 15 Oktober 2026  

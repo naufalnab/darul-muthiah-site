@@ -18,7 +18,7 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <div>
-        <h4>Pautan</h4>
+        <h2>Pautan</h2>
         <ul>
           <li><a href="/">Utama</a></li>
           <li><a href="/profil">Profil Maahad</a></li>
@@ -31,13 +31,14 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <div>
-        <h4>Hubungi kami</h4>
+        <h2>Hubungi kami</h2>
+        <p class="verification-note">Kontak dan alamat menunggu pengesahan institusi.</p>
         <div class="footer-contact">
           {siteConfig.address.street},<br />
           {siteConfig.address.subdistrict},<br />
           {siteConfig.address.cityStatePostcode}.<br /><br />
-          WhatsApp: <a href={`https://wa.me/${siteConfig.whatsappE164}`} target="_blank" rel="noopener noreferrer">{siteConfig.whatsappDisplay}</a><br />
-          Pejabat: <a href={`tel:${siteConfig.phoneOffice.replace(/[^0-9]/g, '')}`}>{siteConfig.phoneOffice}</a>
+          WhatsApp: <a href={siteConfig.releaseApprovals.officialContactApproved ? `https://wa.me/${siteConfig.whatsappE164}` : '/hubungi#saluran'} target="_blank" rel="noopener noreferrer">{siteConfig.whatsappDisplay}</a><br />
+          Pejabat: <a href={siteConfig.releaseApprovals.officialContactApproved ? `tel:${siteConfig.phoneOffice.replace(/[^0-9]/g, '')}` : '/hubungi#saluran'}>{siteConfig.phoneOffice}</a>
         </div>
       </div>
     </div>

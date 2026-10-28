@@ -1,3 +1,5 @@
+> **Status fasa 2 (28 Oktober 2026):** semua gate tetap false. Sesi konsep kini 2027; QR/Form, kontak, alumni dan pengiktirafan masih ditahan. Lihat [laporan terkini](PHASE2_REPORT.md) dan [audit privasi](PHASE2_PRIVACY_AUDIT.md); matriks lama di bawah ialah rujukan sejarah dan tidak boleh dianggap kelulusan.
+
 # MADUM — Senarai Semak Sekatan Pelepasan (Release Blockers)
 
 **Status Keseluruhan:** 🔴 **BLOCKED FOR PUBLIC DEPLOYMENT**  

@@ -1,3 +1,4 @@
+import { auditPreviewOutput } from './previewAssets.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -43,97 +44,9 @@ export function runPostbuildTasks(distDirInput = null) {
     }
   }
 
-  // 2. Strict privacy check in dist/
-  function auditDistDir(dir) {
-    if (!fs.existsSync(dir)) return;
-    const entries = fs.readdirSync(dir, { withFileTypes: true });
-    for (const entry of entries) {
-      const fullPath = path.join(dir, entry.name);
-      if (entry.isDirectory()) {
-        auditDistDir(fullPath);
-      } else {
-        const ext = path.extname(entry.name).toLowerCase();
-        if (ext === '.pdf' || ext === '.zip' || ext === '.doc' || ext === '.docx' || /profail/i.test(entry.name)) {
-          fs.unlinkSync(fullPath);
-          console.error(`[postbuild:SAFETY] PURGED SENSITIVE FILE FROM DIST: ${entry.name}`);
-        }
-      }
-    }
-  }
-  auditDistDir(distDir);
-
-  // 3. In ALL modes (including internet-accessible previews), purge unapproved media from dist/assets
-  if (!studentMediaConsentApproved) {
-    const assetsDir = path.join(distDir, 'assets');
-    if (fs.existsSync(assetsDir)) {
-      const studentMediaFilenames = [
-        'aktiviti-maahad.webp',
-        'aktiviti-tarbiah.webp',
-        'anugerah.webp',
-        'belajar-halaqah.webp',
-        'hero-kelas.webp',
-        'kelas-2.webp',
-        'kelas-akademik.webp',
-        'kemahiran-tvet.webp',
-        'kemasyarakatan.webp',
-        'keselamatan.webp',
-        'lawatan-ilmu.webp',
-        'lawatan.webp',
-        'majlis-ilmu.webp',
-        'outdoor.webp',
-        'pengiktirafan.webp',
-        'rehlah-2.webp',
-        'rehlah-pelajar.webp',
-        'seminar.webp',
-        'sijil.webp',
-        'sukan-pelajar.webp',
-        'video-intro.webp',
-        'video-nasyid.webp',
-        'intro-madum.mp4',
-        'nasyid-pelajar.mp4'
-      ];
-      for (const file of studentMediaFilenames) {
-        const p = path.join(assetsDir, file);
-        if (fs.existsSync(p)) {
-          fs.unlinkSync(p);
-          console.log(`[postbuild:SAFETY] Purged unapproved student media: ${file}`);
-        }
-      }
-    }
-  }
-
-  // 3B. Substitute neutral artwork in generated HTML instead of broken thumbnails.
-  // Only logo-madum.webp is exempt; noindex is not access protection.
-  if (!studentMediaConsentApproved) {
-    const excludedMedia = new Set([
-      'aktiviti-maahad.webp','aktiviti-tarbiah.webp','anugerah.webp',
-      'belajar-halaqah.webp','hero-kelas.webp','kelas-2.webp',
-      'kelas-akademik.webp','kemahiran-tvet.webp','kemasyarakatan.webp',
-      'keselamatan.webp','lawatan-ilmu.webp','lawatan.webp','majlis-ilmu.webp',
-      'outdoor.webp','pengiktirafan.webp','rehlah-2.webp','rehlah-pelajar.webp',
-      'seminar.webp','sijil.webp','sukan-pelajar.webp','video-intro.webp',
-      'video-nasyid.webp'
-    ]);
-    const visit = (dir) => {
-      for (const e of fs.readdirSync(dir,{withFileTypes:true})) {
-        const full=path.join(dir,e.name);
-        if(e.isDirectory()) visit(full);
-        else if(e.name.endsWith('.html')) {
-          let html=fs.readFileSync(full,'utf8');
-          html=html.replace(/\/assets\/([a-z0-9-]+\.webp)/g, (match,file) =>
-            excludedMedia.has(file) ? '/assets/preview-placeholder.svg' : match);
-          fs.writeFileSync(full,html,'utf8');
-        }
-      }
-    };
-    if(fs.existsSync(distDir)) visit(distDir);
-    const assets=path.join(distDir,'assets');
-    if(fs.existsSync(assets)) {
-      for(const entry of fs.readdirSync(assets)) {
-        if(excludedMedia.has(entry) && fs.existsSync(path.join(assets,entry))) fs.unlinkSync(path.join(assets,entry));
-      }
-    }
-  }
+  // Assets were selected before Astro copies public files; no source files are deleted.
+  // Defense in depth: reject any unreviewed generated binary or embedded media.
+  if (!studentMediaConsentApproved) auditPreviewOutput(distDir);
 
   // 4. Configure robots.txt and sitemap based on publicationMode
   const robotsPath = path.join(distDir, 'robots.txt');
@@ -210,6 +123,8 @@ ${publicPages
     prefixRelativePaths(distDir);
     console.log(`[postbuild] Rewrote root-relative links for base prefix: '${cleanBase}'`);
   }
+
+  if (!studentMediaConsentApproved) auditPreviewOutput(distDir);
 
   console.log('[postbuild] Post-build completed successfully.\n');
 }

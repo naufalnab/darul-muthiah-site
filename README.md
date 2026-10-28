@@ -115,3 +115,8 @@ export const siteConfig: SiteConfig = {
 - **Keputusan Pelancaran:** Tertakluk kepada senarai semak dalam [`docs/RELEASE_BLOCKERS.md`](docs/RELEASE_BLOCKERS.md).
 - **Subdomain Ujian:** Pratonton dalaman sahaja, tiada pendaftaran awam diaktifkan.
 - **Lesen & Hak Cipta:** Hak cipta terpelihara © Maahad Tahfiz Al Quran Darul Muthiah (1).
+
+
+## Review fasa 2 — 28 Oktober 2026
+
+[Laporan dan screenshot](docs/PHASE2_REPORT.md), [audit privasi](docs/PHASE2_PRIVACY_AUDIT.md), dan [semakan kontak](docs/PHASE2_CONTACT_REVIEW.md). Publication mode kekal internal; semua approval false. Preview hanya daripada build yang lulus allowlist. Jangan hidangkan root repo atau public/ sebagai laman statik, dan kekalkan pelayan dev pada loopback.

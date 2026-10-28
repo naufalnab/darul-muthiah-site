@@ -1,8 +1,9 @@
 ---
+import ConsentImage from '../components/ConsentImage.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PrimaryCTA from '../components/PrimaryCTA.astro';
 import { claimsRegistry } from '../content/claimsRegistry';
-import { siteConfig } from '../content/siteConfig';
+import { recognitions } from '../content/recognitions';
 
 const title = "Profil Maahad — MADUM";
 const description = "Pengenalan, matlamat pendidikan, sejarah ringkas, dan status pendaftaran Maahad Tahfiz Al Quran Darul Muthiah (1).";
@@ -28,7 +29,7 @@ const description = "Pengenalan, matlamat pendidikan, sejarah ringkas, dan statu
       </div>
 
       <div class="inner-hero-image">
-        <img
+        <ConsentImage
           src="/assets/aktiviti-maahad.webp"
           alt="Warga dan aktiviti Maahad Darul Muthiah"
           loading="eager"
@@ -36,8 +37,8 @@ const description = "Pengenalan, matlamat pendidikan, sejarah ringkas, dan statu
           height="385"
         />
         <span class="inner-photo-tag">
-          Warga MADUM
-          <small>Dokumentasi asal pihak maahad</small>
+          Darul Muthiah
+          <small>Visual neutral · Media dalam semakan</small>
         </span>
       </div>
     </div>
@@ -61,7 +62,7 @@ const description = "Pengenalan, matlamat pendidikan, sejarah ringkas, dan statu
         </a>
       </div>
       <div>
-        <img
+        <ConsentImage
           src="/assets/belajar-halaqah.webp"
           alt="Sesi bacaan Al-Quran"
           class="editorial-visual"
@@ -123,7 +124,7 @@ const description = "Pengenalan, matlamat pendidikan, sejarah ringkas, dan statu
           {claimsRegistry.institution_timeline.disclaimerText}
         </div>
       </div>
-      <img
+      <ConsentImage
         src="/assets/majlis-ilmu.webp"
         class="editorial-visual"
         alt="Majlis ilmu pelajar"
@@ -162,30 +163,20 @@ const description = "Pengenalan, matlamat pendidikan, sejarah ringkas, dan statu
     <div class="container">
       <div class="eyebrow">MAKLUMAT PENDAFTARAN INSTITUSI</div>
       <h2 class="section-title" id="legaliti-title">Status pendaftaran &amp; pengiktirafan</h2>
+      <p class="section-sub">Ringkasan bahan yang diterima untuk semakan. Status pendaftaran, pelantikan dan keahlian semasa masih menunggu pengesahan.</p>
       <div class="legal-row">
-        <div class="legal-card">
-          <span class="eyebrow">JABATAN AGAMA ISLAM SELANGOR</span>
-          <h3>Pendaftaran JAIS</h3>
-          <p>Kod sekolah BZH8026 tercatat pada salinan perakuan dalam profil MADUM.</p>
-          <div style="margin-top:17px">
-            <span class="pending">{claimsRegistry.jais_registration.disclaimerText}</span>
-          </div>
-        </div>
-        <div class="legal-card">
-          <span class="eyebrow">LEMBAGA ZAKAT SELANGOR</span>
-          <h3>Penolong Amil IPIS</h3>
-          <p>Dokumen profil memuatkan keterangan pelantikan institusi. Fungsi kutipan dalam talian bukan sebahagian daripada versi 1.0.</p>
-          <div style="margin-top:17px">
-            <span class="pending">{claimsRegistry.lzs_amil.disclaimerText}</span>
-          </div>
-        </div>
-        <div class="legal-card">
-          <span class="eyebrow">PERSATUAN INSTITUSI TAHFIZ AL-QURAN NEGERI SELANGOR</span>
-          <h3>Keahlian PITAS</h3>
-          <p>Pihak maahad telah menyerahkan salinan sijil keahlian PITAS pada 28 Oktober 2026 untuk semakan.</p>
-          <div style="margin-top:17px"><span class="pending">Status keahlian semasa dan hak siar sijil masih memerlukan pengesahan institusi.</span></div>
-        </div>
+        {recognitions.map(item => (
+          <article class="legal-card">
+            <span class="recognition-mark" aria-hidden="true">{item.short}</span>
+            <div class="eyebrow">{item.organization}</div>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+            <p class="verification-note">{item.pending}</p>
+            <span class="pending">Pengesahan institusi diperlukan</span>
+          </article>
+        ))}
       </div>
+      <p class="verification-note">Salinan sijil dan logo pihak berkuasa tidak dipaparkan. Ringkasan ini bukan perakuan status rasmi atau sokongan pihak berkuasa.</p>
     </div>
   </section>
 

@@ -17,7 +17,7 @@ Sumber: arkib percakapan WhatsApp Cik Nor Hayati (Yatt) pada 28 Oktober 2026 (ti
 - JAIS: `00000238`, `00000239`, `00000240`; gunakan data terverifikasi sahaja tanpa memuat naik scan sijil mentah.
 - LZS: `00000242`; PITAS: `00000244`; scan tidak boleh dipaparkan sebelum izin dan pembuangan metadata sensitif.
 - Enam alumni: `00000257`, `00000259`, `00000262`, `00000266`, `00000269`, `00000271`; izin foto dan atribusi individu masih perlu dikonfirmasi.
-- Testimoni Nur Zulaikha diserahkan sebagai teks WhatsApp dan menunggu persetujuan atribusi.
+- Satu testimoni peribadi diserahkan sebagai teks WhatsApp dan menunggu persetujuan atribusi. Nama tidak dicantumkan dalam handoff awam.
 
 ## Keputusan yang memerlukan Cik Yatt / pihak maahad
 1. Pastikan pendaftaran aktif ialah **sesi 2027** dan semak Google Form `https://forms.gle/vyLMqLJpaHBkwyvJ9` sampai penghantaran ujian; jangan gunakan QR sebelum lulus.
