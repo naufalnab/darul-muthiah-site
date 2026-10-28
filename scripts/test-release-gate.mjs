@@ -3,6 +3,7 @@ import path from 'node:path';
 import os from 'node:os';
 import assert from 'node:assert/strict';
 import { execSync } from 'node:child_process';
+import { previewAssets } from './lib/previewAssets.mjs';
 
 // Synthetic fixtures only: never mutate the actual site's approval configuration,
 // copy original pupil media, or produce a public build from the real workspace.
@@ -13,10 +14,14 @@ for (const entry of ['src', 'scripts', 'astro.config.mjs', 'package.json', 'tsco
 }
 fs.symlinkSync(path.join(workspace, 'node_modules'), path.join(fixture, 'node_modules'), 'dir');
 fs.mkdirSync(path.join(fixture, 'public/assets'), { recursive: true });
-for (const name of ['logo-madum.webp', 'preview-placeholder.svg']) {
-  fs.copyFileSync(path.join(workspace, 'public/assets', name), path.join(fixture, 'public/assets', name));
+for (const relative of Object.keys(previewAssets)) {
+  const target = path.join(fixture, 'public', relative);
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.copyFileSync(path.join(workspace, 'public', relative), target);
 }
 const CONFIG_PATH = path.join(fixture, 'src/content/siteConfig.json');
+const REVIEW_PATH = path.join(fixture, 'src/content/phase3Review.json');
+const reviewBaseline = fs.readFileSync(REVIEW_PATH, 'utf8');
 const DIST_PATH = path.join(fixture, 'dist');
 const workspaceConfig = fs.readFileSync(path.join(workspace, 'src/content/siteConfig.json'), 'utf8');
 
@@ -45,6 +50,11 @@ function runTest(name, fn) {
 }
 
 function writeTestConfig(configObj) {
+  fs.writeFileSync(REVIEW_PATH, reviewBaseline);
+  if (configObj.publicationMode === 'public' && Object.values(configObj.releaseApprovals).every(v => v === true)) {
+    // All-true approval is synthetic fixture state only, never real institutional approval.
+    fs.writeFileSync(REVIEW_PATH, JSON.stringify(Object.fromEntries(Object.keys(JSON.parse(reviewBaseline)).map(key => [key, true]))));
+  }
   fs.writeFileSync(CONFIG_PATH, JSON.stringify(configObj, null, 2), 'utf-8');
 }
 
@@ -214,6 +224,13 @@ try {
     }
   });
 
+  runTest('Phase 3 pending review blocks public release even with all Phase 2 approvals', () => {
+    writeTestConfig({ ...baselineConfig, publicationMode: 'public', releaseApprovals:
+      Object.fromEntries(Object.keys(baselineConfig.releaseApprovals).map(key => [key, true])) });
+    fs.writeFileSync(REVIEW_PATH, reviewBaseline);
+    assert.throws(runFullBuild, /Command failed/);
+  });
+
   // 5. JSON hilang/rusak -> full build gagal
   runTest('5A. Config file missing -> Full build FAILS', () => {
     const tempBackup = CONFIG_PATH + '.bak';
@@ -342,6 +359,23 @@ try {
     runFullBuild();
     fs.appendFileSync(path.join(DIST_PATH, 'index.html'), '<img src="https://example.invalid/unapproved.svg">');
     assert.throws(() => execSync('node scripts/postbuild.mjs', { cwd: fixture, stdio: 'pipe' }));
+  });
+
+  runTest('Responsive media rejects foreign srcset and URL suffix spoofing', () => {
+    writeTestConfig(baselineConfig);
+    for (const markup of [
+      '<picture><source srcset="/assets/phase3/poster-2027-review.webp 1x, https://example.invalid/rogue.webp 2x"><img src="/assets/preview-placeholder.svg"></picture>',
+      '<img src="https://example.invalid/assets/phase3/header-detail.webp">',
+      '<img src="/assets/preview-placeholder.svg" srcset="data:image/png;base64,TEST">'
+    ]) {
+      runFullBuild();
+      fs.appendFileSync(path.join(DIST_PATH, 'index.html'), markup);
+      assert.throws(() => execSync('node scripts/postbuild.mjs', { cwd: fixture, stdio: 'pipe' }));
+    }
+    const poster = path.join(fixture, 'public/assets/phase3/poster-2027-review.webp');
+    const original = fs.readFileSync(poster);
+    try { fs.appendFileSync(poster, 'changed'); assert.throws(runDirectAstroBuild); }
+    finally { fs.writeFileSync(poster, original); }
   });
 
   runTest('Approved filename replacement rejected by content hash', () => {

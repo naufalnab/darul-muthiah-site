@@ -1,6 +1,6 @@
 /**
- * Public-safe editorial intake. Original WhatsApp files, alumni faces, testimonials,
- * PDFs, certificates and credentials must NOT be committed to this repository.
+ * Public-safe editorial intake. Raw chat, PDFs, certificates and credentials remain outside the repository.
+ * Selected, processed website media and supplied alumni review copy are authorized by the owner.
  */
 export const october2026Update = {
   receivedDate: '28 Oktober 2026',

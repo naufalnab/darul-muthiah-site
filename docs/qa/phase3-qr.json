@@ -1,0 +1,24 @@
+{
+  "source": "00000247-PHOTO-2026-10-28-13-54-24.jpg",
+  "sourceSha256": "ca0beb2347a4615140c7304325d379ee209235747956ee982d7c27c098a815c5",
+  "method": "Offline module sampling; QR version 3, ECI UTF-8 (26), byte mode; BCH format and Reed-Solomon parity validation",
+  "grid": {
+    "modules": 29,
+    "x": 44,
+    "y": 1139,
+    "width": 104,
+    "height": 103
+  },
+  "mask": 2,
+  "errorCorrectionLevel": "L",
+  "formatBCHBitErrors": 0,
+  "reedSolomonSyndromes": 15,
+  "allSyndromesZero": true,
+  "decodedUrl": "https://forms.gle/vyLMqLJpaHBkwyvJ9",
+  "matchesPriorHandoff": true,
+  "finalRedirectVerified": false,
+  "accessCheck": "web tool could not access short URL; shell DNS blocked",
+  "submissionPerformed": false,
+  "textFallbackEnabled": false,
+  "registrationEnabled": false
+}

@@ -5,7 +5,7 @@ import PhotoLightbox from '../components/PhotoLightbox.astro';
 import { siteConfig } from '../content/siteConfig';
 import { galleryPhotos, galleryVideos, galleryFilters } from '../content/gallery';
 import AlumniCard from '../components/AlumniCard.astro';
-import { october2026Update } from '../content/octoberUpdate';
+import { alumniProfiles, alumniTestimonial } from '../content/alumni';
 
 const title = "Galeri & Pencapaian — MADUM";
 const description = "Pratonton ruang dokumentasi dan alumni MADUM. Media pelajar dan profil peribadi menunggu izin penerbitan.";
@@ -138,14 +138,26 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
       <div class="eyebrow">KEJAYAAN ALUMNI</div>
       <h2 class="section-title" id="alumni-heading">Jejak ilmu selepas Darul Muthiah</h2>
       <p class="section-sub">
-        {october2026Update.alumniProfilesReceived} profil alumni beserta foto dan maklumat pencapaian telah dibekalkan pihak maahad untuk ruangan ini.
+        Perjalanan enam alumni dalam pengajian Al-Quran, pendidikan, bahasa Arab, perubatan dan undang-undang, berdasarkan maklumat pihak maahad.
       </p>
       <div class="alumni-grid">
-        {Array.from({ length: october2026Update.alumniProfilesReceived }, (_, index) => <AlumniCard number={index + 1} />)}
+        {alumniProfiles.map(profile => <AlumniCard profile={profile} />)}
       </div>
       <div class="review-note">
-        Senarai nama, potret serta ulasan peribadi sedang melalui semakan ketepatan dan persetujuan penerbitan. Maklumat ini tidak dimuat naik ke repositori awam sehingga diluluskan.
+        Nota semakan: nama dan pencapaian di atas dibekalkan pihak maahad. Padanan potret kepada nama serta izin penerbitan individu belum disahkan; potret belum dipaparkan bagi mengelakkan salah atribusi.
       </div>
+    </div>
+  </section>
+
+  <section class="section-compact surface-white" aria-labelledby="testimoni-title">
+    <div class="container testimonial-wrap">
+      <div class="eyebrow">SUARA ALUMNI</div>
+      <h2 class="section-title" id="testimoni-title">Kenangan yang membentuk diri.</h2>
+      <figure class="alumni-testimonial">
+        <blockquote><p>{alumniTestimonial.text}</p></blockquote>
+        <figcaption>{alumniTestimonial.name}<small>Alumni 2019</small></figcaption>
+      </figure>
+      <p class="verification-note">Teks asal yang dibekalkan untuk semakan. Atribusi dan izin penerbitan akhir masih menunggu pengesahan.</p>
     </div>
   </section>
 

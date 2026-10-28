@@ -3,12 +3,13 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import { auditPreviewOutput } from './lib/previewAssets.mjs';
+import { auditPreviewOutput, previewAssets } from './lib/previewAssets.mjs';
 
 const require = createRequire(import.meta.url);
 const dist = path.resolve('dist');
-const output = path.resolve('previews/phase2');
+const output = path.resolve('previews/phase3');
 const base = process.env.QA_BASE || '';
+const allowedMedia = Object.keys(previewAssets).map(asset => `/${asset}`);
 const config = JSON.parse(fs.readFileSync('src/content/siteConfig.json', 'utf8'));
 if (config.publicationMode !== 'internal' || Object.values(config.releaseApprovals).some(Boolean)) throw new Error('QA requires internal/unapproved configuration');
 auditPreviewOutput(dist);
@@ -24,12 +25,13 @@ const server = http.createServer((req,res) => {
   res.setHeader('Content-Type', mime[path.extname(file)] || 'application/octet-stream');
   res.end(fs.readFileSync(file));
 });
-await new Promise(resolve => server.listen(0,'127.0.0.1',resolve));
-const origin = `http://127.0.0.1:${server.address().port}`;
+let origin;
 let browser;
 const report = { base, viewports:[320,375,390,768,1024,1280,1440], pages:[], linkChecks:[], passed:false };
 const allLinks = new Set();
 try {
+  await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
+  origin = `http://127.0.0.1:${server.address().port}`;
   browser = await puppeteer.launch({ executablePath:process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless:true, args:['--no-sandbox'] });
   for (const route of ['','profil','pengajian','kemasukan','galeri','hubungi','missing-phase2-page']) {
     const is404 = route.startsWith('missing');
@@ -73,7 +75,7 @@ try {
       check(`HTTP ${width}`,response.status()===(is404?404:200));
       check(`No overflow ${width}`,!state.overflow && state.overflowingElements.length===0);
       check(`No broken images ${width}`,state.brokenImages.length===0,state.brokenImages);
-      check(`Media consent ${width}`,state.media.every(src=>/\/(logo-madum.webp|preview-placeholder.svg)$/.test(src)));
+      check(`Media consent ${width}`,state.media.every(src=>allowedMedia.includes(src.slice(base.length))));
       check(`No unverified contact/Form links ${width}`,state.unapprovedLinks.length===0);
       check(`Metadata ${width}`,state.title && state.description && state.canonical?.startsWith(config.canonicalBase) && state.robots==='noindex, nofollow' && state.h1===1);
       for(const href of state.links) if(href.startsWith(origin))allLinks.add(href);
@@ -109,7 +111,10 @@ try {
     await page.setViewport({width:1440,height:900});
     await page.waitForFunction(()=>document.getElementById('menu-toggle-btn').getAttribute('aria-expanded')==='false');
     check('Resize closes menu',true);
-    if(route==='galeri') check('Six neutral alumni cards',await page.$$eval('.alumni-card',cards=>cards.length===6 && cards.every(c=>!c.querySelector('img'))));
+    if(route==='galeri') {
+      check('Six supplied alumni profiles',await page.$$eval('.alumni-card',cards=>cards.length===6 && cards.every(c=>c.querySelector('h3')?.textContent && !c.textContent.includes('Ruang profil'))));
+      check('One attributed testimonial',await page.$$eval('.alumni-testimonial',items=>items.length===1 && items[0].textContent.includes('Nur Zulaikha')));
+    }
     if(route==='kemasukan') {
       check('Registration held',await page.$eval('[data-registration-status]',e=>e.dataset.registrationStatus==='pending'));
       check('Form disabled until contact verified',await page.$eval('#inquiry fieldset',e=>e.disabled));
@@ -142,10 +147,14 @@ try {
     report.linkChecks.push({path:url.pathname+url.hash,status,expectedStatus,target,passed:status===expectedStatus&&target});
   }
   report.passed=report.pages.every(p=>p.passed)&&report.linkChecks.every(l=>l.passed);
+} catch (err) {
+  report.error = err.message;
+  report.blocked = report.pages.length === 0;
+  console.error(`[QA] ${report.blocked ? 'BLOCKED' : 'FAILED'}: ${err.message}`);
 } finally {
   if(browser)await browser.close();
-  await new Promise(resolve=>server.close(resolve));
+  if(server.listening) await new Promise(resolve=>server.close(resolve));
   fs.writeFileSync(path.join(output,base?'qa-pages.json':'qa.json'),JSON.stringify(report,null,2)+'\n');
 }
-console.log(`QA ${report.passed?'PASSED':'FAILED'}: ${report.pages.length} routes, ${report.linkChecks.length} internal links.`);
+console.log(`QA ${report.blocked?'BLOCKED':report.passed?'PASSED':'FAILED'}: ${report.pages.length} routes, ${report.linkChecks.length} internal links.`);
 if(!report.passed)process.exitCode=1;

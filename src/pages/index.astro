@@ -1,12 +1,13 @@
 ---
 import ConsentImage from '../components/ConsentImage.astro';
+import HomeHeader from '../components/HomeHeader.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import ProgramCard from '../components/ProgramCard.astro';
 import PrimaryCTA from '../components/PrimaryCTA.astro';
 import { programsList, curriculumPillars } from '../content/programs';
 import { siteConfig } from '../content/siteConfig';
 
-const title = "MADUM — Pratonton Website (Konsep UI/UX v1.0)";
+const title = "MADUM — Pratonton Kandungan Rasmi";
 const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muthiah (1). Bukan laman rasmi yang diterbitkan.";
 ---
 <SiteLayout title={title} description={description} activeRoute="/" isHome={true}>
@@ -43,18 +44,11 @@ const description = "Pratonton konsep homepage Maahad Tahfiz Al Quran Darul Muth
 
       <div class="hero-visual">
         <div class="hero-img-outer">
-          <ConsentImage
-            src="/assets/hero-kelas.webp"
-            class="hero-photo"
-            alt="Suasana kelas pengajian dan pembelajaran di MADUM"
-            loading="eager"
-            width="510"
-            height="490"
-          />
+          <HomeHeader />
         </div>
         <div class="photo-credit">
           Mengenali MADUM
-          <small>Visual neutral · Media dalam semakan</small>
+          <small>Header klien · Paparan penuh dalam semakan</small>
         </div>
       </div>
     </div>

@@ -1,0 +1,24 @@
+---
+import { siteConfig } from '../content/siteConfig';
+import reviewedAssets from '../../scripts/lib/phase3PreviewAssets.json';
+// Consent and explicit asset review are independent. Missing review keeps a valid fallback.
+const approved = siteConfig.releaseApprovals.studentMediaConsentApproved &&
+  ['assets/phase3/header-desktop.webp', 'assets/phase3/header-mobile.webp', 'assets/phase3/header-fallback.jpg']
+    .every(asset => Object.hasOwn(reviewedAssets, asset));
+---
+{approved ? (
+  <picture>
+    <source media="(max-width: 750px)" srcset="/assets/phase3/header-mobile.webp" type="image/webp" width="630" height="540" />
+    <source srcset="/assets/phase3/header-desktop.webp" type="image/webp" width="1020" height="760" />
+    <img class="hero-photo" src="/assets/phase3/header-fallback.jpg" width="765" height="570"
+      alt="Header pilihan pihak maahad: sekumpulan wanita dan pelajar membaca Al-Quran bersama"
+      fetchpriority="high" loading="eager" decoding="async" />
+  </picture>
+) : (
+  <div class="header-review-visual">
+    <img class="hero-photo" src="/assets/phase3/header-detail.webp" width="780" height="390"
+      alt="Petikan motif gerbang hijau daripada header pilihan pihak maahad, tanpa paparan wajah"
+      fetchpriority="high" loading="eager" decoding="async" />
+    <div class="header-review-copy"><span class="eyebrow">HEADER PILIHAN MAAHAD</span><p>Ilmu, hafazan<br />dan tarbiah.</p><small>Petikan visual · Paparan penuh menunggu izin media</small></div>
+  </div>
+)}

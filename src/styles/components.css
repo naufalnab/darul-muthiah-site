@@ -2417,3 +2417,24 @@ html { scroll-padding-top:110px; }
 
 .photo-credit small { color:var(--muted); }
 .map-notice { color:var(--emerald); }
+
+/* Phase 3 content follows the approved layout and brand tokens. */
+.hero-img-outer picture { display:block; }
+.header-review-visual { position:relative; }
+.header-review-visual .hero-photo { object-fit:cover; }
+.header-review-copy { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; padding:36px; color:var(--cream); background:linear-gradient(0deg,rgba(18,63,53,.84),rgba(18,63,53,.14)); }
+.header-review-copy .eyebrow { color:var(--cream); font-size:10px; }
+.header-review-copy p { font:400 clamp(30px,3.2vw,44px)/1.2 var(--serif); margin:20px 0; }
+.header-review-copy small { max-width:250px; line-height:1.7; }
+.client-poster { margin:0; padding:12px; background:white; border:1px solid var(--line); border-radius:12px; box-shadow:0 16px 40px rgba(18,63,53,.08); }
+.client-poster img { display:block; width:100%; height:auto; border-radius:6px; }
+.client-poster figcaption { margin:12px 4px 4px; font-size:12px; color:var(--muted); line-height:1.7; }
+.alumni-portrait { display:block; width:100%; height:280px; object-fit:cover; object-position:center 25%; }
+.alumni-copy h3 { overflow-wrap:anywhere; }
+.alumni-copy .alumni-achievement { color:var(--deep); font-weight:700; margin-bottom:8px; }
+.testimonial-wrap { max-width:850px; }
+.alumni-testimonial { margin:28px 0; padding:28px; background:var(--cream); border-left:3px solid var(--gold); border-radius:0 12px 12px 0; }
+.alumni-testimonial blockquote { margin:0; font:400 22px/1.7 var(--serif); color:var(--deep); }
+.alumni-testimonial figcaption { margin-top:20px; font-size:14px; font-weight:700; color:var(--emerald); }
+.alumni-testimonial small { display:block; margin-top:4px; color:var(--muted); font-weight:400; }
+@media (max-width:750px) { .header-review-copy { padding:28px; } .header-review-copy p { font-size:32px; } .alumni-testimonial { padding:24px 20px; } .alumni-testimonial blockquote { font-size:20px; } }

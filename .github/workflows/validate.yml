@@ -22,6 +22,7 @@ jobs:
       - run: pnpm run build
         env:
           ASTRO_BASE: /
+      - run: pnpm run test:content
       - name: Browser QA at root
         run: CHROME_PATH=$(command -v google-chrome) pnpm run test:qa
       - name: Build Pages subpath preview
@@ -29,5 +30,6 @@ jobs:
         env:
           ASTRO_BASE: /darul-muthiah-site
           GITHUB_PAGES: 'true'
+      - run: QA_BASE=/darul-muthiah-site pnpm run test:content
       - name: Browser QA at Pages subpath
         run: CHROME_PATH=$(command -v google-chrome) QA_BASE=/darul-muthiah-site pnpm run test:qa

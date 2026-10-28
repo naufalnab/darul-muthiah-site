@@ -12,7 +12,8 @@
     "typecheck": "astro check && tsc --noEmit",
     "test:gate": "node scripts/test-release-gate.mjs",
     "test:qa": "node scripts/run-qa.mjs",
-    "test:cwv": "node scripts/audit_cwv.mjs"
+    "test:cwv": "node scripts/audit_cwv.mjs",
+    "test:content": "node scripts/audit-built-site.mjs"
   },
   "keywords": [],
   "author": "",
