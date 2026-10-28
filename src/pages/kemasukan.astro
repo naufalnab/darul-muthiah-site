@@ -1,10 +1,11 @@
 ---
+import ConsentImage from '../components/ConsentImage.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PrimaryCTA from '../components/PrimaryCTA.astro';
 import WhatsAppInquiryForm from '../components/WhatsAppInquiryForm.astro';
 import { admissionsSteps, admissionsChecklist, feeItems } from '../content/fees';
 import { siteConfig } from '../content/siteConfig';
-import { october2026Update } from '../content/octoberUpdate';
+import AdmissionsPoster from '../components/AdmissionsPoster.astro';
 
 const title = "Kemasukan & Yuran | MADUM — Pratonton UI/UX";
 const description = "Pratonton dalaman halaman Kemasukan & Yuran MADUM. Belum diterbitkan sebagai laman rasmi.";
@@ -22,7 +23,7 @@ const description = "Pratonton dalaman halaman Kemasukan & Yuran MADUM. Belum di
           Langkah pertama menuju <em>pengajian Al-Quran.</em>
         </h1>
         <p class="inner-lead">
-          Semak syarat kelayakan, anggaran yuran berdasarkan profil rujukan dan salurkan pertanyaan kepada pihak maahad melalui WhatsApp.
+          Kenali syarat asas dan program pengajian sesi 2027. Yuran dan saluran pertanyaan masih menunggu pengesahan pihak maahad.
         </p>
         <a class="btn btn-primary" href="#pertanyaan">
           Tanya Kemasukan <span class="arrow" aria-hidden="true">↓</span>
@@ -30,7 +31,7 @@ const description = "Pratonton dalaman halaman Kemasukan & Yuran MADUM. Belum di
       </div>
 
       <div class="inner-hero-image">
-        <img
+        <ConsentImage
           src="/assets/hero-kelas.webp"
           alt="Suasana kelas pengajian dan pembelajaran di Maahad Darul Muthiah"
           loading="eager"
@@ -38,28 +39,14 @@ const description = "Pratonton dalaman halaman Kemasukan & Yuran MADUM. Belum di
           height="385"
         />
         <span class="inner-photo-tag">
-          Suasana kelas MADUM
-          <small>Dokumentasi asal pihak maahad</small>
+          Pengajian Al-Quran
+          <small>Visual neutral · Media dalam semakan</small>
         </span>
       </div>
     </div>
   </section>
 
-  <!-- Latest client admissions campaign: preview only until QR/form verified -->
-  <section class="section-compact surface-cream" aria-labelledby="update-2027-title">
-    <div class="container">
-      <div class="eyebrow">HEBAHAN TERKINI · 28 OKTOBER 2026</div>
-      <h2 class="section-title" id="update-2027-title">Pengambilan pelajar sesi 2027</h2>
-      <p class="section-sub">
-        Pihak maahad telah menyerahkan poster pengambilan baharu bagi menggantikan poster lama yang mempunyai QR pendaftaran tidak berfungsi.
-      </p>
-      <div class="review-note">
-        Pautan borang dalam poster pengganti telah dikenal pasti. Pengesahan akses dan serahan borang perlu diselesaikan sebelum pautan pendaftaran diterbitkan.
-        <span class="sr-only">Pautan borang menunggu ujian.</span>
-      </div>
-      <p class="section-sub" style="font-size:12px;margin-top:14px">Rujukan kempen: {october2026Update.posterDate} · Status: menunggu kelulusan penerbitan.</p>
-    </div>
-  </section>
+  <AdmissionsPoster />
 
   <!-- Cara Memulakan -->
   <section class="section-compact surface-white" aria-labelledby="langkah-title">
@@ -133,12 +120,12 @@ const description = "Pratonton dalaman halaman Kemasukan & Yuran MADUM. Belum di
         <div class="eyebrow">BORANG PERTANYAAN</div>
         <h2 class="section-title" id="pertanyaan-title">Dapatkan maklumat lanjut daripada pihak maahad.</h2>
         <p class="prose">
-          Isi maklumat minimum yang diperlukan untuk menghasilkan mesej WhatsApp pada peranti anda. Laman pratonton tidak menyimpan maklumat ini di server.
+          Borang pertanyaan disediakan untuk semakan aliran sahaja. Penghantaran akan tersedia selepas nombor penerima rasmi disahkan pihak maahad.
         </p>
         <div class="info-card" style="min-height:0;margin-top:22px">
           <h3 style="font-size:21px">Apa berlaku selepas klik?</h3>
           <p>
-            WhatsApp akan dibuka dengan teks yang telah disusun. Anda boleh menyemak dan menghantarnya sendiri kepada pentadbir maahad. Tiada pendaftaran rasmi disahkan secara automatik.
+            Selepas saluran diluluskan, mesej boleh disemak pada peranti anda sebelum dihantar sendiri melalui WhatsApp. Tiada permohonan dihantar dalam pratonton ini.
           </p>
         </div>
       </div>

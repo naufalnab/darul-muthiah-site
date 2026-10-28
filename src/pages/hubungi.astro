@@ -1,11 +1,12 @@
 ---
+import ConsentImage from '../components/ConsentImage.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PrimaryCTA from '../components/PrimaryCTA.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import { siteConfig } from '../content/siteConfig';
 
 const title = "Hubungi Kami — MADUM";
-const description = "Maklumat perhubungan rasmi, nombor WhatsApp, lokasi Shah Alam, serta jawapan kepada soalan lazim Maahad Darul Muthiah.";
+const description = "Rujukan maklumat perhubungan, nombor WhatsApp, lokasi Shah Alam, serta jawapan kepada soalan lazim Maahad Darul Muthiah.";
 ---
 <SiteLayout title={title} description={description} activeRoute="/hubungi">
   <!-- Plain Hero -->
@@ -23,17 +24,17 @@ const description = "Maklumat perhubungan rasmi, nombor WhatsApp, lokasi Shah Al
       </p>
       <a
         class="btn btn-primary"
-        href={`https://wa.me/${siteConfig.whatsappE164}?text=Assalamualaikum.%20Saya%20ingin%20bertanya%20mengenai%20MADUM.`}
-        target="_blank"
-        rel="noopener noreferrer"
+        href={siteConfig.releaseApprovals.officialContactApproved ? `https://wa.me/${siteConfig.whatsappE164}?text=Assalamualaikum.%20Saya%20ingin%20bertanya%20mengenai%20MADUM.` : '#saluran'}
+        target={siteConfig.releaseApprovals.officialContactApproved ? '_blank' : undefined}
+        rel={siteConfig.releaseApprovals.officialContactApproved ? 'noopener noreferrer' : undefined}
       >
-        WhatsApp MADUM <span class="arrow" aria-hidden="true">↗</span>
+        {siteConfig.releaseApprovals.officialContactApproved ? 'WhatsApp MADUM' : 'Semak Saluran Pertanyaan'} <span class="arrow" aria-hidden="true">↗</span>
       </a>
     </div>
   </section>
 
   <!-- Saluran Perhubungan -->
-  <section class="section-compact surface-white" aria-labelledby="saluran-title">
+  <section class="section-compact surface-white" id="saluran" aria-labelledby="saluran-title">
     <div class="container">
       <div class="eyebrow">SALURAN PERHUBUNGAN</div>
       <h2 class="section-title" id="saluran-title">Hubungi melalui saluran yang sesuai.</h2>
@@ -41,18 +42,20 @@ const description = "Maklumat perhubungan rasmi, nombor WhatsApp, lokasi Shah Al
         <article class="contact-card">
           <div class="contact-icon" aria-hidden="true">↗</div>
           <h3>WhatsApp Kemasukan</h3>
+          <span class="pending">Nombor rasmi belum disahkan</span>
           <p>{siteConfig.whatsappDisplay}</p>
-          <a href={`https://wa.me/${siteConfig.whatsappE164}`} target="_blank" rel="noopener noreferrer">
-            Mulakan pertanyaan ↗
+          <a href={siteConfig.releaseApprovals.officialContactApproved ? `https://wa.me/${siteConfig.whatsappE164}` : undefined} aria-disabled={!siteConfig.releaseApprovals.officialContactApproved} target="_blank" rel="noopener noreferrer">
+            Saluran pertanyaan · Menunggu pengesahan
           </a>
         </article>
 
         <article class="contact-card">
           <div class="contact-icon" aria-hidden="true">☎</div>
           <h3>Telefon Pejabat</h3>
+          <span class="pending">Keaktifan belum disahkan</span>
           <p>{siteConfig.phoneOffice}</p>
-          <a href={`tel:${siteConfig.phoneOffice.replace(/[^0-9]/g, '')}`}>
-            Hubungi pejabat ↗
+          <a href={siteConfig.releaseApprovals.officialContactApproved ? `tel:${siteConfig.phoneOffice.replace(/[^0-9]/g, '')}` : undefined} aria-disabled={!siteConfig.releaseApprovals.officialContactApproved}>
+            Talian pejabat · Menunggu pengesahan
           </a>
         </article>
 
@@ -60,8 +63,8 @@ const description = "Maklumat perhubungan rasmi, nombor WhatsApp, lokasi Shah Al
           <div class="contact-icon" aria-hidden="true">✉</div>
           <h3>E-mel</h3>
           <p>{siteConfig.emailOffice}</p>
-          <a href={`mailto:${siteConfig.emailOffice}`}>
-            Hantar e-mel ↗
+          <a href={siteConfig.releaseApprovals.officialContactApproved ? `mailto:${siteConfig.emailOffice}` : undefined} aria-disabled={!siteConfig.releaseApprovals.officialContactApproved}>
+            E-mel · Menunggu pengesahan
           </a>
           <p style="font-size:10px;color:#86632d;margin-top:6px;">
             Alamat e-mel menunggu pengesahan institusi.
@@ -75,7 +78,7 @@ const description = "Maklumat perhubungan rasmi, nombor WhatsApp, lokasi Shah Al
     <div class="container">
       <div class="eyebrow">MAKLUMAT ZAKAT</div>
       <h2 class="section-title" id="zakat-title">Pautan portal zakat</h2>
-      <p class="section-sub">Pihak maahad telah berkongsi portal Mudah Zakat. Sebarang urusan pembayaran berlangsung di laman luar, bukan di website MADUM.</p>
+      <p class="section-sub">Pautan rujukan luar · Hubungan dengan penerima MADUM belum disahkan. Pihak maahad telah berkongsi portal Mudah Zakat. Sebarang urusan pembayaran berlangsung di laman luar, bukan di website MADUM.</p>
       <a href="https://www.mudahzakat.com/" target="_blank" rel="noopener noreferrer" class="text-link">Lawati Portal Mudah Zakat ↗</a>
       <div class="review-note">Sila sahkan organisasi penerima serta butiran pembayaran secara bebas sebelum membuat sebarang transaksi.</div>
     </div>
@@ -123,7 +126,7 @@ const description = "Maklumat perhubungan rasmi, nombor WhatsApp, lokasi Shah Al
         <FAQAccordion />
       </div>
 
-      <img
+      <ConsentImage
         src="/assets/aktiviti-maahad.webp"
         class="editorial-visual"
         alt="Aktiviti dan suasana pembelajaran warga Maahad Darul Muthiah"

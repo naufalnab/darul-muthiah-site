@@ -1,3 +1,4 @@
+import { preparePreviewAssets } from './scripts/lib/previewAssets.mjs';
 import { defineConfig } from 'astro/config';
 import { runPrebuildChecks } from './scripts/lib/runPrebuildChecks.mjs';
 import { runPostbuildTasks } from './scripts/lib/runPostbuildTasks.mjs';
@@ -31,6 +32,13 @@ export default defineConfig({
   site,
   base,
   output: 'static',
+  publicDir: preparePreviewAssets(),
+  vite: {
+    cacheDir: './.astro/vite',
+    server: {
+      fs: { deny: ['.env', '.env.*', '*.{crt,pem,key,p12,pfx,cer,der}', '.npmrc', '.yarnrc.yml', '**/.git/**', '**/public/**'] }
+    }
+  },
   build: {
     format: 'directory'
   },

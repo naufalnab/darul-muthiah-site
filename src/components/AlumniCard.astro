@@ -1,0 +1,16 @@
+---
+interface Props { number: number; }
+const { number } = Astro.props;
+const label = String(number).padStart(2, '0');
+---
+<article class="alumni-card" aria-labelledby={`alumni-${label}`}>
+  <div class="alumni-visual" aria-hidden="true">
+    <span class="alumni-mark">DM</span><span class="alumni-number">{label}</span>
+  </div>
+  <div class="alumni-copy">
+    <span class="eyebrow">JEJAK ALUMNI</span>
+    <h3 id={`alumni-${label}`}>Ruang profil {label}</h3>
+    <p>Kisah perjalanan ilmu dan pencapaian akan dikongsi selepas pengesahan maklumat dan izin penerbitan.</p>
+    <span class="pending">Menunggu izin penerbitan</span>
+  </div>
+</article>

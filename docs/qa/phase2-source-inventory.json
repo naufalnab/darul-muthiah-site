@@ -1,0 +1,164 @@
+[
+  {
+    "path": "public/robots.txt",
+    "bytes": 84,
+    "sha256": "f91ed028aa2aa1c3222fe6e19ea0c6d87e921a3d550263bcdeba5e6b8be8282b",
+    "previewAllowed": true
+  },
+  {
+    "path": "public/assets/video-nasyid.webp",
+    "bytes": 26860,
+    "sha256": "97b06f4ce31163489130de3ff684cc8a9da508da2e1e2b04407ab58646e2c7f0",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/preview-placeholder.svg",
+    "bytes": 860,
+    "sha256": "69116b18679adad4e2ac3061be18c9c65b4cbce65d01047763abd4065e6fb1a5",
+    "previewAllowed": true
+  },
+  {
+    "path": "public/assets/intro-madum.mp4",
+    "bytes": 3456603,
+    "sha256": "c987394e29bfba300aeff33e2d4db7f12d7243dcf4798990cd09272752e5bb7c",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/video-intro.webp",
+    "bytes": 30996,
+    "sha256": "db1c7278987aa987c3953cfb8f5a9cc2ff2816e3aadb81bcc81bae340bbddde5",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/majlis-ilmu.webp",
+    "bytes": 177464,
+    "sha256": "c2d54685df413e0d55eea2fd0262dfc9d94595d42acba35f289ed4597bf47ad0",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/kemahiran-tvet.webp",
+    "bytes": 53684,
+    "sha256": "1620dd950845fabc3a6f323abc71e3f9518097d19801c886964d46fc43b2c471",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/hero-kelas.webp",
+    "bytes": 67866,
+    "sha256": "062db534056eb9d5601e883811de0ea9dc76fcda7f4def17d3e02fe854131a4e",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/rehlah-pelajar.webp",
+    "bytes": 204418,
+    "sha256": "77a9b6cccb41692a6a96beaef31c6657a6a3627a19431647b740e63a9ceff2d8",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/logo-madum.webp",
+    "bytes": 40524,
+    "sha256": "7c206c30f264a25c94985a2f5e0436c99320c1dec2b70c738004a4795aee6d73",
+    "previewAllowed": true
+  },
+  {
+    "path": "public/assets/keselamatan.webp",
+    "bytes": 77394,
+    "sha256": "685eb8cc6c1feb9920f5e78937ff19407d39facab264dbc3fcc84cc5acbc6a10",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/aktiviti-maahad.webp",
+    "bytes": 125514,
+    "sha256": "5de27a0753986f99b654f29e2f8a60294d764bba5bc69280037d6aea5e98ebf4",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/aktiviti-tarbiah.webp",
+    "bytes": 110402,
+    "sha256": "da1f0f96836aa7fb2e324ef0a8653291046453261dd41552a2b65f733f69e6cc",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/outdoor.webp",
+    "bytes": 305170,
+    "sha256": "a2acca514b3b188758ce9bc03d39135f55d863ea0a6d1319f07f16035d3bf3de",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/sukan-pelajar.webp",
+    "bytes": 156852,
+    "sha256": "0fdefd80380b28b07ca6b37a72f8bce23390dc76e8eaa67045c7028f97a3f996",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/kelas-akademik.webp",
+    "bytes": 111878,
+    "sha256": "aeb932369bcaa2918dfb3c9f9f0812dfee0e1efe48c14f2dd5ad1d0c0a9e7327",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/lawatan.webp",
+    "bytes": 185944,
+    "sha256": "1bebede00983719d0e37942b9b2cbb130657351ceae514a6a370a3685e40d836",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/sijil.webp",
+    "bytes": 190824,
+    "sha256": "3458680087ab1881e490bd7dd126158c841e6134052f62dfe3a0fe815b3cbea6",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/belajar-halaqah.webp",
+    "bytes": 52106,
+    "sha256": "8317e19595ecb3916c085aea7a6b15b30b13e2e56facbe7cef6dafc689d23d9a",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/kelas-2.webp",
+    "bytes": 117938,
+    "sha256": "c75d6839f692ea4e74c4fe0c2de40de74e4f32eb31c85a1d4e93249d43ca1a00",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/nasyid-pelajar.mp4",
+    "bytes": 6835110,
+    "sha256": "a08f732194bf2b15d48fac020edf350a4d835156279251d9a8cd12c8d8340dbf",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/kemasyarakatan.webp",
+    "bytes": 133844,
+    "sha256": "b2d055bf2c9d54994f20d88afae69179c221cb4fd8a09b13f9fbaa6dfe3265b1",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/seminar.webp",
+    "bytes": 85212,
+    "sha256": "b6d97d5ef45b9a50035149f7ed23089d492357f6d515a314bb82e8eeda889e62",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/anugerah.webp",
+    "bytes": 135954,
+    "sha256": "3e5bf05c6be1a4e21bff47bcb2864d093e5a66b5e0481e0049aad6bc48a1b918",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/rehlah-2.webp",
+    "bytes": 197460,
+    "sha256": "78790e1f8054e002d4ef91f134ae638737f6730d246e14dcbad456c94594f94c",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/lawatan-ilmu.webp",
+    "bytes": 161710,
+    "sha256": "be7f2965da3cb9c6d44bf76dc96b4f268db7027193ca0da3d1725288716a30e9",
+    "previewAllowed": false
+  },
+  {
+    "path": "public/assets/pengiktirafan.webp",
+    "bytes": 99880,
+    "sha256": "8b7d48015376133eaf058197113380a1baece5d43139bd75c8f30c3807573a20",
+    "previewAllowed": false
+  }
+]

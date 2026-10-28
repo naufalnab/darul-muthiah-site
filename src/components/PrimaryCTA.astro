@@ -22,6 +22,9 @@ const {
   disclaimer = 'Pratonton dalaman · Pengesahan diperlukan',
   sectionClass = 'section-ending'
 } = Astro.props;
+const contactPending = ctaHref.startsWith('https://wa.me/') && !siteConfig.releaseApprovals.officialContactApproved;
+const resolvedHref = contactPending ? '/hubungi#saluran' : ctaHref;
+const external = isExternal && !contactPending;
 ---
 <section class={sectionClass} aria-labelledby="cta-heading">
   <div class="container">
@@ -34,11 +37,11 @@ const {
       <div class="cta-actions">
         <a
           class="btn btn-gold"
-          href={ctaHref}
-          target={isExternal ? '_blank' : undefined}
-          rel={isExternal ? 'noopener noreferrer' : undefined}
+          href={resolvedHref}
+          target={external ? '_blank' : undefined}
+          rel={external ? 'noopener noreferrer' : undefined}
         >
-          {ctaText} <span class="arrow" aria-hidden="true">↗</span>
+          {contactPending ? 'Semak Saluran Pertanyaan' : ctaText} <span class="arrow" aria-hidden="true">↗</span>
         </a>
         <small>{disclaimer}</small>
       </div>

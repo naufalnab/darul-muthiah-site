@@ -1,0 +1,180 @@
+[
+  {
+    "path": "",
+    "status": 200,
+    "bytes": 14687,
+    "sha256": "bb57d23d0aeb9a99abd95944109292c0d3bb30605e1c15087be7643a90d2c4c1",
+    "media_refs": [
+      "/darul-muthiah-site/assets/logo-madum.webp",
+      "/darul-muthiah-site/assets/preview-placeholder.svg"
+    ]
+  },
+  {
+    "path": "profil/",
+    "status": 200,
+    "bytes": 12854,
+    "sha256": "da1d5acf730c8d77732ec5274c55e7d3b92fc8eb148e9f800919d81042ab8783",
+    "media_refs": [
+      "/darul-muthiah-site/assets/logo-madum.webp",
+      "/darul-muthiah-site/assets/preview-placeholder.svg"
+    ]
+  },
+  {
+    "path": "pengajian/",
+    "status": 200,
+    "bytes": 12397,
+    "sha256": "c1f242e2902574929bf45f91733ab967bb909f49b64788482158c30486067e2d",
+    "media_refs": [
+      "/darul-muthiah-site/assets/logo-madum.webp",
+      "/darul-muthiah-site/assets/preview-placeholder.svg"
+    ]
+  },
+  {
+    "path": "kemasukan/",
+    "status": 200,
+    "bytes": 16117,
+    "sha256": "b75ee32f3574ce3f3d779bf4f268e20e0849ac58dc0bc8c284f8f8add04a4a4c",
+    "media_refs": [
+      "/darul-muthiah-site/assets/logo-madum.webp",
+      "/darul-muthiah-site/assets/preview-placeholder.svg"
+    ]
+  },
+  {
+    "path": "galeri/",
+    "status": 200,
+    "bytes": 10182,
+    "sha256": "7c347e7f8b906376df62f58183273ea47d9f801cfcf81b15a09725f6276daa9c",
+    "media_refs": [
+      "/darul-muthiah-site/assets/logo-madum.webp"
+    ]
+  },
+  {
+    "path": "hubungi/",
+    "status": 200,
+    "bytes": 13349,
+    "sha256": "e3e658c7a189a3a0a4282d66ad15abbc8717c4d4a8eff37b238814f69c0fdfee",
+    "media_refs": [
+      "/darul-muthiah-site/assets/logo-madum.webp",
+      "/darul-muthiah-site/assets/preview-placeholder.svg"
+    ]
+  },
+  {
+    "path": "robots.txt",
+    "status": 200,
+    "bytes": 69,
+    "sha256": "30853dd8482b71d90df6aba606b73af65c4a309bd9862816c859fd713b40ea44",
+    "text": "# Internal Review / Staging - Do not index\nUser-agent: *\nDisallow: /\n"
+  },
+  {
+    "path": "sitemap.xml",
+    "status": 404
+  },
+  {
+    "path": "assets/video-nasyid.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/preview-placeholder.svg",
+    "status": 200,
+    "bytes": 860,
+    "sha256": "69116b18679adad4e2ac3061be18c9c65b4cbce65d01047763abd4065e6fb1a5"
+  },
+  {
+    "path": "assets/intro-madum.mp4",
+    "status": 404
+  },
+  {
+    "path": "assets/video-intro.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/majlis-ilmu.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/kemahiran-tvet.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/hero-kelas.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/rehlah-pelajar.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/logo-madum.webp",
+    "status": 200,
+    "bytes": 40524,
+    "sha256": "7c206c30f264a25c94985a2f5e0436c99320c1dec2b70c738004a4795aee6d73"
+  },
+  {
+    "path": "assets/keselamatan.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/aktiviti-maahad.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/aktiviti-tarbiah.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/outdoor.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/sukan-pelajar.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/kelas-akademik.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/lawatan.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/sijil.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/belajar-halaqah.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/kelas-2.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/nasyid-pelajar.mp4",
+    "status": 404
+  },
+  {
+    "path": "assets/kemasyarakatan.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/seminar.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/anugerah.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/rehlah-2.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/lawatan-ilmu.webp",
+    "status": 404
+  },
+  {
+    "path": "assets/pengiktirafan.webp",
+    "status": 404
+  }
+]

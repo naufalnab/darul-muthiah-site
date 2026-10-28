@@ -4,10 +4,11 @@ import PrimaryCTA from '../components/PrimaryCTA.astro';
 import PhotoLightbox from '../components/PhotoLightbox.astro';
 import { siteConfig } from '../content/siteConfig';
 import { galleryPhotos, galleryVideos, galleryFilters } from '../content/gallery';
+import AlumniCard from '../components/AlumniCard.astro';
 import { october2026Update } from '../content/octoberUpdate';
 
 const title = "Galeri & Pencapaian — MADUM";
-const description = "Dokumentasi autentik suasana pembelajaran, hafazan, TVET, sukan, dan rakaman video aktiviti pelajar Maahad Darul Muthiah.";
+const description = "Pratonton ruang dokumentasi dan alumni MADUM. Media pelajar dan profil peribadi menunggu izin penerbitan.";
 
 const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
 ---
@@ -25,7 +26,7 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
       <p class="inner-lead">
         Sorotan aktiviti Al-Quran, pembelajaran, kemahiran, sukan dan lawatan daripada bahan yang dibekalkan oleh pihak maahad.
       </p>
-      <span class="pending">Pratonton dokumentasi rasmi MADUM</span>
+      <span class="pending">Dokumentasi menunggu izin penerbitan</span>
     </div>
   </section>
 
@@ -36,9 +37,9 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
         <div>
           <div class="eyebrow">GALERI TERPILIH</div>
           <h2 class="section-title" id="galeri-terpilih-title">Kegiatan yang membentuk pengalaman pelajar.</h2>
-          <p class="section-sub">Gunakan penapis kategori atau pilih gambar untuk melihat paparan lebih besar.</p>
+          <p class="section-sub">{mediaApproved ? 'Gunakan penapis kategori atau pilih gambar untuk melihat paparan lebih besar.' : 'Foto dan penapis galeri akan tersedia selepas izin penerbitan disahkan.'}</p>
         </div>
-        <span style="font-size:11px;color:#758477">Dokumentasi asal pihak maahad</span>
+        <span style="font-size:11px;color:var(--emerald)">{mediaApproved ? 'Dokumentasi pihak maahad' : 'Media dalam semakan'}</span>
       </div>
 
       {!mediaApproved ? (
@@ -99,7 +100,7 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
     <div class="container">
       <div class="eyebrow">VIDEO AKTIVITI</div>
       <h2 class="section-title" id="video-title">Momen MADUM dalam video.</h2>
-      <p class="section-sub">Video hanya dimainkan apabila dipilih pengunjung; bunyi tidak dimainkan secara automatik.</p>
+      <p class="section-sub">{mediaApproved ? 'Video hanya dimainkan apabila dipilih pengunjung; bunyi tidak dimainkan secara automatik.' : 'Rakaman pelajar belum tersedia dalam pratonton ini.'}</p>
       
       {!mediaApproved ? (
         <div class="review-note" style="background:#fff;border-color:#dce5db;padding:32px 24px;text-align:center;margin:25px 0;">
@@ -139,6 +140,9 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
       <p class="section-sub">
         {october2026Update.alumniProfilesReceived} profil alumni beserta foto dan maklumat pencapaian telah dibekalkan pihak maahad untuk ruangan ini.
       </p>
+      <div class="alumni-grid">
+        {Array.from({ length: october2026Update.alumniProfilesReceived }, (_, index) => <AlumniCard number={index + 1} />)}
+      </div>
       <div class="review-note">
         Senarai nama, potret serta ulasan peribadi sedang melalui semakan ketepatan dan persetujuan penerbitan. Maklumat ini tidak dimuat naik ke repositori awam sehingga diluluskan.
       </div>

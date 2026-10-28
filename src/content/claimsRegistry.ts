@@ -237,7 +237,7 @@ export const claimsRegistry: Record<string, ClaimItem> = {
     approved_by: null,
     approved_at: null,
     public_display_policy: 'show_with_disclaimer',
-    disclaimerText: 'Dipaparkan sebagai status rujukan pendaftaran rasmi. Penggunaan logo JAIS memerlukan kebenaran bertulis.',
+    disclaimerText: 'Bahan pendaftaran diterima untuk semakan. Status semasa dan hak penggunaan perlu disahkan institusi.',
     actionRequired: 'Dapatkan keizinan bertulis sama ada nombor perakuan boleh dipaparkan secara terbuka pada footer/laman profil.',
     dataType: 'ACTIVE_REGISTRATION_DATA'
   },
@@ -252,7 +252,7 @@ export const claimsRegistry: Record<string, ClaimItem> = {
     approved_by: null,
     approved_at: null,
     public_display_policy: 'show_with_disclaimer',
-    disclaimerText: 'Rujukan tauliah kutipan zakat institusi; laman web ini tidak menerima sebarang transaksi wang secara langsung.',
+    disclaimerText: 'Bahan pelantikan diterima untuk semakan. Tempoh pelantikan dan penerima zakat perlu disahkan; laman ini tidak memproses pembayaran.',
     actionRequired: 'Sahkan status pembaharuan tauliah LZS tahunan bersama pihak pentadbiran maahad.',
     dataType: 'ACTIVE_REGISTRATION_DATA'
   },
