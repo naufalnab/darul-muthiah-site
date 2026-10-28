@@ -34,8 +34,8 @@ export const claimsRegistry: Record<string, ClaimItem> = {
   admissions_session: {
     id: 'admissions_session',
     field: 'Sesi Pengambilan Semasa',
-    value: '2026/2027',
-    source: 'Pesan awal Cik Yatt & Profil PDF h.10 vs Poster 00000125 (Sesi 2027)',
+    value: '2027',
+    source: 'Poster pengambilan pengganti dihantar Cik Yatt pada 28 Oktober 2026; profil yuran kekal rujukan 2026/2027',
     sourcePage: 'Profil PDF h.10 & Poster 00000125',
     codeLocation: 'src/content/siteConfig.ts:34',
     status: 'PENDING_VERIFICATION',
@@ -43,7 +43,7 @@ export const claimsRegistry: Record<string, ClaimItem> = {
     approved_at: null,
     public_display_policy: 'show_with_disclaimer',
     disclaimerText: 'Maklumat kemasukan tertakluk kepada pengesahan sesi rasmi pihak maahad.',
-    actionRequired: 'Pihak maahad perlu mengesahkan sama ada sesi kemasukan semasa adalah 2026/2027 atau 2027.',
+    actionRequired: 'Sahkan tarikh, pautan borang dan syarat poster pengganti sesi 2027; yuran profil 2026/2027 tidak boleh dianggap terkini.',
     dataType: 'ACTIVE_REGISTRATION_DATA'
   },
   whatsapp_cta: {

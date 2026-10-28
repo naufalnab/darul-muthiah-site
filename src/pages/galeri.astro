@@ -4,11 +4,11 @@ import PrimaryCTA from '../components/PrimaryCTA.astro';
 import PhotoLightbox from '../components/PhotoLightbox.astro';
 import { siteConfig } from '../content/siteConfig';
 import { galleryPhotos, galleryVideos, galleryFilters } from '../content/gallery';
+import { october2026Update } from '../content/octoberUpdate';
 
 const title = "Galeri & Pencapaian — MADUM";
 const description = "Dokumentasi autentik suasana pembelajaran, hafazan, TVET, sukan, dan rakaman video aktiviti pelajar Maahad Darul Muthiah.";
 
-const isPublic = siteConfig.publicationMode === 'public';
 const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
 ---
 <SiteLayout title={title} description={description} activeRoute="/galeri">
@@ -41,7 +41,7 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
         <span style="font-size:11px;color:#758477">Dokumentasi asal pihak maahad</span>
       </div>
 
-      {isPublic && !mediaApproved ? (
+      {!mediaApproved ? (
         <div class="review-note" style="background:#fff;border-color:#dce5db;padding:36px 28px;text-align:center;margin:30px 0;">
           <h3 style="font:400 24px var(--serif);margin:0 0 12px;color:var(--deep)">Dokumentasi Pelajar Sedang Disemak</h3>
           <p style="font-size:13px;color:var(--muted);max-width:540px;margin:0 auto 18px;line-height:1.8">
@@ -101,7 +101,7 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
       <h2 class="section-title" id="video-title">Momen MADUM dalam video.</h2>
       <p class="section-sub">Video hanya dimainkan apabila dipilih pengunjung; bunyi tidak dimainkan secara automatik.</p>
       
-      {isPublic && !mediaApproved ? (
+      {!mediaApproved ? (
         <div class="review-note" style="background:#fff;border-color:#dce5db;padding:32px 24px;text-align:center;margin:25px 0;">
           <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.8">
             Rakaman video persembahan dan aktiviti pelajar ditahan sementara sehingga kebenaran pelepasan rasmi disahkan.
@@ -132,8 +132,21 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
     </div>
   </section>
 
+  <section class="section-compact surface-cream" aria-labelledby="alumni-heading">
+    <div class="container">
+      <div class="eyebrow">KEJAYAAN ALUMNI</div>
+      <h2 class="section-title" id="alumni-heading">Jejak ilmu selepas Darul Muthiah</h2>
+      <p class="section-sub">
+        {october2026Update.alumniProfilesReceived} profil alumni beserta foto dan maklumat pencapaian telah dibekalkan pihak maahad untuk ruangan ini.
+      </p>
+      <div class="review-note">
+        Senarai nama, potret serta ulasan peribadi sedang melalui semakan ketepatan dan persetujuan penerbitan. Maklumat ini tidak dimuat naik ke repositori awam sehingga diluluskan.
+      </div>
+    </div>
+  </section>
+
   <!-- Lightbox Modal -->
-  {(!isPublic || mediaApproved) && <PhotoLightbox />}
+  {mediaApproved && <PhotoLightbox />}
 
   <!-- Final CTA -->
   <PrimaryCTA

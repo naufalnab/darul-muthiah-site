@@ -62,8 +62,8 @@ export function runPostbuildTasks(distDirInput = null) {
   }
   auditDistDir(distDir);
 
-  // 3. If in public mode without media approval, remove student media from dist/assets
-  if (publicationMode === 'public' && !studentMediaConsentApproved) {
+  // 3. In ALL modes (including internet-accessible previews), purge unapproved media from dist/assets
+  if (!studentMediaConsentApproved) {
     const assetsDir = path.join(distDir, 'assets');
     if (fs.existsSync(assetsDir)) {
       const studentMediaFilenames = [
@@ -75,6 +75,7 @@ export function runPostbuildTasks(distDirInput = null) {
         'kelas-2.webp',
         'kelas-akademik.webp',
         'kemahiran-tvet.webp',
+        'kemasyarakatan.webp',
         'keselamatan.webp',
         'lawatan-ilmu.webp',
         'lawatan.webp',
@@ -97,6 +98,39 @@ export function runPostbuildTasks(distDirInput = null) {
           fs.unlinkSync(p);
           console.log(`[postbuild:SAFETY] Purged unapproved student media: ${file}`);
         }
+      }
+    }
+  }
+
+  // 3B. Substitute neutral artwork in generated HTML instead of broken thumbnails.
+  // Only logo-madum.webp is exempt; noindex is not access protection.
+  if (!studentMediaConsentApproved) {
+    const excludedMedia = new Set([
+      'aktiviti-maahad.webp','aktiviti-tarbiah.webp','anugerah.webp',
+      'belajar-halaqah.webp','hero-kelas.webp','kelas-2.webp',
+      'kelas-akademik.webp','kemahiran-tvet.webp','kemasyarakatan.webp',
+      'keselamatan.webp','lawatan-ilmu.webp','lawatan.webp','majlis-ilmu.webp',
+      'outdoor.webp','pengiktirafan.webp','rehlah-2.webp','rehlah-pelajar.webp',
+      'seminar.webp','sijil.webp','sukan-pelajar.webp','video-intro.webp',
+      'video-nasyid.webp'
+    ]);
+    const visit = (dir) => {
+      for (const e of fs.readdirSync(dir,{withFileTypes:true})) {
+        const full=path.join(dir,e.name);
+        if(e.isDirectory()) visit(full);
+        else if(e.name.endsWith('.html')) {
+          let html=fs.readFileSync(full,'utf8');
+          html=html.replace(/\/assets\/([a-z0-9-]+\.webp)/g, (match,file) =>
+            excludedMedia.has(file) ? '/assets/preview-placeholder.svg' : match);
+          fs.writeFileSync(full,html,'utf8');
+        }
+      }
+    };
+    if(fs.existsSync(distDir)) visit(distDir);
+    const assets=path.join(distDir,'assets');
+    if(fs.existsSync(assets)) {
+      for(const entry of fs.readdirSync(assets)) {
+        if(excludedMedia.has(entry) && fs.existsSync(path.join(assets,entry))) fs.unlinkSync(path.join(assets,entry));
       }
     }
   }
