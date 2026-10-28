@@ -4,6 +4,7 @@ import PrimaryCTA from '../components/PrimaryCTA.astro';
 import WhatsAppInquiryForm from '../components/WhatsAppInquiryForm.astro';
 import { admissionsSteps, admissionsChecklist, feeItems } from '../content/fees';
 import { siteConfig } from '../content/siteConfig';
+import { october2026Update } from '../content/octoberUpdate';
 
 const title = "Kemasukan & Yuran | MADUM — Pratonton UI/UX";
 const description = "Pratonton dalaman halaman Kemasukan & Yuran MADUM. Belum diterbitkan sebagai laman rasmi.";
@@ -44,6 +45,22 @@ const description = "Pratonton dalaman halaman Kemasukan & Yuran MADUM. Belum di
     </div>
   </section>
 
+  <!-- Latest client admissions campaign: preview only until QR/form verified -->
+  <section class="section-compact surface-cream" aria-labelledby="update-2027-title">
+    <div class="container">
+      <div class="eyebrow">HEBAHAN TERKINI · 28 OKTOBER 2026</div>
+      <h2 class="section-title" id="update-2027-title">Pengambilan pelajar sesi 2027</h2>
+      <p class="section-sub">
+        Pihak maahad telah menyerahkan poster pengambilan baharu bagi menggantikan poster lama yang mempunyai QR pendaftaran tidak berfungsi.
+      </p>
+      <div class="review-note">
+        Pautan borang dalam poster pengganti telah dikenal pasti. Pengesahan akses dan serahan borang perlu diselesaikan sebelum pautan pendaftaran diterbitkan.
+        <span class="sr-only">Pautan borang menunggu ujian.</span>
+      </div>
+      <p class="section-sub" style="font-size:12px;margin-top:14px">Rujukan kempen: {october2026Update.posterDate} · Status: menunggu kelulusan penerbitan.</p>
+    </div>
+  </section>
+
   <!-- Cara Memulakan -->
   <section class="section-compact surface-white" aria-labelledby="langkah-title">
     <div class="container">
@@ -81,7 +98,7 @@ const description = "Pratonton dalaman halaman Kemasukan & Yuran MADUM. Belum di
       <div class="eyebrow">RUJUKAN YURAN</div>
       <h2 class="section-title" id="yuran-title">Struktur yuran pengajian.</h2>
       <p class="section-sub">
-        Nilai daripada dokumen profil sesi {siteConfig.admissionsSession} yang dibekalkan oleh klien. Bukan pengesahan kadar terkini.
+        Rujukan dokumen profil sesi 2026/2027 sahaja. Kadar bagi pengambilan 2027 belum disahkan oleh pihak maahad.
       </p>
 
       <div class="review-note">

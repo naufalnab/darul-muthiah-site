@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-labelledby="title">
+<title id="title">Dokumentasi menunggu kebenaran penerbitan</title>
+<rect width="800" height="600" fill="#123F35"/>
+<rect x="25" y="25" width="750" height="550" rx="24" fill="#206452" stroke="#D2AD6A" stroke-width="2"/>
+<path d="M105 165H695" stroke="#D2AD6A" opacity=".5"/>
+<text x="400" y="278" text-anchor="middle" fill="#FBF8F0" font-family="Georgia, serif" font-size="48">DARUL MUTHIAH</text>
+<text x="400" y="326" text-anchor="middle" fill="#FBF8F0" font-family="Arial, sans-serif" font-size="20">Maahad Tahfiz Al Quran (1)</text>
+<path d="M105 376H695" stroke="#D2AD6A" opacity=".5"/>
+<text x="400" y="435" text-anchor="middle" fill="#FBF8F0" font-family="Arial, sans-serif" font-size="18">Dokumentasi dalam semakan</text>
+</svg>
