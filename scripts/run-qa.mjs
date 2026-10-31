@@ -28,7 +28,7 @@ const server = http.createServer((req,res) => {
 });
 let origin;
 let browser;
-const report = { base, viewports:[320,360,375,390,414,430,768,1024,1280,1440,1920], pages:[], linkChecks:[], passed:false };
+const report = { base, viewports:[320,360,375,390,414,430,751,767,768,1024,1280,1440,1920], pages:[], linkChecks:[], passed:false };
 const allLinks = new Set();
 try {
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
@@ -93,6 +93,8 @@ try {
       check(`Metadata ${width}`,state.title && state.description && state.canonical?.startsWith(config.canonicalBase) && state.robots==='noindex, nofollow' && state.h1===1);
       for(const href of state.links) if(href.startsWith(origin))allLinks.add(href);
       if ([320,375,430].includes(width) && !base) await page.screenshot({path:path.join(output,`${result.page}_Mobile_${width}_Viewport.png`)});
+      if(!route && [751,767].includes(width)) check(`Hero stacks at boundary ${width}`,await page.$eval('.hero-grid',e=>getComputedStyle(e).gridTemplateColumns.split(' ').length===1));
+      if(!route && [751,767].includes(width) && !base) await page.screenshot({path:path.join(output,`index_MobileBoundary_${width}.png`)});
       if(width<=430) check(`Main control touch targets ${width}`,await page.$$eval('main .btn, main .circle-arrow, main .filter-button, main .faq-q',items=>items.filter(e=>e.getClientRects().length && !e.closest('[hidden]')).every(e=>{const r=e.getBoundingClientRect();return r.width>=44 && r.height>=44;})));
       if ([1024,1280,1440,1920].includes(width) && !base) {
         await page.screenshot({path:path.join(output,`${result.page}_Desktop_${width}_${width>=1440?'Full':'Viewport'}.png`),fullPage:width>=1440});
