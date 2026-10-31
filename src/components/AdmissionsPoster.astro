@@ -1,3 +1,6 @@
+---
+import { programsList } from '../content/programs';
+---
 <figure class="client-poster" id="kempen-2027" aria-labelledby="poster-caption">
   <a href="/assets/refinement/poster-2027-854.webp" target="_blank" rel="noopener noreferrer" aria-label="Lihat poster sesi 2027 pada saiz penuh, tab baharu">
     <img src="/assets/refinement/poster-2027-854.webp"
@@ -7,6 +10,7 @@
       alt="Poster asal MADUM sesi 2027: tiga program pengajian dan kelayakan pelajar perempuan 10–17 tahun. Bahagian QR dan hubungan ditutup sementara." />
   </a>
   <figcaption id="poster-caption">Poster pihak maahad · 28 Oktober 2026<br />Pilih poster untuk membaca saiz penuh ↗</figcaption>
+  <details class="poster-text"><summary>Baca ringkasan poster</summary><p>Pengambilan sesi 2027 untuk pelajar perempuan berumur 10–17 tahun.</p><ul>{programsList.map(program => <li><strong>{program.title.replace(/<br\s*\/?>/g, ' ')}</strong><br />{program.duration}</li>)}</ul><p>Tempoh ialah anggaran. Semak kelayakan di bawah; pendaftaran belum diaktifkan.</p></details>
   <div class="registration-status" data-registration-status="pending">
     <strong>Pendaftaran belum diaktifkan</strong>
     <p>QR, borang dan saluran hubungan ditahan sehingga pengesahan pihak maahad serta ujian penerimaan admin selesai.</p>

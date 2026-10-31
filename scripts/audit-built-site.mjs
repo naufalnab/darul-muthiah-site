@@ -84,7 +84,7 @@ test('All real release approvals remain false and publication stays internal', (
 const passed = checks.every(c => c.passed);
 const report = { kind: 'static integrity; no browser or performance measurements', base, htmlFiles: htmls.length, checks, passed };
 fs.mkdirSync('docs/qa', { recursive: true });
-fs.writeFileSync(`docs/qa/desktop-static${base ? '-pages' : ''}.json`, JSON.stringify(report, null, 2) + '\n');
+fs.writeFileSync(`docs/qa/mobile-static${base ? '-pages' : ''}.json`, JSON.stringify(report, null, 2) + '\n');
 for (const c of checks.filter(c => !c.passed)) console.error(c.name, c.reason);
 console.log(`Static integrity ${passed ? 'PASSED' : 'FAILED'}: ${checks.filter(c => c.passed).length}/${checks.length}`);
 if (!passed) process.exitCode = 1;

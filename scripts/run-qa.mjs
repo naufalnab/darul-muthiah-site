@@ -8,7 +8,7 @@ import { auditPreviewOutput, previewAssets } from './lib/previewAssets.mjs';
 
 const require = createRequire(import.meta.url);
 const dist = path.resolve('dist');
-const output = path.resolve('previews/phase3-desktop-refinement');
+const output = path.resolve('previews/mobile-refinement');
 const base = process.env.QA_BASE || '';
 const allowedMedia = Object.keys(previewAssets).map(asset => `/${asset}`);
 const config = JSON.parse(fs.readFileSync('src/content/siteConfig.json', 'utf8'));
@@ -28,7 +28,7 @@ const server = http.createServer((req,res) => {
 });
 let origin;
 let browser;
-const report = { base, viewports:[320,375,390,768,1024,1280,1440,1920], pages:[], linkChecks:[], passed:false };
+const report = { base, viewports:[320,360,375,390,414,430,768,1024,1280,1440,1920], pages:[], linkChecks:[], passed:false };
 const allLinks = new Set();
 try {
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
@@ -61,7 +61,7 @@ try {
       new PerformanceObserver(list=> {for(const e of list.getEntries()) if(!e.hadRecentInput)window.__metrics.cls+=e.value;}).observe({type:'layout-shift',buffered:true});
     });
     for (const width of report.viewports) {
-      await page.setViewport({width,height:900});
+      await page.setViewport({width,height:({320:640,360:800,375:812,390:844,414:896,430:932,768:1024})[width] || 900});
       // Resizing a live document can start a new responsive-image request.
       // Let it complete before navigation so the harness does not abort it.
       await page.waitForNetworkIdle({idleTime:250,timeout:15000});
@@ -74,7 +74,7 @@ try {
       });
       const state = await page.evaluate(()=> ({
         overflow:document.documentElement.scrollWidth>innerWidth,
-        overflowingElements:[...document.querySelectorAll('main *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1).slice(0,8).map(e=>e.tagName+'.'+e.className),
+        overflowingElements:[...document.querySelectorAll('main *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1 && !(e.closest('.gallery-controls') && getComputedStyle(e.closest('.gallery-controls')).overflowX==='auto')).slice(0,8).map(e=>e.tagName+'.'+e.className),
         brokenImages:[...document.images].filter(i=>!i.complete || !i.naturalWidth).map(i=>i.src),
         media:[...document.querySelectorAll('img,video,source')].map(e=>e.getAttribute('src')).filter(Boolean),
         title:document.title, description:document.querySelector('meta[name=description]')?.content,
@@ -92,6 +92,8 @@ try {
       check(`No unverified contact/Form links ${width}`,state.unapprovedLinks.length===0);
       check(`Metadata ${width}`,state.title && state.description && state.canonical?.startsWith(config.canonicalBase) && state.robots==='noindex, nofollow' && state.h1===1);
       for(const href of state.links) if(href.startsWith(origin))allLinks.add(href);
+      if ([320,375,430].includes(width) && !base) await page.screenshot({path:path.join(output,`${result.page}_Mobile_${width}_Viewport.png`)});
+      if(width<=430) check(`Main control touch targets ${width}`,await page.$$eval('main .btn, main .circle-arrow, main .filter-button, main .faq-q',items=>items.filter(e=>e.getClientRects().length && !e.closest('[hidden]')).every(e=>{const r=e.getBoundingClientRect();return r.width>=44 && r.height>=44;})));
       if ([1024,1280,1440,1920].includes(width) && !base) {
         await page.screenshot({path:path.join(output,`${result.page}_Desktop_${width}_${width>=1440?'Full':'Viewport'}.png`),fullPage:width>=1440});
       }
@@ -105,7 +107,7 @@ try {
         check(`axe ${width}`,axe.violations.length===0);
         result.performance.push({width,...state.perf});
         check(`Lab LCP/CLS ${width}`,state.perf.lcp>0 && state.perf.lcp<2500 && state.perf.cls<0.1);
-        if(width===390 && !base) await page.screenshot({path:path.join(output,`${result.page}_Mobile_390_Full.png`),fullPage:true});
+        if(width===390 && !base) { await page.screenshot({path:path.join(output,`${result.page}_Mobile_390_Full.png`),fullPage:true}); await page.screenshot({path:path.join(output,`${result.page}_Mobile_390_Viewport.png`)}); if(route==='kemasukan') await page.$eval('.client-poster',e=>e.scrollIntoView({behavior:'instant'})); if(route==='kemasukan') await page.screenshot({path:path.join(output,'kemasukan-poster_390.png')}); }
       }
     }
     // Keyboard navigation, focus restoration, and resize closure on every route.
@@ -120,12 +122,98 @@ try {
     await page.keyboard.press('Enter');
     check('Menu opens by keyboard',await page.$eval('#menu-toggle-btn',e=>e.getAttribute('aria-expanded')==='true'));
     await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
-    const menuViolations=await page.evaluate(async()=> (await window.axe.run('#mobile-nav',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>v.id));
+    const menuViolations=await page.evaluate(async()=> (await window.axe.run('#mobile-menu',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>v.id));
     check('Expanded menu accessibility',menuViolations.length===0,menuViolations);
+    check('Native modal menu and scroll lock',await page.evaluate(()=>document.querySelector('#mobile-menu').open && getComputedStyle(document.documentElement).overflow==='hidden'));
+    check('One menu CTA and hidden sticky',await page.evaluate(()=>document.querySelectorAll('#mobile-nav .mobile-menu-cta').length===1 && document.querySelector('.mobile-sticky').hidden));
+    check('aria-controls resolves to open modal',await page.$eval('#menu-toggle-btn',e=>document.getElementById(e.getAttribute('aria-controls')).open));
+    await page.focus('#mobile-nav a:last-child');await page.keyboard.press('Tab');
+    check('Modal keyboard focus contained',await page.evaluate(()=>document.querySelector('#mobile-menu').contains(document.activeElement)));
+    if(!route && !base) await page.screenshot({path:path.join(output,'menu-open_390.png')});
     await page.keyboard.press('Escape');
-    check('Escape restores focus',await page.evaluate(()=>document.activeElement.id==='menu-toggle-btn' && document.activeElement.getAttribute('aria-expanded')==='false'));
+    check('Escape restores focus' ,await page.evaluate(()=>document.activeElement.id==='menu-toggle-btn' && document.activeElement.getAttribute('aria-expanded')==='false'));
+    check('Menu releases scroll lock',await page.evaluate(()=>getComputedStyle(document.documentElement).overflow!=='hidden'));
+    check('Sticky hidden above hero',await page.$eval('.mobile-sticky',e=>e.hidden));
+    if(await page.$('.hero, .inner-hero, .plain-hero')) {
+      await page.evaluate(()=>{const hero=document.querySelector('.hero, .inner-hero, .plain-hero');window.scrollTo({top:hero.getBoundingClientRect().bottom+scrollY+120,behavior:'instant'});});
+      await page.waitForFunction(()=>!document.querySelector('.mobile-sticky').hidden);
+      check('Sticky appears after hero',true);
+      if(!route && !base) await page.screenshot({path:path.join(output,'sticky-visible_390.png')});
+      const scrollYBefore=await page.evaluate(()=>scrollY);
+      await page.click('#menu-toggle-btn');
+      check('Sticky hidden while menu open',await page.$eval('.mobile-sticky',e=>e.hidden));
+      await page.mouse.wheel({deltaY:300});
+      check('Menu prevents background scroll',await page.evaluate(y=>Math.abs(scrollY-y)<1,scrollYBefore));
+      if(!route && !base) await page.screenshot({path:path.join(output,'sticky-hidden-menu-open_390.png')});
+      await page.mouse.click(1,1);
+      check('Backdrop click closes menu',await page.$eval('#mobile-menu',e=>!e.open));
+      await page.evaluate(()=>{const fixture=document.createElement('input');fixture.id='qa-focus-fixture';fixture.type='tel';fixture.style='position:fixed;top:0;left:0;width:100px;height:48px';document.body.append(fixture);fixture.focus({preventScroll:true});});
+      check('Editing hides persistent CTA',await page.$eval('.mobile-sticky',e=>e.hidden));
+      await page.setViewport({width:390,height:430});
+      check('Short editing viewport keeps CTA hidden',await page.$eval('.mobile-sticky',e=>e.hidden));
+      await page.evaluate(()=>document.getElementById('qa-focus-fixture').remove());
+      await page.setViewport({width:390,height:844});
+      await page.click('#menu-toggle-btn');await page.click('#close-mobile-menu');
+      check('Close button restores focus',await page.evaluate(()=>!document.querySelector('#mobile-menu').open && document.activeElement.id==='menu-toggle-btn'));
+      await page.click('#menu-toggle-btn');
+      const targetRoute=route==='profil'?'pengajian':'profil';
+      await Promise.all([page.waitForNavigation({waitUntil:'networkidle0'}),page.click(`#mobile-nav a[href="${base}/${targetRoute}"]`)]);
+      check('Menu link navigates and closes',await page.$eval('#mobile-menu',e=>!e.open));
+      await page.goBack({waitUntil:'networkidle0'});
+      check('Back resets navigation state',await page.evaluate(()=>!document.querySelector('#mobile-menu').open && document.querySelector('#menu-toggle-btn').getAttribute('aria-expanded')==='false'));
+      await page.goForward({waitUntil:'networkidle0'});await page.goBack({waitUntil:'networkidle0'});
+      check('Forward/back does not retain scroll lock',await page.evaluate(()=>!document.querySelector('#mobile-menu').open && !document.documentElement.dataset.mobileMenu));
+      if(route==='kemasukan') {
+        await page.$eval('#pertanyaan',e=>e.scrollIntoView({behavior:'instant'}));
+        await page.waitForFunction(()=>document.querySelector('.mobile-sticky').hidden);
+        check('Form area suppresses sticky CTA',true);
+        if(!base) await page.screenshot({path:path.join(output,'kemasukan-form_390.png')});
+        await page.$eval('.poster-text',e=>e.open=true);
+        check('Accessible poster summary retains sourced programs',await page.$eval('.poster-text',e=>e.textContent.includes('Hafazan Al-Quran') && e.textContent.includes('Syahadah') && e.textContent.includes('SPM Fast Track')));
+        await page.$eval('.poster-text',e=>e.open=false);
+        check('Phone input and full-width form controls',await page.evaluate(()=>document.querySelector('#phone').type==='tel' && [...document.querySelectorAll('#inquiry input,#inquiry select')].every(e=>e.getBoundingClientRect().height>=48)));
+      }
+      if(route==='galeri') {
+        await page.setViewport({width:390,height:844,isMobile:true,hasTouch:true});
+        await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
+        await page.$eval('.gallery-controls',e=>e.scrollIntoView({behavior:'instant'}));await page.tap('[data-filter="tvet"]');
+        check('Touch gallery filter',await page.$$eval('.gallery-card:not([hidden])',e=>e.length===2));
+        if(!base) await page.screenshot({path:path.join(output,'galeri-filter_390.png')});
+        await page.click('.gallery-card:not([hidden])');
+        check('Lightbox hides sticky CTA',await page.$eval('.mobile-sticky',e=>e.hidden));
+        await page.keyboard.press('Escape');await page.click('[data-filter="all"]');
+        await page.$eval('#alumni-heading',e=>e.scrollIntoView({behavior:'instant'}));
+        if(!base) await page.screenshot({path:path.join(output,'alumni_390.png')});
+      }
+      if(route==='hubungi') {
+        await page.setViewport({width:390,height:844,isMobile:true,hasTouch:true});
+        await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
+        await page.$eval('#faq-btn-faq-2',e=>e.scrollIntoView({behavior:'instant',block:'center'}));await page.tap('#faq-btn-faq-2');
+        check('Touch FAQ opens',await page.$eval('#faq-btn-faq-2',e=>e.getAttribute('aria-expanded')==='true'));
+        if(!base) await page.screenshot({path:path.join(output,'faq-open_390.png')});
+        await page.click('#faq-btn-faq-2');
+      }
+      if(!is404) {
+        await page.$eval('.final-cta',e=>e.scrollIntoView({behavior:'instant',block:'center'}));
+        await page.waitForFunction(()=>document.querySelector('.mobile-sticky').hidden);
+        check('Visible final CTA suppresses persistent duplicate',true);
+      }
+      await page.evaluate(()=>window.scrollTo({top:document.body.scrollHeight,behavior:'instant'}));
+      check('Footer leaves room for persistent CTA',await page.evaluate(()=>parseFloat(getComputedStyle(document.querySelector('.site-footer')).paddingBottom)>=100));
+      if(!route && !base) await page.screenshot({path:path.join(output,'footer_390.png')});
+    }
+    await page.setViewport({width:390,height:844,isMobile:true,hasTouch:true});
+    await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
+    await page.tap('#menu-toggle-btn');
+    check('Touch opens hamburger menu',await page.$eval('#mobile-menu',e=>e.open));
+    await page.tap('#close-mobile-menu');
+    check('Touch closes hamburger menu',await page.$eval('#mobile-menu',e=>!e.open));
+    await page.setViewport({width:844,height:390,isMobile:true,hasTouch:true});
     await page.click('#menu-toggle-btn');
-    await page.setViewport({width:1440,height:900});
+    check('Landscape menu scrolls within viewport',await page.$eval('#mobile-menu',e=>{const r=e.getBoundingClientRect();return e.open && r.top>=0 && r.bottom<=innerHeight && e.scrollHeight>=e.clientHeight;}));
+    await page.keyboard.press('Escape');
+    await page.click('#menu-toggle-btn');
+    await page.setViewport({width:1440,height:900,isMobile:true,hasTouch:true});
     await page.waitForFunction(()=>document.getElementById('menu-toggle-btn').getAttribute('aria-expanded')==='false');
     check('Resize closes menu',true);
     if(route==='galeri') {

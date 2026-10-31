@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../styles/components.css';
 import '../styles/desktop-refinement.css';
+import '../styles/mobile-refinement.css';
 import PreviewBanner from '../components/PreviewBanner.astro';
 import AnnouncementBar from '../components/AnnouncementBar.astro';
 import SiteHeader from '../components/SiteHeader.astro';
@@ -34,7 +35,7 @@ const robotsDirective = (isInternalMode || activeRoute === '/404') ? 'noindex, n
 <html lang="ms-MY">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#123F35" />
     <meta name="robots" content={robotsDirective} />
 
@@ -74,40 +75,8 @@ const robotsDirective = (isInternalMode || activeRoute === '/404') ? 'noindex, n
         el.textContent = String(new Date().getFullYear());
       });
 
-      // Mobile Menu Controller
-      const toggle = document.getElementById('menu-toggle-btn') as HTMLButtonElement | null;
-      const mobileNav = document.getElementById('mobile-nav');
+      import '../scripts/mobileExperience';
 
-      const closeMenu = () => {
-        if (!mobileNav || !toggle) return;
-        mobileNav.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Buka menu');
-      };
-
-      if (toggle && mobileNav) {
-        const mobileBreakpoint = window.matchMedia('(max-width: 1060px)');
-        mobileBreakpoint.addEventListener('change', closeMenu);
-        document.addEventListener('click', (event) => {
-          if (event.target instanceof Node && !mobileNav.contains(event.target) && !toggle.contains(event.target)) closeMenu();
-        });
-        toggle.addEventListener('click', () => {
-          const state = mobileNav.classList.toggle('open');
-          toggle.setAttribute('aria-expanded', String(state));
-          toggle.setAttribute('aria-label', state ? 'Tutup menu' : 'Buka menu');
-        });
-
-        mobileNav.querySelectorAll('a').forEach(a => {
-          a.addEventListener('click', closeMenu);
-        });
-
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
-            closeMenu();
-            toggle.focus();
-          }
-        });
-      }
     </script>
   </body>
 </html>

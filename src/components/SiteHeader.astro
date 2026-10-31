@@ -52,17 +52,19 @@ const current = normalizeRoute(activeRoute);
       class="menu-toggle"
       type="button"
       aria-label="Buka menu"
-      aria-controls="mobile-nav"
+      aria-controls="mobile-menu"
       aria-expanded="false"
       id="menu-toggle-btn"
     >
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
-        <path d="M4 7h16M4 12h16M4 17h16" />
+        <path class="menu-lines" d="M4 7h16M4 12h16M4 17h16" /><path class="menu-cross" d="M6 6l12 12M6 18L18 6" />
       </svg>
     </button>
   </div>
 
-  <nav id="mobile-nav" class="mobile-nav" aria-label="Navigasi mudah alih">
+  <dialog id="mobile-menu" class="mobile-menu" aria-labelledby="mobile-menu-title">
+    <div class="mobile-menu-heading"><h2 id="mobile-menu-title">Terokai MADUM</h2><button type="button" id="close-mobile-menu" aria-label="Tutup menu">✕</button></div>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="Navigasi mudah alih">
     {navItems.map(item => {
       const isActive = current === normalizeRoute(item.href);
       return (
@@ -75,8 +77,9 @@ const current = normalizeRoute(activeRoute);
         </a>
       );
     })}
-    <a href="/kemasukan#pertanyaan">
+    <a class="mobile-menu-cta" href="/kemasukan#pertanyaan">
       Tanya Kemasukan ↗
     </a>
-  </nav>
+    </nav>
+  </dialog>
 </header>

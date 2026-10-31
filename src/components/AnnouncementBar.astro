@@ -8,8 +8,9 @@ interface Props {
 const { session = siteConfig.admissionsSession } = Astro.props;
 ---
 <aside class="announcement" aria-label="Pengumuman kemasukan">
-  <strong>Pengambilan Pelajar Sesi {session}</strong>
+  <span class="announcement-desktop"><strong>Pengambilan Pelajar Sesi {session}</strong>
   <span>·</span>
   Maklumat kemasukan tertakluk kepada pengesahan
-  <a href="/kemasukan">Lihat maklumat →</a>
+  <a href="/kemasukan">Lihat maklumat →</a></span>
+  <span class="announcement-mobile"><span>{siteConfig.publicationMode === 'internal' ? 'Pratonton dalaman' : 'MADUM'}</span><a href="/kemasukan">Sesi {session} →</a></span>
 </aside>
