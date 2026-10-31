@@ -39,10 +39,6 @@ try {
     const result = { page:is404?'404':route||'index', checks:[], consoleErrors:[], pageErrors:[], failedRequests:[], canceledImages:[], canceledVideos:[], accessibility:[], responsive:[], performance:[] };
     const check = (name, passed, details) => result.checks.push({name,passed:Boolean(passed), ...(details ? {details}: {})});
     const page = await browser.newPage();
-    const pendingRequests = new Map();
-    page.on('request', req=>pendingRequests.set(req,req.url()));
-    for(const event of ['requestfinished','requestfailed']) page.on(event,req=>pendingRequests.delete(req));
-    const idle = async idleTime => {try {await page.waitForNetworkIdle({idleTime,timeout:15000});} catch(err) {throw new Error(`${route||'index'} network idle: ${JSON.stringify([...pendingRequests.values()])}`,{cause:err});}};
     page.on('console', msg=> { if(msg.type()==='error' && !msg.text().includes('404 (Not Found)')) result.consoleErrors.push(msg.text()); });
     page.on('pageerror', err=> result.pageErrors.push(err.message));
     page.on('requestfailed', req=> {
@@ -69,10 +65,9 @@ try {
     });
     for (const width of report.viewports) {
       console.log(`CHECK ${route||'index'} ${width}`);
+      // Isolate each viewport before resizing; old srcset requests must not cross scenarios.
+      await page.goto('about:blank');
       await page.setViewport({width,height:({320:640,360:800,375:812,390:844,414:896,430:932,768:1024})[width] || 900});
-      // Resizing a live document can start a new responsive-image request.
-      // Let it complete before navigation so the harness does not abort it.
-      await idle(250);
       const response = await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
       await page.evaluate(async()=> {
         document.querySelectorAll('img').forEach(img=>{ img.loading='eager'; });
@@ -123,8 +118,8 @@ try {
       }
     }
     // Keyboard navigation, focus restoration, and resize closure on every route.
+    await page.goto('about:blank');
     await page.setViewport({width:390,height:844});
-    await idle(250);
     await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
     await page.keyboard.press('Tab');
     check('Keyboard skip link',await page.evaluate(()=>document.activeElement?.getAttribute('href')==='#main-content'));
