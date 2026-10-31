@@ -1,0 +1,11 @@
+{
+  "checkedDate": "2026-10-31",
+  "method": "Read-only HTTP GET with redirects; no POST, submission, message or candidate data",
+  "source": "https://forms.gle/vyLMqLJpaHBkwyvJ9",
+  "status": 200,
+  "finalUrl": "https://docs.google.com/forms/d/e/1FAIpQLSelF8DsofwnEF0ot-Py38mOuxe1yfBRG496sdj4V-wFtmZMOg/viewform?usp=send_form",
+  "pageTitle": "BORANG MAKLUMAT CALON PELAJAR MADUM 2026",
+  "finding": "Accessible form still names session 2026; suitability for 2027 is not verified",
+  "adminReceiptVerified": false,
+  "decision": "Keep QR, registration CTA and unverified contact actions held; institutional confirmation and authorized end-to-end test still required"
+}

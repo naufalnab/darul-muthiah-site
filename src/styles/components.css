@@ -1261,17 +1261,17 @@
   transform: scale(1.04);
 }
 
-.gallery-card figcaption {
+.gallery-card .gallery-caption {
   padding: 15px 17px 18px;
 }
 
-.gallery-card figcaption b {
+.gallery-card .gallery-caption b {
   display: block;
   font-size: 12px;
   color: var(--deep);
 }
 
-.gallery-card figcaption small {
+.gallery-card .gallery-caption small {
   font-size: 10px;
   color: #829083;
 }
@@ -2336,10 +2336,10 @@ dialog.lightbox[open] {
   .gallery-card img {
     height: 144px;
   }
-  .gallery-card figcaption {
+  .gallery-card .gallery-caption {
     padding: 12px;
   }
-  .gallery-card figcaption b {
+  .gallery-card .gallery-caption b {
     font-size: 11px;
   }
   .gallery-controls {

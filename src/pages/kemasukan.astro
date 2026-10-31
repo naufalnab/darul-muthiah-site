@@ -1,9 +1,8 @@
 ---
-import ConsentImage from '../components/ConsentImage.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PrimaryCTA from '../components/PrimaryCTA.astro';
 import WhatsAppInquiryForm from '../components/WhatsAppInquiryForm.astro';
-import { admissionsSteps, admissionsChecklist, feeItems } from '../content/fees';
+import { admissionsSteps, admissionsChecklist } from '../content/fees';
 import { siteConfig } from '../content/siteConfig';
 import AdmissionsPoster from '../components/AdmissionsPoster.astro';
 
@@ -30,23 +29,10 @@ const description = "Pratonton dalaman halaman Kemasukan & Yuran MADUM. Belum di
         </a>
       </div>
 
-      <div class="inner-hero-image">
-        <ConsentImage
-          src="/assets/hero-kelas.webp"
-          alt="Suasana kelas pengajian dan pembelajaran di Maahad Darul Muthiah"
-          loading="eager"
-          width="485"
-          height="385"
-        />
-        <span class="inner-photo-tag">
-          Pengajian Al-Quran
-          <small>Visual neutral · Media dalam semakan</small>
-        </span>
-      </div>
+      <AdmissionsPoster />
     </div>
   </section>
 
-  <AdmissionsPoster />
 
   <!-- Cara Memulakan -->
   <section class="section-compact surface-white" aria-labelledby="langkah-title">
@@ -92,19 +78,17 @@ const description = "Pratonton dalaman halaman Kemasukan & Yuran MADUM. Belum di
         <strong>Semakan sebelum terbit:</strong> semua kadar, kaedah bantuan asnaf, dan syarat pembayaran perlu disahkan pihak maahad. Pratonton ini tidak menerima pembayaran.
       </div>
 
-      <div class="fees">
-        {feeItems.map(fee => (
-          <div class="fee-card">
-            <div class="fee-top">
-              <b>{fee.category}</b>
-            </div>
-            <div class="fee-body">
-              <div class="value">{fee.value}</div>
-              <span class="suffix">{fee.period}</span>
-              <p>{fee.description}</p>
-            </div>
-          </div>
-        ))}
+      <div class="fee-editorial">
+        <div>
+          <span class="pending">Kadar rasmi sesi 2027 belum disahkan</span>
+          <h3>Rancang keperluan pengajian dengan maklumat yang tepat.</h3>
+          <p>Jadual yuran akan dikemas kini selepas pengesahan pihak maahad. Tiada bayaran atau tempahan tempat diterima melalui pratonton ini.</p>
+          <a class="text-link" href="/hubungi#saluran">Semak saluran perhubungan →</a>
+        </div>
+        <div class="fee-questions">
+          <h4>Perkara untuk ditanya kepada pihak maahad</h4>
+          <ul><li>Komponen pendaftaran dan yuran tahunan.</li><li>Perbezaan keperluan pengajian asrama dan harian.</li><li>Kaedah pembayaran serta bantuan yang tersedia.</li></ul>
+        </div>
       </div>
 
       <div class="review-note" style="background:#f2f7ee;border-color:#dce8d8;color:#465f4e">

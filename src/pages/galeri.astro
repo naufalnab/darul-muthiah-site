@@ -1,8 +1,9 @@
 ---
+import reviewedAssets from '../../scripts/lib/documentationAssets.json';
+import ConsentImage from '../components/ConsentImage.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PrimaryCTA from '../components/PrimaryCTA.astro';
 import PhotoLightbox from '../components/PhotoLightbox.astro';
-import { siteConfig } from '../content/siteConfig';
 import { galleryPhotos, galleryVideos, galleryFilters } from '../content/gallery';
 import AlumniCard from '../components/AlumniCard.astro';
 import { alumniProfiles, alumniTestimonial } from '../content/alumni';
@@ -10,7 +11,7 @@ import { alumniProfiles, alumniTestimonial } from '../content/alumni';
 const title = "Galeri & Pencapaian — MADUM";
 const description = "Pratonton ruang dokumentasi dan alumni MADUM. Media pelajar dan profil peribadi menunggu izin penerbitan.";
 
-const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
+const mediaApproved = [...galleryPhotos.map(p => p.src), ...galleryVideos.flatMap(v => [v.src, v.poster])].every(src => Object.hasOwn(reviewedAssets, src.slice(1)));
 ---
 <SiteLayout title={title} description={description} activeRoute="/galeri">
   <!-- Plain Hero -->
@@ -26,7 +27,7 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
       <p class="inner-lead">
         Sorotan aktiviti Al-Quran, pembelajaran, kemahiran, sukan dan lawatan daripada bahan yang dibekalkan oleh pihak maahad.
       </p>
-      <span class="pending">Dokumentasi menunggu izin penerbitan</span>
+      <span class="pending">Dokumentasi pihak maahad · Pratonton dalaman</span>
     </div>
   </section>
 
@@ -69,25 +70,24 @@ const mediaApproved = siteConfig.releaseApprovals.studentMediaConsentApproved;
           <!-- Gallery Grid -->
           <div class="gallery-grid-full">
             {galleryPhotos.map(photo => (
-              <figure
+              <button
+                type="button"
                 class="gallery-card"
                 data-cat={photo.cat}
-                tabindex="0"
-                role="button"
-                aria-label={`Lihat gambar: ${photo.title}`}
               >
-                <img
+                <ConsentImage
                   src={photo.src}
+                  sizes="(max-width: 750px) 100vw, (max-width: 1000px) 50vw, 380px"
                   alt={photo.alt}
                   loading="lazy"
                   width="380"
                   height="240"
                 />
-                <figcaption>
+                <span class="gallery-caption">
                   <b>{photo.title}</b>
                   <small>{photo.catLabel}</small>
-                </figcaption>
-              </figure>
+                </span>
+              </button>
             ))}
           </div>
         </>

@@ -1,0 +1,129 @@
+[
+  {
+    "source": "public/assets/hero-kelas.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "062db534056eb9d5601e883811de0ea9dc76fcda7f4def17d3e02fe854131a4e",
+    "width": 1008,
+    "height": 756
+  },
+  {
+    "source": "public/assets/aktiviti-maahad.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "5de27a0753986f99b654f29e2f8a60294d764bba5bc69280037d6aea5e98ebf4",
+    "width": 1008,
+    "height": 756
+  },
+  {
+    "source": "public/assets/aktiviti-tarbiah.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "da1f0f96836aa7fb2e324ef0a8653291046453261dd41552a2b65f733f69e6cc",
+    "width": 1080,
+    "height": 810
+  },
+  {
+    "source": "public/assets/belajar-halaqah.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "8317e19595ecb3916c085aea7a6b15b30b13e2e56facbe7cef6dafc689d23d9a",
+    "width": 810,
+    "height": 1080
+  },
+  {
+    "source": "public/assets/kelas-akademik.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "aeb932369bcaa2918dfb3c9f9f0812dfee0e1efe48c14f2dd5ad1d0c0a9e7327",
+    "width": 1080,
+    "height": 810
+  },
+  {
+    "source": "public/assets/kemahiran-tvet.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "1620dd950845fabc3a6f323abc71e3f9518097d19801c886964d46fc43b2c471",
+    "width": 1024,
+    "height": 768
+  },
+  {
+    "source": "public/assets/sukan-pelajar.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "0fdefd80380b28b07ca6b37a72f8bce23390dc76e8eaa67045c7028f97a3f996",
+    "width": 1080,
+    "height": 810
+  },
+  {
+    "source": "public/assets/rehlah-pelajar.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "77a9b6cccb41692a6a96beaef31c6657a6a3627a19431647b740e63a9ceff2d8",
+    "width": 1080,
+    "height": 810
+  },
+  {
+    "source": "public/assets/majlis-ilmu.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "c2d54685df413e0d55eea2fd0262dfc9d94595d42acba35f289ed4597bf47ad0",
+    "width": 1024,
+    "height": 768
+  },
+  {
+    "source": "public/assets/seminar.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "b6d97d5ef45b9a50035149f7ed23089d492357f6d515a314bb82e8eeda889e62",
+    "width": 1024,
+    "height": 768
+  },
+  {
+    "source": "public/assets/keselamatan.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "685eb8cc6c1feb9920f5e78937ff19407d39facab264dbc3fcc84cc5acbc6a10",
+    "width": 607,
+    "height": 1080
+  },
+  {
+    "source": "public/assets/outdoor.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "a2acca514b3b188758ce9bc03d39135f55d863ea0a6d1319f07f16035d3bf3de",
+    "width": 1080,
+    "height": 810
+  },
+  {
+    "source": "public/assets/lawatan-ilmu.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "be7f2965da3cb9c6d44bf76dc96b4f268db7027193ca0da3d1725288716a30e9",
+    "width": 1000,
+    "height": 750
+  },
+  {
+    "source": "public/assets/video-intro.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "db1c7278987aa987c3953cfb8f5a9cc2ff2816e3aadb81bcc81bae340bbddde5",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "source": "public/assets/video-nasyid.webp",
+    "provenance": "Existing institutional website documentation; visually reviewed 2026-10-31; owner authorizes selected website media in task brief.",
+    "sha256": "97b06f4ce31163489130de3ff684cc8a9da508da2e1e2b04407ab58646e2c7f0",
+    "width": 848,
+    "height": 480
+  },
+  {
+    "source": "public/assets/intro-madum.mp4",
+    "sha256": "c987394e29bfba300aeff33e2d4db7f12d7243dcf4798990cd09272752e5bb7c",
+    "bytes": 3456603,
+    "provenance": "Existing website video; reused in place, no duplicated binary."
+  },
+  {
+    "source": "public/assets/nasyid-pelajar.mp4",
+    "sha256": "a08f732194bf2b15d48fac020edf350a4d835156279251d9a8cd12c8d8340dbf",
+    "bytes": 6835110,
+    "provenance": "Existing website video; reused in place, no duplicated binary."
+  },
+  {
+    "source": "00000247-PHOTO-2026-10-28-13-54-24.jpg",
+    "sourceSha256": "ca0beb2347a4615140c7304325d379ee209235747956ee982d7c27c098a815c5",
+    "outputs": [
+      "assets/refinement/poster-2027-480.webp",
+      "assets/refinement/poster-2027-854.webp"
+    ],
+    "processing": "Artwork and activity photos retained. Footer y1120\u20131280 masks unverified QR and contact actions. No AI reconstruction. EXIF/XMP omitted.",
+    "publication": "Internal review only; activation approvals remain false."
+  }
+]

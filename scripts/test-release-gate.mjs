@@ -378,6 +378,23 @@ try {
     finally { fs.writeFileSync(poster, original); }
   });
 
+  runTest('Documentation video remains hash-bound and user initiated', () => {
+    writeTestConfig(baselineConfig);
+    for (const markup of [
+      '<video controls preload="none" poster="/assets/video-intro.webp"><source src="https://example.invalid/rogue.mp4" type="video/mp4"></video>',
+      '<video controls autoplay preload="none" poster="/assets/video-intro.webp"><source src="/assets/intro-madum.mp4" type="video/mp4"></video>',
+      '<iframe src="https://example.invalid"></iframe>'
+    ]) {
+      runFullBuild();
+      fs.appendFileSync(path.join(DIST_PATH, 'index.html'), markup);
+      assert.throws(() => execSync('node scripts/postbuild.mjs', { cwd: fixture, stdio: 'pipe' }));
+    }
+    const media = path.join(fixture, 'public/assets/hero-kelas.webp');
+    const original = fs.readFileSync(media);
+    try { fs.appendFileSync(media, 'changed'); assert.throws(runDirectAstroBuild); }
+    finally { fs.writeFileSync(media, original); }
+  });
+
   runTest('Approved filename replacement rejected by content hash', () => {
     writeTestConfig(baselineConfig);
     const logo = path.join(fixture, 'public/assets/logo-madum.webp');
@@ -395,14 +412,14 @@ try {
     finally { fs.unlinkSync(file); }
   });
 
-  runTest('Pages subpath build is private, has valid metadata, no raw contacts/Form/media', () => {
+  runTest('Pages subpath build is private, has valid metadata, reviewed media and no raw contacts/Form', () => {
     writeTestConfig(baselineConfig);
     execSync('pnpm exec astro build', { cwd: fixture, env: { ...process.env, ASTRO_BASE: '/darul-muthiah-site', GITHUB_PAGES: 'true' }, stdio: 'pipe' });
     for (const route of ['', 'profil/', 'pengajian/', 'kemasukan/', 'galeri/', 'hubungi/']) {
       const html = fs.readFileSync(path.join(DIST_PATH, route, 'index.html'), 'utf8');
       assert.match(html, /noindex, nofollow/);
       assert.doesNotMatch(html, /href="(?:https:\/\/wa.me|tel:|mailto:|https:\/\/forms\.)/);
-      assert.doesNotMatch(html, /hero-kelas|intro-madum|nasyid-pelajar/);
+      assert.doesNotMatch(html, /portrait-000002|header-desktop/); // Reviewed documentation is authorized; unverified identity remains withheld.
       assert.doesNotMatch(html, /(?:href|src)="\/assets/);
       assert.match(html, /\/darul-muthiah-site\/assets\/preview-placeholder.svg|\/darul-muthiah-site\/assets\/logo-madum.webp/);
     }

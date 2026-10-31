@@ -1,11 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+const documentationAssets = JSON.parse(fs.readFileSync(new URL('./documentationAssets.json', import.meta.url), 'utf8'));
 const phase3Assets = JSON.parse(fs.readFileSync(new URL('./phase3PreviewAssets.json', import.meta.url), 'utf8'));
 
-// Content hashes prevent an approved filename from being replaced with a pupil photo.
+// Exact hashes bind review to content; a reviewed filename cannot authorize a replacement.
 export const previewAssets = {
   ...phase3Assets,
+  ...documentationAssets,
   'assets/logo-madum.webp': '7c206c30f264a25c94985a2f5e0436c99320c1dec2b70c738004a4795aee6d73',
   'assets/preview-placeholder.svg': '69116b18679adad4e2ac3061be18c9c65b4cbce65d01047763abd4065e6fb1a5',
 };
@@ -45,17 +47,22 @@ export function auditPreviewOutput(dir) {
       const content = fs.readFileSync(file, 'utf8');
       // Only exact reviewed local URLs may occur in media-bearing attributes.
       // Responsive <picture>/<source> is permitted; arbitrary URLs, data URIs,
-      // CSS media references, active video and embedded documents still fail closed.
+      // CSS media references and embedded documents still fail closed; reviewed video requires user controls.
       const approvedUrl = url => Object.keys(previewAssets).some(asset =>
         url === `/${asset}` || (url.startsWith('/') && url.endsWith(`/${asset}`) &&
           /^\/(?:[a-z0-9_-]+\/)+assets\//i.test(url)));
       if (relative.endsWith('.html')) {
-        if (/<(?:video|audio|iframe|object|embed)\b/i.test(content)) {
+        if (/<(?:audio|iframe|object|embed)\b/i.test(content)) {
           throw new Error(`[PRIVACY_LEAK] Unreviewed media element: ${relative}`);
         }
-        for (const tag of content.matchAll(/<(?:img|source)\b[^>]*>/gi)) {
+        for (const video of content.matchAll(/<video\b[^>]*>/gi)) {
+          if (!/\bcontrols(?:[\s=>])/.test(video[0]) || /\bautoplay\b/i.test(video[0]) || !/\bpreload="none"/.test(video[0])) {
+            throw new Error(`[PRIVACY_LEAK] Video must be user initiated: ${relative}`);
+          }
+        }
+        for (const tag of content.matchAll(/<(?:img|source|video)\b[^>]*>/gi)) {
           let hasSource = false;
-          for (const attr of tag[0].matchAll(/\b(src|srcset)="([^"]+)"/gi)) {
+          for (const attr of tag[0].matchAll(/\b(src|srcset|poster)="([^"]+)"/gi)) {
             hasSource = true;
             const urls = attr[1].toLowerCase() === 'srcset'
               ? attr[2].split(',').map(candidate => candidate.trim().split(/\s+/)[0])

@@ -66,6 +66,15 @@ test('Six client alumni profiles and one verbatim attributed testimonial', () =>
   assert.ok(gallery.includes('Alhamdulillah, Darul Muthiah banyak mendidik saya bukan sahaja dalam hafazan Al-Quran, tetapi juga dalam membentuk akhlak dan disiplin diri. Ilmu dan kenangan di sini akan sentiasa terpahat di hati. Terima kasih Puan Pengetua dan semua tenaga pengajar.'));
   assert.doesNotMatch(gallery, /portrait-000002/); // Do not guess a photo identity.
 });
+test('Reviewed institutional gallery and gated actions', () => {
+  assert.equal((gallery.match(/class="gallery-card"/g) || []).length, 12);
+  assert.equal((gallery.match(/<video\b/g) || []).length, 2);
+  assert.match(gallery, /controls/);
+  const admissions = fs.readFileSync(path.join(dist, 'kemasukan/index.html'), 'utf8');
+  assert.match(admissions, /poster-2027-854/);
+  assert.match(admissions, /data-registration-status="pending"/);
+  assert.doesNotMatch(admissions, /RM\s*(?:1,?310|500|450)/);
+});
 test('All real release approvals remain false and publication stays internal', () => {
   const config = JSON.parse(fs.readFileSync('src/content/siteConfig.json', 'utf8'));
   assert.equal(config.publicationMode, 'internal');
@@ -75,7 +84,7 @@ test('All real release approvals remain false and publication stays internal', (
 const passed = checks.every(c => c.passed);
 const report = { kind: 'static integrity; no browser or performance measurements', base, htmlFiles: htmls.length, checks, passed };
 fs.mkdirSync('docs/qa', { recursive: true });
-fs.writeFileSync(`docs/qa/phase3-static${base ? '-pages' : ''}.json`, JSON.stringify(report, null, 2) + '\n');
+fs.writeFileSync(`docs/qa/desktop-static${base ? '-pages' : ''}.json`, JSON.stringify(report, null, 2) + '\n');
 for (const c of checks.filter(c => !c.passed)) console.error(c.name, c.reason);
 console.log(`Static integrity ${passed ? 'PASSED' : 'FAILED'}: ${checks.filter(c => c.passed).length}/${checks.length}`);
 if (!passed) process.exitCode = 1;

@@ -13,7 +13,7 @@ const isReview = siteConfig.publicationMode === 'internal';
     <img class="alumni-portrait" src={profile.portrait!} alt={`Potret ${profile.name}`}
       width={profile.portraitWidth} height={profile.portraitHeight} loading="lazy" decoding="async" />
   ) : (
-    <div class="alumni-visual" aria-hidden="true"><span class="alumni-mark">DM</span><span class="alumni-number">{profile.year}</span></div>
+    <div class="alumni-visual" aria-hidden="true"><span class="alumni-mark">{profile.name.split(/\s+/).slice(0, 2).map(part => part[0]).join('')}</span><span class="alumni-number">{profile.year}</span></div>
   )}
   <div class="alumni-copy">
     <span class="eyebrow">ALUMNI {profile.year}</span>
