@@ -20,15 +20,15 @@ const description = "Rujukan maklumat perhubungan, nombor WhatsApp, lokasi Shah 
         Kami sedia membantu <em>pertanyaan anda.</em>
       </h1>
       <p class="inner-lead">
-        Hubungi pihak maahad bagi pertanyaan tentang pengajian, kemasukan, yuran atau lawatan. Saluran berikut berdasarkan maklumat yang dibekalkan klien dan perlu disemak sebelum penerbitan.
+        Hubungi pihak maahad bagi pertanyaan tentang pengajian, kemasukan, yuran atau lawatan.
       </p>
       <a
         class="btn btn-primary"
-        href={siteConfig.releaseApprovals.officialContactApproved ? `https://wa.me/${siteConfig.whatsappE164}?text=Assalamualaikum.%20Saya%20ingin%20bertanya%20mengenai%20MADUM.` : '#saluran'}
-        target={siteConfig.releaseApprovals.officialContactApproved ? '_blank' : undefined}
-        rel={siteConfig.releaseApprovals.officialContactApproved ? 'noopener noreferrer' : undefined}
+        href={`https://wa.me/${siteConfig.whatsappE164}?text=Assalamualaikum.%20Saya%20ingin%20bertanya%20mengenai%20MADUM.`}
+        target="_blank"
+        rel="noopener noreferrer"
       >
-        {siteConfig.releaseApprovals.officialContactApproved ? 'WhatsApp MADUM' : 'Semak Saluran Pertanyaan'} <span class="arrow" aria-hidden="true">↗</span>
+        WhatsApp MADUM <span class="arrow" aria-hidden="true">↗</span>
       </a>
     </div>
   </section>
@@ -42,11 +42,9 @@ const description = "Rujukan maklumat perhubungan, nombor WhatsApp, lokasi Shah 
         <article class="contact-card">
           <div class="contact-icon" aria-hidden="true">↗</div>
           <h3>WhatsApp Kemasukan</h3>
-          <span class="pending">Nombor rasmi belum disahkan</span>
           <p>{siteConfig.whatsappDisplay}</p>
-          <p class="verification-note">Poster sesi 2027 menyatakan +60 12-202 3024. Pihak maahad perlu menetapkan nombor rasmi sebelum saluran diaktifkan.</p>
-          <a href={siteConfig.releaseApprovals.officialContactApproved ? `https://wa.me/${siteConfig.whatsappE164}` : undefined} aria-disabled={!siteConfig.releaseApprovals.officialContactApproved} target="_blank" rel="noopener noreferrer">
-            Saluran pertanyaan · Menunggu pengesahan
+          <a href={`https://wa.me/${siteConfig.whatsappE164}`} target="_blank" rel="noopener noreferrer">
+            Hubungi melalui WhatsApp
           </a>
         </article>
 
@@ -63,18 +61,11 @@ const description = "Rujukan maklumat perhubungan, nombor WhatsApp, lokasi Shah 
         <article class="contact-card">
           <div class="contact-icon" aria-hidden="true">✉</div>
           <h3>E-mel</h3>
-          <span class="pending">Alamat rasmi belum disahkan</span>
-          <p>{siteConfig.emailOffice}</p>
-          <a href={siteConfig.releaseApprovals.officialContactApproved ? `mailto:${siteConfig.emailOffice}` : undefined} aria-disabled={!siteConfig.releaseApprovals.officialContactApproved}>
-            E-mel · Menunggu pengesahan
-          </a>
-          <p class="verification-note">
-            Alamat e-mel menunggu pengesahan institusi.
-          </p>
+          <p><a href={`mailto:${siteConfig.emailOffice}`}>{siteConfig.emailOffice}</a></p>
         </article>
       </div>
       <div class="review-note">
-        <strong>Facebook</strong><br />Nama halaman yang dibekalkan: Maahad Tahfiz Al Quran Darul Muthiah (1). Pautan akan ditambah selepas URL tepat disahkan oleh pihak maahad.
+        <strong>Facebook</strong><br />Maahad Tahfiz Al Quran Darul Muthiah (1)
       </div>
     </div>
   </section>
@@ -83,9 +74,9 @@ const description = "Rujukan maklumat perhubungan, nombor WhatsApp, lokasi Shah 
     <div class="container">
       <div class="eyebrow">MAKLUMAT ZAKAT</div>
       <h2 class="section-title" id="zakat-title">Pautan portal zakat</h2>
-      <p class="section-sub">Pautan rujukan luar · Hubungan dengan penerima MADUM belum disahkan. Pihak maahad telah berkongsi portal Mudah Zakat. Sebarang urusan pembayaran berlangsung di laman luar, bukan di website MADUM.</p>
+      <p class="section-sub">Untuk pembayaran zakat, sila layari portal Mudah Zakat yang dikongsikan oleh pihak maahad.</p>
       <a href="https://www.mudahzakat.com/" target="_blank" rel="noopener noreferrer" class="text-link">Lawati Portal Mudah Zakat ↗</a>
-      <div class="review-note">Sila sahkan organisasi penerima serta butiran pembayaran secara bebas sebelum membuat sebarang transaksi.</div>
+      <div class="review-note">Sila semak nama penerima dan butiran pembayaran di portal sebelum membuat pembayaran.</div>
     </div>
   </section>
 

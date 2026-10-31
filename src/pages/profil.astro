@@ -171,6 +171,7 @@ const description = "Pengenalan, matlamat pendidikan, sejarah ringkas, dan statu
             <div class="eyebrow">{item.organization}</div>
             <h3>{item.title}</h3>
             <p>{item.description}</p>
+            {item.short === 'JAIS' && <a href="/assets/phase3/sijil-jais.png" target="_blank" rel="noopener noreferrer"><img src="/assets/phase3/sijil-jais.png" width="816" height="1109" loading="lazy" alt="Sijil pendaftaran JAIS dengan nombor kad pengenalan ditutup" style="display:block;width:100%;height:auto;margin:1rem 0;border:1px solid #ddd;border-radius:6px" /></a>}
             <p class="verification-note">{item.pending}</p>
             <span class="pending">Pengesahan institusi diperlukan</span>
           </article>

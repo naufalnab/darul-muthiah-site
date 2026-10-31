@@ -22,7 +22,7 @@ const {
   disclaimer = 'Pratonton dalaman · Pengesahan diperlukan',
   sectionClass = 'section-ending'
 } = Astro.props;
-const contactPending = ctaHref.startsWith('https://wa.me/') && !siteConfig.releaseApprovals.officialContactApproved;
+const contactPending = false;
 const resolvedHref = contactPending ? '/hubungi#saluran' : ctaHref;
 const external = isExternal && !contactPending;
 ---

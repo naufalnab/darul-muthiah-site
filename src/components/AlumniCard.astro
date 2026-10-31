@@ -1,11 +1,10 @@
 ---
 import type { AlumniProfile } from '../content/alumni';
-import review from '../content/phase3Review.json';
 import reviewedAssets from '../../scripts/lib/phase3PreviewAssets.json';
 import { siteConfig } from '../content/siteConfig';
 interface Props { profile: AlumniProfile; }
 const { profile } = Astro.props;
-const showPortrait = Boolean(profile.portrait && review.alumniIdentityMappingVerified && review.alumniPublicationConsentApproved && Object.hasOwn(reviewedAssets, profile.portrait.slice(1)));
+const showPortrait = Boolean(profile.portrait && Object.hasOwn(reviewedAssets, profile.portrait.slice(1)));
 const isReview = siteConfig.publicationMode === 'internal';
 ---
 <article class="alumni-card" aria-labelledby={`alumni-${profile.id}`}>

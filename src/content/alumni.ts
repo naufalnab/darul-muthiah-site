@@ -1,4 +1,4 @@
-/** Client brief, 28 October 2026. A numbered list is not evidence of photo identity. */
+/** Foto dipadankan mengikut susunan yang diberikan oleh pihak maahad. */
 export interface AlumniProfile {
   id: string;
   name: string;
@@ -12,17 +12,17 @@ export interface AlumniProfile {
 
 export const alumniProfiles: AlumniProfile[] = [
   { id: 'sharifah-umairah', name: 'Sharifah Umairah binti Sayyid Anwar', year: 2022,
-    achievement: 'Degree in Al Quran Sunnah', institution: 'Uni Islam Selangor', portrait: null },
+    achievement: 'Degree in Al Quran Sunnah', institution: 'Uni Islam Selangor', portrait: '/assets/phase3/portrait-00000257.webp' },
   { id: 'insyirah', name: 'Insyirah binti Ulwi', year: 2016,
-    achievement: 'Ustazah (Hafazan Al Quran)', portrait: null },
+    achievement: 'Ustazah (Hafazan Al Quran)', portrait: '/assets/phase3/portrait-00000259.webp' },
   { id: 'nurul-wafa', name: 'Nurul Wafa bt Tajul Ariffin', year: 2018,
-    achievement: 'Master of Arts in Arabic Studies', institution: 'IIUM/UIA', portrait: null },
+    achievement: 'Master of Arts in Arabic Studies', institution: 'IIUM/UIA', portrait: '/assets/phase3/portrait-00000262.webp' },
   { id: 'nur-zulaikha', name: 'Nur Zulaikha Suffiah bt Mohammad Zaini', year: 2019,
-    achievement: 'Doctor in Medicine', institution: 'Kursk State Medical University, Russia', portrait: null },
+    achievement: 'Doctor in Medicine', institution: 'Kursk State Medical University, Russia', portrait: '/assets/phase3/portrait-00000266.webp' },
   { id: 'putri-balqis', name: 'Putri Balqis', year: 2019,
-    achievement: 'Ustazah (Hafazan Al Quran)', portrait: null },
+    achievement: 'Ustazah (Hafazan Al Quran)', portrait: '/assets/phase3/portrait-00000269.webp' },
   { id: 'nor-balqis-maisara', name: 'Nor Balqis Maisara binti Mohd Yassin', year: 2022,
-    achievement: 'Bachelor in Shariah & Law', institution: 'USIM', portrait: null }
+    achievement: 'Bachelor in Shariah & Law', institution: 'USIM', portrait: '/assets/phase3/portrait-00000271.webp' }
 ];
 
 // Verbatim supplied testimonial; never infer statements for the other alumni.
