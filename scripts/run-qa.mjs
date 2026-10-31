@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer-core';
 import http from 'node:http';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
@@ -35,12 +36,21 @@ try {
   browser = await puppeteer.launch({ executablePath:process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless:true, args:['--no-sandbox'] });
   for (const route of ['','profil','pengajian','kemasukan','galeri','hubungi','missing-phase2-page']) {
     const is404 = route.startsWith('missing');
-    const result = { page:is404?'404':route||'index', checks:[], consoleErrors:[], pageErrors:[], failedRequests:[], accessibility:[], responsive:[], performance:[] };
+    const result = { page:is404?'404':route||'index', checks:[], consoleErrors:[], pageErrors:[], failedRequests:[], canceledImages:[], accessibility:[], responsive:[], performance:[] };
     const check = (name, passed, details) => result.checks.push({name,passed:Boolean(passed), ...(details ? {details}: {})});
     const page = await browser.newPage();
     page.on('console', msg=> { if(msg.type()==='error' && !msg.text().includes('404 (Not Found)')) result.consoleErrors.push(msg.text()); });
     page.on('pageerror', err=> result.pageErrors.push(err.message));
-    page.on('requestfailed', req=> result.failedRequests.push(`${req.failure()?.errorText || 'request failed'} ${req.url()}`));
+    page.on('requestfailed', req=> {
+      const error = req.failure()?.errorText || 'request failed';
+      const url = new URL(req.url());
+      // Chrome may cancel a speculative srcset candidate after choosing another.
+      // Keep the cancellation as evidence, then verify the exact asset bytes below.
+      if (error === 'net::ERR_ABORTED' && req.resourceType() === 'image' && url.origin === origin &&
+          allowedMedia.includes(url.pathname.slice(base.length))) {
+        result.canceledImages.push({url:req.url(),error});
+      } else result.failedRequests.push(`${error} ${req.url()}`);
+    });
     page.on('response', res=> { if(res.status()>=400 && !(is404 && res.request().isNavigationRequest())) result.failedRequests.push(`${res.status()} ${res.url()}`); });
     // No external services contacted by the browser QA, including accidental submissions.
     await page.setRequestInterception(true);
@@ -149,7 +159,15 @@ try {
       check('FAQ closes with keyboard',await page.$eval('#faq-btn-faq-2',e=>e.getAttribute('aria-expanded')==='false'));
     }
     if(route==='profil') check('Three text-only recognition cards',await page.$$eval('.legal-card',cards=>cards.length===3 && cards.every(c=>!c.querySelector('img'))));
-    check('No console errors',result.consoleErrors.length===0,result.consoleErrors);
+    for (const canceled of result.canceledImages) {
+      const response = await fetch(canceled.url);
+      const bytes = Buffer.from(await response.arrayBuffer());
+      const asset = new URL(canceled.url).pathname.slice(base.length + 1);
+      canceled.status = response.status;
+      canceled.hashVerified = response.status === 200 && createHash('sha256').update(bytes).digest('hex') === previewAssets[asset];
+    }
+    check('Canceled responsive candidates have exact reviewed bytes',result.canceledImages.every(item=>item.hashVerified),result.canceledImages);
+    check('No console errors' ,result.consoleErrors.length===0,result.consoleErrors);
     check('No runtime exceptions',result.pageErrors.length===0,result.pageErrors);
     check('No failed assets/requests',result.failedRequests.length===0,result.failedRequests);
     result.passed=result.checks.every(c=>c.passed);
