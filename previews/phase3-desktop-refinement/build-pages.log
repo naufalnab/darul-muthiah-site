@@ -1,0 +1,70 @@
+
+> darul-muthiah@1.0.0 prebuild /Users/mac/Documents/MADUM-Phase3-Source/phase3-review-checkout
+> node scripts/prebuild.mjs
+
+[prebuild] Starting pre-build validation & publication safety checks...
+[prebuild] Active publicationMode: 'internal'
+[prebuild] ✓ Privacy audit passed: No PDF, ZIP or internal client documents in public/
+[prebuild] ✓ Build mode 'internal' validated successfully.
+
+
+> darul-muthiah@1.0.0 build /Users/mac/Documents/MADUM-Phase3-Source/phase3-review-checkout
+> astro build
+
+[prebuild] Starting pre-build validation & publication safety checks...
+[prebuild] Active publicationMode: 'internal'
+[prebuild] ✓ Privacy audit passed: No PDF, ZIP or internal client documents in public/
+[prebuild] ✓ Build mode 'internal' validated successfully.
+
+10:06:27 [types] Generated 61ms
+10:06:27 [build] output: "static"
+10:06:27 [build] mode: "static"
+10:06:27 [build] directory: /Users/mac/Documents/MADUM-Phase3-Source/phase3-review-checkout/dist/
+10:06:27 [build] Collecting build info...
+10:06:27 [build] ✓ Completed in 127ms.
+10:06:27 [build] Building static entrypoints...
+10:06:27 [vite] ✓ built in 357ms
+10:06:27 [vite] ✓ built in 238ms
+10:06:27 [build] Rearranging server assets...
+
+ generating static routes 
+10:06:27   ├─ /404.html (+32ms) 
+10:06:27   ├─ /galeri/index.html (+19ms) 
+10:06:27   ├─ /hubungi/index.html (+9ms) 
+10:06:27   ├─ /kemasukan/index.html (+7ms) 
+10:06:27   ├─ /pengajian/index.html (+9ms) 
+10:06:27   ├─ /profil/index.html (+6ms) 
+10:06:27   ├─ /index.html (+24ms) 
+10:06:27 ✓ Completed in 131ms.
+
+10:06:27 [build] ✓ Completed in 777ms.
+[postbuild] Executing post-build tasks for mode: 'internal'
+[postbuild] Created profil.html fallback from profil/index.html
+[postbuild] Created pengajian.html fallback from pengajian/index.html
+[postbuild] Created kemasukan.html fallback from kemasukan/index.html
+[postbuild] Created galeri.html fallback from galeri/index.html
+[postbuild] Created hubungi.html fallback from hubungi/index.html
+[postbuild] Preview allowlist and content hashes verified.
+[postbuild] Configured robots.txt with Disallow: / (Internal mode, no sitemap exposed)
+[postbuild] Rewrote root-relative links for base prefix: '/darul-muthiah-site'
+[postbuild] Preview allowlist and content hashes verified.
+[postbuild] Post-build completed successfully.
+
+10:06:28 [build] 7 page(s) built in 1.04s
+10:06:28 [build] Complete!
+
+> darul-muthiah@1.0.0 postbuild /Users/mac/Documents/MADUM-Phase3-Source/phase3-review-checkout
+> node scripts/postbuild.mjs
+
+[postbuild] Executing post-build tasks for mode: 'internal'
+[postbuild] Created profil.html fallback from profil/index.html
+[postbuild] Created pengajian.html fallback from pengajian/index.html
+[postbuild] Created kemasukan.html fallback from kemasukan/index.html
+[postbuild] Created galeri.html fallback from galeri/index.html
+[postbuild] Created hubungi.html fallback from hubungi/index.html
+[postbuild] Preview allowlist and content hashes verified.
+[postbuild] Configured robots.txt with Disallow: / (Internal mode, no sitemap exposed)
+[postbuild] Rewrote root-relative links for base prefix: '/darul-muthiah-site'
+[postbuild] Preview allowlist and content hashes verified.
+[postbuild] Post-build completed successfully.
+

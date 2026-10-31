@@ -59,6 +59,16 @@ export function runPrebuildChecks() {
     }
   }
 
+  const review = JSON.parse(fs.readFileSync(path.resolve('src/content/phase3Review.json'), 'utf8'));
+  const requiredReview = ['alumniIdentityMappingVerified', 'alumniPublicationConsentApproved',
+    'testimonialAttributionApproved', 'posterActivationApproved', 'posterFormEndToEndVerified'];
+  if (requiredReview.some(key => typeof review[key] !== 'boolean')) {
+    throw new Error('[RELEASE_BLOCKER] Invalid Phase 3 review configuration');
+  }
+  if (publicationMode === 'public' && requiredReview.some(key => !review[key])) {
+    throw new Error('[RELEASE_BLOCKER] Phase 3 identity, attribution and poster review remains pending');
+  }
+
   // Check public/ directory for accidental leak of client PDFs or internal raw assets
   const publicDir = path.resolve('public');
   if (fs.existsSync(publicDir)) {

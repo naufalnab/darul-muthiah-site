@@ -17,7 +17,7 @@
 | **2** | **Klaim Sejarah Penubuhan 2003** | **DITOLAK** (Tiada dalam dokumen; PDF h.3 & h.7 catat mula April 2012) | 🔴 **CONFLICTED** | Disingkirkan dari seluruh kod sumber. | Dilarang sama sekali menyiarkan tahun 2003 tanpa dokumen sokongan. |
 | **3** | **Nombor WhatsApp Kemasukan** | `+60 12-310 8902` (Cik Yatt) vs `+60 12-202 3024` (Profil h.7) | 🔴 **BLOCKED** | Peringatan pra-tontonan dalaman aktif. | Tetapkan talian rasmi penerima pertanyaan wali santri. |
 | **4** | **Jadual & Kadar Yuran** | Pendaftaran: **RM 1,310**<br>Asrama: **RM 500**/bln<br>Harian: **RM 450**/bln (PDF h.10) | 🔴 **BLOCKED** | **Fail-Closed:** Jika belum diluluskan, angka disembunyikan dan diganti teks *"Hubungi Kami"* secara automatik. | Persetujuan bertulis pihak maahad bagi struktur yuran terkini. |
-| **5** | **Izin Penerbitan Media Pelajar** | 12 Foto Pelajar & 2 Klip Video (Usia 10–17 tahun) | 🔴 **BLOCKED** | **Fail-Closed:** Galeri foto/video tidak dirender & fail media disingkirkan daripada `dist/assets/` dalam mod awam. | Borang kebenaran bertulis ibu bapa/penjaga (parental consent). |
+| **5** | **Izin Penerbitan Media Pelajar** | 12 Foto Pelajar & 2 Klip Video (Usia 10–17 tahun) | 🔴 **BLOCKED** | **Public release ditolak** tanpa approval. Preview internal sahaja boleh memaparkan dokumentasi website yang direview melalui allowlist hash, menurut brief pemilik 31 Oktober; aset lain dikecualikan. | Borang kebenaran bertulis ibu bapa/penjaga (parental consent). |
 | **6** | **Pendaftaran JAIS & LZS** | JAIS: `BZH8026` / `13S(8)18/59` (Luput: 13 Okt 2028)<br>LZS: `Kod 1290` | 🟡 **PENDING** | Teks nombor sahaja dipaparkan; tiada imbasan sijil atau data peribadi penandatangan. | Pengesahan hak siar nombor perakuan pada laman awam. |
 | **7** | **Domain & Konfigurasi Pelayan** | `madum.ilmuniaga.com` vs `www.madum.edu.my` | 🔴 **BLOCKED** | robots.txt `Disallow: /` dan meta `noindex, nofollow` aktif. | Pengesahan domain pengeluaran akhir dan sijil SSL. |
 | **8** | **Lokasi & Pin Google Maps** | No. 61, Jalan Gunung Nuang U11/28, Shah Alam | 🟡 **PENDING** | Peta ditandakan sebagai ilustrasi visual; pautan luar ke carian Maps. | Pengesahan pin koordinat premis bagi panduan pengunjung. |
@@ -40,7 +40,7 @@ Sistem binaan kini dilengkapi skrip pra-binaan [`scripts/prebuild.mjs`](../scrip
 2. Skrip keselamatan [`scripts/postbuild.mjs`](../scripts/postbuild.mjs):
    - Mengaudit direktori `dist/` untuk memastikan tiada berkas `.pdf`, `.zip`, `.doc` atau fail arkib klien yang tersalin ke folder umum.
    - Menguatkuasakan `robots.txt` dengan arahan `Disallow: /` bagi mod `internal`.
-   - Menggugurkan fail media pelajar dari folder `dist/assets/` jika dibina dalam mod awam tanpa kelulusan media.
+   - Menolak public build tanpa kelulusan media; preview internal hanya menyalin aset yang hash-nya direview. Allowlist bukan persetujuan institusi.
 
 ---
 

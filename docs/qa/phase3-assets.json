@@ -1,0 +1,110 @@
+[
+  {
+    "source": "00000273-PHOTO-2026-10-28-14-02-01.jpg",
+    "sourceSha256": "d5239263360aa46ac692cd46111aa80b7d2a758eba9d03fb3c80bdada258e1c2",
+    "output": "assets/phase3/header-detail.webp",
+    "width": 780,
+    "height": 390,
+    "bytes": 3364,
+    "sha256": "37e603f1ee6045d93140fb5fbe8a3b1567cbe93debf84fa06b632c03cc5b6a45"
+  },
+  {
+    "source": "00000273-PHOTO-2026-10-28-14-02-01.jpg",
+    "sourceSha256": "d5239263360aa46ac692cd46111aa80b7d2a758eba9d03fb3c80bdada258e1c2",
+    "output": "assets/phase3/header-desktop.webp",
+    "width": 1020,
+    "height": 760,
+    "bytes": 69286,
+    "sha256": "c5c3c6a3c489c92d1175f6bb8bddc343a428569737b4460b05de81f8b4bc7e94"
+  },
+  {
+    "source": "00000273-PHOTO-2026-10-28-14-02-01.jpg",
+    "sourceSha256": "d5239263360aa46ac692cd46111aa80b7d2a758eba9d03fb3c80bdada258e1c2",
+    "output": "assets/phase3/header-mobile.webp",
+    "width": 630,
+    "height": 540,
+    "bytes": 45076,
+    "sha256": "7aa734f6268100bbeeb1e2654e0270356587e1e19bf7c06f0e058cafafa34ee8"
+  },
+  {
+    "source": "00000273-PHOTO-2026-10-28-14-02-01.jpg",
+    "sourceSha256": "d5239263360aa46ac692cd46111aa80b7d2a758eba9d03fb3c80bdada258e1c2",
+    "output": "assets/phase3/header-fallback.jpg",
+    "width": 765,
+    "height": 570,
+    "bytes": 74470,
+    "sha256": "f29cb5592217ca85f27d52c0bd9cb9daaf79166473edb61a3bd7a64a5db058f9"
+  },
+  {
+    "source": "00000247-PHOTO-2026-10-28-13-54-24.jpg",
+    "sourceSha256": "ca0beb2347a4615140c7304325d379ee209235747956ee982d7c27c098a815c5",
+    "output": "assets/phase3/poster-2027-review.webp",
+    "width": 854,
+    "height": 1280,
+    "bytes": 176702,
+    "sha256": "7b0c00a80c229292cbe76ec9f16c533091864e11606c8870a940c42bae3a523c"
+  },
+  {
+    "source": "00000247-PHOTO-2026-10-28-13-54-24.jpg",
+    "sourceSha256": "ca0beb2347a4615140c7304325d379ee209235747956ee982d7c27c098a815c5",
+    "output": "assets/phase3/poster-2027-review.jpg",
+    "width": 854,
+    "height": 1280,
+    "bytes": 202819,
+    "sha256": "86d98c247c8d79082b1f17a4bb8695b7d730316dcecdd19f5006242b1fad46b0"
+  },
+  {
+    "source": "00000257-PHOTO-2026-10-28-13-55-52.jpg",
+    "sourceSha256": "765a9ba0bcb6c9cdaa0b86d730fade3829165850d543f2ca9f8f224601c4524d",
+    "output": "assets/phase3/portrait-00000257.webp",
+    "width": 490,
+    "height": 700,
+    "bytes": 23240,
+    "sha256": "c76185d80c82aee047dde587aa8526294d3f69af6beea7f8673623e192b23103"
+  },
+  {
+    "source": "00000259-PHOTO-2026-10-28-13-55-53.jpg",
+    "sourceSha256": "3303e2cc4146e706c52286404f04f31198469e4db550e4d3808ac6f79fabd054",
+    "output": "assets/phase3/portrait-00000259.webp",
+    "width": 230,
+    "height": 382,
+    "bytes": 8346,
+    "sha256": "c008ccc75b5221802bac949b4840c65481ea068d1c0e3f967850beb6dd5c53cf"
+  },
+  {
+    "source": "00000262-PHOTO-2026-10-28-13-55-53.jpg",
+    "sourceSha256": "1220aafc4b68b523eb9c32e88a18b730d0ecc1608a8529b4aca9ea744856e3e0",
+    "output": "assets/phase3/portrait-00000262.webp",
+    "width": 600,
+    "height": 817,
+    "bytes": 20170,
+    "sha256": "1411fd86a29a565b7a7275c27c33a42e785edd12a790e703f6fca52d4593ca06"
+  },
+  {
+    "source": "00000266-PHOTO-2026-10-28-13-58-01.jpg",
+    "sourceSha256": "43f13a7e242f3cfb55e4eaa97e0c3e8d6a3c55bfeecb73c24ed9c5f2b7aded93",
+    "output": "assets/phase3/portrait-00000266.webp",
+    "width": 600,
+    "height": 797,
+    "bytes": 30478,
+    "sha256": "b1be540a8053cc031942c2c0061789150b59c65e6f48d284fd2339b0e336a2f8"
+  },
+  {
+    "source": "00000269-PHOTO-2026-10-28-13-59-26.jpg",
+    "sourceSha256": "365b89c4060890a2f3a4907fb966f135085ba6b1d8813686b7482bbea2de71fb",
+    "output": "assets/phase3/portrait-00000269.webp",
+    "width": 275,
+    "height": 210,
+    "bytes": 4366,
+    "sha256": "1ce30a5a5a4dfbc23d0725c122943ea3a1975f18a5226cb1c672d9a2710c9ef6"
+  },
+  {
+    "source": "00000271-PHOTO-2026-10-28-14-00-02.jpg",
+    "sourceSha256": "5b18fa05c2af4c97cd14b46bcfa96f5437d0dc44cad30a5493c2678eb4b0725e",
+    "output": "assets/phase3/portrait-00000271.webp",
+    "width": 572,
+    "height": 715,
+    "bytes": 24364,
+    "sha256": "4516500e12ebf2831c1b729b3dd30005142caa11a913ede081a389487e2cbe96"
+  }
+]

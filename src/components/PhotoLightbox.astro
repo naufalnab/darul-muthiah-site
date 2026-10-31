@@ -4,8 +4,9 @@
   <button type="button" id="close-viewer" aria-label="Tutup gambar">
     Tutup ✕
   </button>
-  <img id="image-large" alt="" src="" />
-  <p id="image-caption"></p>
+  <img id="image-large" alt="" src="/assets/preview-placeholder.svg" width="1080" height="810" />
+  <p id="image-caption" aria-live="polite"></p>
+  <div class="lightbox-navigation"><button type="button" id="previous-image" aria-label="Gambar sebelumnya">← Sebelumnya</button><button type="button" id="next-image" aria-label="Gambar seterusnya">Seterusnya →</button></div>
 </dialog>
 
 <script>
@@ -19,7 +20,7 @@
     if (!viewer || !largeImg) return;
     openerElement = card;
     const img = card.querySelector('img');
-    const boldTitle = card.querySelector('figcaption b');
+    const boldTitle = card.querySelector('.gallery-caption b');
     
     if (img) {
       largeImg.src = img.src;
@@ -44,7 +45,7 @@
       viewer.close();
     }
     viewer.classList.remove('open');
-    largeImg.removeAttribute('src');
+    largeImg.src = document.querySelector<HTMLImageElement>('.gallery-card img')?.src || largeImg.src;
     document.body.style.overflow = '';
     if (openerElement) {
       openerElement.focus();
@@ -52,15 +53,27 @@
     }
   }
 
+  function stepImage(direction: number) {
+    const cards = [...document.querySelectorAll<HTMLElement>('.gallery-card:not([hidden])')];
+    if (!cards.length || !openerElement || !largeImg) return;
+    const next = cards[(cards.indexOf(openerElement) + direction + cards.length) % cards.length];
+    openerElement = next;
+    const img = next.querySelector('img');
+    if (img) { largeImg.src = img.src; largeImg.alt = img.alt; }
+    if (captionEl) captionEl.textContent = next.querySelector('.gallery-caption b')?.textContent || '';
+  }
+  document.getElementById('previous-image')?.addEventListener('click', () => stepImage(-1));
+  document.getElementById('next-image')?.addEventListener('click', () => stepImage(1));
+  viewer?.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault(); stepImage(event.key === 'ArrowLeft' ? -1 : 1);
+    }
+  });
+
   // Bind cards
   document.querySelectorAll<HTMLElement>('.gallery-card').forEach(card => {
     card.addEventListener('click', () => openLightbox(card));
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openLightbox(card);
-      }
-    });
+
   });
 
   closeBtn?.addEventListener('click', closeLightbox);

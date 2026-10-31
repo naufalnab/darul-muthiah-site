@@ -1,5 +1,5 @@
 ---
-import { siteConfig } from '../content/siteConfig';
+import reviewedAssets from '../../scripts/lib/documentationAssets.json';
 interface Props {
   src: string;
   alt: string;
@@ -7,10 +7,16 @@ interface Props {
   width: string | number;
   height: string | number;
   loading?: 'eager' | 'lazy';
+  sizes?: string;
+  fetchpriority?: 'high' | 'low' | 'auto';
 }
-const { src, alt, loading = 'lazy', ...attributes } = Astro.props;
-const approved = siteConfig.releaseApprovals.studentMediaConsentApproved;
+const { src, alt, loading = 'lazy', sizes = '(max-width: 750px) 100vw, (max-width: 1280px) 45vw, 560px', ...attributes } = Astro.props;
+// Task-authorized documentation only; approval flags still block official release.
+const approved = Object.hasOwn(reviewedAssets, src.slice(1));
+const variants = [480, 800].map(width => ({ width, url: src.replace('/assets/', '/assets/refinement/').replace('.webp', `-${width}.webp`) }))
+  .filter(item => Object.hasOwn(reviewedAssets, item.url.slice(1)));
+const srcset = approved && variants.length ? variants.map(item => `${item.url} ${item.width}w`).join(', ') : undefined;
 ---
-<img {...attributes} src={approved ? src : '/assets/preview-placeholder.svg'}
-  alt={approved ? alt : 'Visual neutral MADUM. Dokumentasi menunggu kebenaran penerbitan.'}
+<img {...attributes} src={approved ? src : '/assets/preview-placeholder.svg'} srcset={srcset} sizes={srcset ? sizes : undefined}
+  alt={approved ? alt : 'Visual neutral MADUM. Dokumentasi menunggu semakan aset.'}
   loading={loading} decoding="async" />

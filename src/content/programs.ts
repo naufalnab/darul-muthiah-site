@@ -54,7 +54,7 @@ export const curriculumPillars: CurriculumPillar[] = [
   },
   {
     symbol: '✧',
-    title: 'Dinniyah',
+    title: 'Diniyyah',
     description: 'Fardhu Ain, fiqh, pengajian Islam, adab dan akhlak.'
   },
   {
@@ -82,7 +82,7 @@ export const dailySchedule: ScheduleItem[] = [
   },
   {
     timeLabel: 'Petang',
-    title: 'Dinniyah & Riadah',
+    title: 'Diniyyah & Riadah',
     description: 'Pengajian, kemahiran serta aktiviti jasmani.'
   },
   {

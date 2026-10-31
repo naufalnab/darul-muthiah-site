@@ -1,0 +1,29 @@
+
+> darul-muthiah@1.0.0 test:gate /Users/mac/Documents/MADUM-Phase3-Source/phase3-review-checkout
+> node scripts/test-release-gate.mjs
+
+
+=== RUNNING FULL-BUILD RELEASE SAFETY GATE REGRESSION SUITE ===
+
+[TEST 1] 1. Internal + approvals false -> Full build SUCCEEDS, Disallow: /, no sitemap ... ✅ PASSED
+[TEST 2] 2. Public + all approvals false -> Full build FAILS (fail-closed exit non-zero) ... ✅ PASSED
+[TEST 3] 3. Public + one approval false (feesApproved: false) -> Full build FAILS ... ✅ PASSED
+[TEST 4] 4. Public + all approvals true -> Full build SUCCEEDS, sitemap.xml generated & public robots.txt ... ✅ PASSED
+[TEST 5] Phase 3 pending review blocks public release even with all Phase 2 approvals ... ✅ PASSED
+[TEST 6] 5A. Config file missing -> Full build FAILS ... ✅ PASSED
+[TEST 7] 5B. Corrupted / malformed JSON -> Full build FAILS ... ✅ PASSED
+[TEST 8] 6A. Invalid / unknown publicationMode (e.g. "staging") -> Full build FAILS ... ✅ PASSED
+[TEST 9] 6B. Non-boolean approval value -> Full build FAILS ... ✅ PASSED
+[TEST 10] 6C. Attempting environment variable bypass (MADUM_CONFIG_PATH) -> Strictly IGNORED ... ✅ PASSED
+[TEST 11] New nested media excluded before copy; renamed and embedded media rejected ... ✅ PASSED
+[TEST 12] Responsive media rejects foreign srcset and URL suffix spoofing ... ✅ PASSED
+[TEST 13] Documentation video remains hash-bound and user initiated ... ✅ PASSED
+[TEST 14] Approved filename replacement rejected by content hash ... ✅ PASSED
+[TEST 15] Sensitive document in public fails prebuild ... ✅ PASSED
+[TEST 16] Pages subpath build is private, has valid metadata, reviewed media and no raw contacts/Form ... ✅ PASSED
+[TEST 17] 7. Direct `astro build` command (outside npm lifecycle) -> STILL ENFORCES RELEASE GATE ... ✅ PASSED
+
+[CLEANUP] Synthetic fixture removed; actual configuration and dist were never mutated.
+
+=== REGRESSION SUITE RESULTS: 17/17 TESTS PASSED ===
+

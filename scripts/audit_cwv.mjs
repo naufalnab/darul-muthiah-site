@@ -5,7 +5,7 @@ import path from 'node:path';
 
 const distDir = path.resolve('dist');
 const port = 4325;
-const chromePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const chromePath = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
@@ -71,6 +71,12 @@ for (const p of pages) {
   const page = await browser.newPage();
   await page.setViewport({ width: 1440, height: 900 });
 
+  await page.setCacheEnabled(false);
+  const cdp = await page.createCDPSession();
+  await cdp.send('Network.enable');
+  await cdp.send('Network.emulateNetworkConditions', { offline: false, latency: 150, downloadThroughput: 1600 * 1024 / 8, uploadThroughput: 750 * 1024 / 8 });
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+
   // Inject performance observer for LCP and CLS before load
   await page.evaluateOnNewDocument(() => {
     window.__cwv = {
@@ -113,7 +119,7 @@ for (const p of pages) {
 
     return {
       fcpMs: fcp ? Math.round(fcp) : null,
-      lcpMs: window.__cwv.lcp ? Math.round(window.__cwv.lcp) : (fcp ? Math.round(fcp) : null),
+      lcpMs: window.__cwv.lcp ? Math.round(window.__cwv.lcp) : null,
       lcpElement: window.__cwv.lcpElement,
       cls: Math.round(window.__cwv.cls * 1000) / 1000,
       domContentLoadedMs: domContentLoaded ? Math.round(domContentLoaded) : null,
@@ -139,8 +145,9 @@ for (const p of pages) {
   await page.close();
 }
 
-fs.writeFileSync(path.resolve('previews/cwv_audit.json'), JSON.stringify(cwvResults, null, 2), 'utf-8');
-console.log('\n[CWV Audit] Report written to previews/cwv_audit.json');
+fs.mkdirSync('previews/phase3-desktop-refinement', { recursive: true });
+fs.writeFileSync(path.resolve('previews/phase3-desktop-refinement/cwv-throttled.json'), JSON.stringify({method:'Cold-cache desktop 1440; 150ms latency, 1.6Mbps down, 750Kbps up, 4x CPU; localhost lab, not field CWV',results:cwvResults}, null, 2), 'utf-8');
+console.log('\n[CWV Audit] Report written to previews/phase3-desktop-refinement/cwv-throttled.json');
 
 await browser.close();
 server.close();

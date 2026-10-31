@@ -1,0 +1,16 @@
+
+> darul-muthiah@1.0.0 typecheck /Users/mac/Documents/MADUM-Phase3-Source/phase3-review-checkout
+> astro check && tsc --noEmit
+
+[prebuild] Starting pre-build validation & publication safety checks...
+[prebuild] Active publicationMode: 'internal'
+[prebuild] ✓ Privacy audit passed: No PDF, ZIP or internal client documents in public/
+[prebuild] ✓ Build mode 'internal' validated successfully.
+
+10:04:10 [types] Generated 126ms
+10:04:10 [check] Getting diagnostics for Astro files in /Users/mac/Documents/MADUM-Phase3-Source/phase3-review-checkout...
+Result (44 files): 
+- 0 errors
+- 0 warnings
+- 0 hints
+

@@ -61,7 +61,7 @@ export const admissionsSteps = [
   {
     num: '03',
     title: 'Hubungi maahad',
-    description: 'Hantar pertanyaan melalui WhatsApp untuk langkah seterusnya. Ini bukan pengesahan pendaftaran.'
+    description: 'Semak saluran yang tersedia dan status pengesahannya sebelum membuat pertanyaan. Ini bukan pengesahan pendaftaran.'
   }
 ];
 

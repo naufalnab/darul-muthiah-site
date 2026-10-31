@@ -44,6 +44,7 @@ const description = "Rujukan maklumat perhubungan, nombor WhatsApp, lokasi Shah 
           <h3>WhatsApp Kemasukan</h3>
           <span class="pending">Nombor rasmi belum disahkan</span>
           <p>{siteConfig.whatsappDisplay}</p>
+          <p class="verification-note">Poster sesi 2027 menyatakan +60 12-202 3024. Pihak maahad perlu menetapkan nombor rasmi sebelum saluran diaktifkan.</p>
           <a href={siteConfig.releaseApprovals.officialContactApproved ? `https://wa.me/${siteConfig.whatsappE164}` : undefined} aria-disabled={!siteConfig.releaseApprovals.officialContactApproved} target="_blank" rel="noopener noreferrer">
             Saluran pertanyaan · Menunggu pengesahan
           </a>
@@ -62,14 +63,18 @@ const description = "Rujukan maklumat perhubungan, nombor WhatsApp, lokasi Shah 
         <article class="contact-card">
           <div class="contact-icon" aria-hidden="true">✉</div>
           <h3>E-mel</h3>
+          <span class="pending">Alamat rasmi belum disahkan</span>
           <p>{siteConfig.emailOffice}</p>
           <a href={siteConfig.releaseApprovals.officialContactApproved ? `mailto:${siteConfig.emailOffice}` : undefined} aria-disabled={!siteConfig.releaseApprovals.officialContactApproved}>
             E-mel · Menunggu pengesahan
           </a>
-          <p style="font-size:10px;color:#86632d;margin-top:6px;">
+          <p class="verification-note">
             Alamat e-mel menunggu pengesahan institusi.
           </p>
         </article>
+      </div>
+      <div class="review-note">
+        <strong>Facebook</strong><br />Nama halaman yang dibekalkan: Maahad Tahfiz Al Quran Darul Muthiah (1). Pautan akan ditambah selepas URL tepat disahkan oleh pihak maahad.
       </div>
     </div>
   </section>
@@ -121,7 +126,7 @@ const description = "Rujukan maklumat perhubungan, nombor WhatsApp, lokasi Shah 
         <div class="eyebrow">PERTANYAAN LAZIM</div>
         <h2 class="section-title" id="faq-title">Soalan yang sering ditanyakan.</h2>
         <p class="section-sub">
-          Jawapan ringkas untuk memudahkan wali murid sebelum menghubungi pihak maahad.
+          Jawapan ringkas untuk memudahkan ibu bapa dan penjaga sebelum menghubungi pihak maahad.
         </p>
         <FAQAccordion />
       </div>
@@ -141,7 +146,7 @@ const description = "Rujukan maklumat perhubungan, nombor WhatsApp, lokasi Shah 
   <PrimaryCTA
     eyebrow="LANGKAH SETERUSNYA"
     title="Pertanyaan anda dialu-alukan."
-    description="Salurkan soalan kepada pihak maahad melalui borang pertanyaan WhatsApp yang ringkas."
+    description="Semak status saluran perhubungan dan maklumat kemasukan terlebih dahulu. Penghantaran pertanyaan akan tersedia selepas nombor rasmi disahkan."
     ctaText="Tanya Kemasukan"
     ctaHref="/kemasukan#pertanyaan"
     disclaimer="Pratonton dalaman · Pengesahan diperlukan"

@@ -1,0 +1,13 @@
+
+> darul-muthiah@1.0.0 test:cwv /Users/mac/Documents/MADUM-Phase3-Source/phase3-review-checkout
+> node scripts/audit_cwv.mjs
+
+[CWV Audit Server] Listening on http://localhost:4325
+[CWV] Page: index | FCP: 1960ms (NEEDS_IMPROVEMENT) | LCP: 1976ms (GOOD) | CLS: 0 (GOOD)
+[CWV] Page: profil | FCP: 2424ms (NEEDS_IMPROVEMENT) | LCP: 2424ms (GOOD) | CLS: 0 (GOOD)
+[CWV] Page: pengajian | FCP: 1788ms (GOOD) | LCP: 1788ms (GOOD) | CLS: 0 (GOOD)
+[CWV] Page: kemasukan | FCP: 1276ms (GOOD) | LCP: 1428ms (GOOD) | CLS: 0 (GOOD)
+[CWV] Page: galeri | FCP: 1540ms (GOOD) | LCP: 1540ms (GOOD) | CLS: 0 (GOOD)
+[CWV] Page: hubungi | FCP: 1296ms (GOOD) | LCP: 1296ms (GOOD) | CLS: 0 (GOOD)
+
+[CWV Audit] Report written to previews/phase3-desktop-refinement/cwv-throttled.json

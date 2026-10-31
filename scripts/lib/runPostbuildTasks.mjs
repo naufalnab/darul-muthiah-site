@@ -112,6 +112,8 @@ ${publicPages
           let content = fs.readFileSync(fullPath, 'utf-8');
           // Replace href="/assets/...", src="/assets/...", poster="/assets/..."
           content = content.replace(/(href|src|poster)="\/(assets\/[^"]+)"/g, `$1="${cleanBase}/$2"`);
+          content = content.replace(/srcset="([^"]+)"/g, (_, candidates) =>
+            `srcset="${candidates.split(',').map(candidate => candidate.trim().replace(/^\/assets\//, `${cleanBase}/assets/`)).join(', ')}"`);
           // Replace page route hrefs
           content = content.replace(/href="\/(profil|pengajian|kemasukan|galeri|hubungi|404)(\b[^"]*)"/g, `href="${cleanBase}/$1$2"`);
           // Replace home href="/"

@@ -1,16 +1,25 @@
 ---
-interface Props { number: number; }
-const { number } = Astro.props;
-const label = String(number).padStart(2, '0');
+import type { AlumniProfile } from '../content/alumni';
+import review from '../content/phase3Review.json';
+import reviewedAssets from '../../scripts/lib/phase3PreviewAssets.json';
+import { siteConfig } from '../content/siteConfig';
+interface Props { profile: AlumniProfile; }
+const { profile } = Astro.props;
+const showPortrait = Boolean(profile.portrait && review.alumniIdentityMappingVerified && review.alumniPublicationConsentApproved && Object.hasOwn(reviewedAssets, profile.portrait.slice(1)));
+const isReview = siteConfig.publicationMode === 'internal';
 ---
-<article class="alumni-card" aria-labelledby={`alumni-${label}`}>
-  <div class="alumni-visual" aria-hidden="true">
-    <span class="alumni-mark">DM</span><span class="alumni-number">{label}</span>
-  </div>
+<article class="alumni-card" aria-labelledby={`alumni-${profile.id}`}>
+  {showPortrait ? (
+    <img class="alumni-portrait" src={profile.portrait!} alt={`Potret ${profile.name}`}
+      width={profile.portraitWidth} height={profile.portraitHeight} loading="lazy" decoding="async" />
+  ) : (
+    <div class="alumni-visual" aria-hidden="true"><span class="alumni-mark">{profile.name.split(/\s+/).slice(0, 2).map(part => part[0]).join('')}</span><span class="alumni-number">{profile.year}</span></div>
+  )}
   <div class="alumni-copy">
-    <span class="eyebrow">JEJAK ALUMNI</span>
-    <h3 id={`alumni-${label}`}>Ruang profil {label}</h3>
-    <p>Kisah perjalanan ilmu dan pencapaian akan dikongsi selepas pengesahan maklumat dan izin penerbitan.</p>
-    <span class="pending">Menunggu izin penerbitan</span>
+    <span class="eyebrow">ALUMNI {profile.year}</span>
+    <h3 id={`alumni-${profile.id}`}>{profile.name}</h3>
+    <p class="alumni-achievement">{profile.achievement}</p>
+    {profile.institution && <p>{profile.institution}</p>}
+    {isReview && <span class="pending">Maklumat klien · Izin akhir dalam semakan</span>}
   </div>
 </article>
