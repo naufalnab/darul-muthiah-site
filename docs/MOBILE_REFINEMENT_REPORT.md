@@ -86,3 +86,13 @@ Desktop diperiksa pada 1024/1280/1440/1920 px untuk enam halaman: posisi/ukuran 
 Commit implementasi: `a6e69ad`, `10a2616`, `caa27e2`, `3770334`, `36e820c`; `0845020` menambahkan bukti QA dan laporan. Workflow validasi menerima PR bertarget branch Phase3 agar stacked PR mendapatkan CI; workflow deployment tidak diubah.
 
 [Draft PR #5](https://github.com/naufalnab/darul-muthiah-site/pull/5) kini menggunakan base `main` karena Phase3 PR #4 sudah digabung eksternal. [Checks PR](https://github.com/naufalnab/darul-muthiah-site/pull/5/checks) menyediakan status CI commit terakhir. PR tetap Draft dan tidak di-merge.
+
+## Tindak lanjut: header pilihan pengguna
+
+Setelah review mobile, pengguna secara eksplisit meminta gambar yang dilampirkan menjadi header. Gambar cocok dengan sumber lokal `00000273-PHOTO-2026-10-28-14-02-01.jpg`, SHA-256 `d5239263360aa46ac692cd46111aa80b7d2a758eba9d03fb3c80bdada258e1c2`. Beranda kini menggunakan komposisi sumber tersebut, dikompresi menjadi WebP 1600×900 dan 800×450 tanpa mengganti isinya. Kedua turunan ditambahkan ke allowlist hash yang terbatas; approval flags tidak berubah.
+
+Desktop memakai gambar sebagai latar header lebar dengan lapisan gradien untuk keterbacaan teks kiri. Mobile menampilkan komposisi 16:9 di bawah teks tanpa crop. Caption dokumentasi kelas diganti menjadi “Pendidikan Al-Quran · Ilmu, adab dan tarbiah”, agar tidak mengklaim visual pilihan ini sebagai foto dokumentasi kegiatan sebenarnya.
+
+Perubahan Beranda desktop ini disengaja sesuai instruksi terbaru, sehingga hasil geometri 24/24 dan screenshot/performa sebelumnya di atas merekam versi sebelum penggantian header. Bukti terbaru berada di [previews/header-choice](../previews/header-choice/), termasuk viewport desktop, mobile, modal dan sticky. Pemeriksaan baru memastikan sumber gambar pilihan digunakan pada setiap breakpoint; kelima halaman lain tidak diubah.
+
+Validasi tindak lanjut: typecheck bersih, build dan audit statis root lulus 40/40, browser Beranda root 135/135 dengan 9 tautan internal. Build dan audit statis Pages lulus 40/40, browser Beranda Pages 135/135 dengan 9 tautan internal, release gate 17/17. Axe Beranda pada 390/1440 px dan modal tidak mencatat pelanggaran otomatis. Status CI commit terbaru tersedia di [Checks PR #5](https://github.com/naufalnab/darul-muthiah-site/pull/5/checks).

@@ -233,3 +233,26 @@ html[data-mobile-menu=open], html[data-mobile-menu=open] body { overflow: hidden
   .footer-bottom { flex-direction: column; align-items: flex-start; }
   .mobile-sticky:not([hidden]) { display: block; position: fixed; bottom: 0; left: 0; right: 0; border-top: 1px solid #dbe4d9; }
 }
+/* User-selected header, 31 October: preserve the supplied full composition. */
+.hero-selected::before, .hero-selected .hero-visual::before, .hero-selected .hero-visual::after { display: none; }
+@media (min-width: 768px) {
+  .hero-selected { background: var(--deep); isolation: isolate; }
+  .hero-selected .hero-grid { display: flex; min-height: clamp(620px, 48vw, 820px); align-items: center; }
+  .hero-selected .hero-copy { z-index: 2; width: 43%; max-width: 510px; }
+  .hero-selected .hero-visual { position: absolute; inset: 0; width: 100%; max-width: none; height: 100%; margin: 0; z-index: -1; }
+  .hero-selected .hero-img-outer { width: 100%; height: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; }
+  .hero-selected .hero-photo { width: 100%; height: 100%; object-fit: cover; object-position: center; border-radius: 0; }
+  .hero-selected::after { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(90deg, #082f2aeb 0%, #082f2acc 29%, #082f2a55 46%, transparent 64%); }
+  .hero-selected h1, .hero-selected .hero-note, .hero-selected .hero-description, .hero-selected .hero-meta { color: var(--cream); }
+  .hero-selected h1 em { color: #e4c68d; }
+  .hero-selected .hero-description { line-height: 1.75; }
+  .hero-selected .btn-primary { background: #e4c68d; color: #123f35; }
+  .hero-selected .btn-outline { color: var(--cream); border-color: #fbf8f099; }
+  .hero-selected .btn-outline:hover { background: #123f35; }
+  .hero-selected .tiny-icon { color: var(--cream); border-color: #fbf8f080; }
+  .hero-selected .photo-credit { display: none; }
+}
+@media (max-width: 767px) {
+  .hero-selected .hero-photo { aspect-ratio: 16 / 9; object-fit: contain; border-radius: 8px; }
+  .hero-selected .hero-img-outer { padding: 0; border: 0; outline: none; border-radius: 8px; }
+}

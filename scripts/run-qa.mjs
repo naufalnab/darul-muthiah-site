@@ -8,7 +8,7 @@ import { auditPreviewOutput, previewAssets } from './lib/previewAssets.mjs';
 
 const require = createRequire(import.meta.url);
 const dist = path.resolve('dist');
-const output = path.resolve('previews/mobile-refinement');
+const output = path.resolve(process.env.QA_OUTPUT || 'previews/mobile-refinement');
 const base = process.env.QA_BASE || '';
 const allowedMedia = Object.keys(previewAssets).map(asset => `/${asset}`);
 const config = JSON.parse(fs.readFileSync('src/content/siteConfig.json', 'utf8'));
@@ -34,7 +34,7 @@ try {
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
   origin = `http://127.0.0.1:${server.address().port}`;
   browser = await puppeteer.launch({ executablePath:process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless:true, args:['--no-sandbox'] });
-  for (const route of (process.env.QA_ROUTES ? process.env.QA_ROUTES.split(',') : ['','profil','pengajian','kemasukan','galeri','hubungi','missing-phase2-page'])) {
+  for (const route of (process.env.QA_ROUTES ? process.env.QA_ROUTES.split(',').map(route=>route==='/'?'':route) : ['','profil','pengajian','kemasukan','galeri','hubungi','missing-phase2-page'])) {
     const is404 = route.startsWith('missing');
     const result = { page:is404?'404':route||'index', checks:[], consoleErrors:[], pageErrors:[], failedRequests:[], canceledImages:[], canceledVideos:[], accessibility:[], responsive:[], performance:[] };
     const check = (name, passed, details) => result.checks.push({name,passed:Boolean(passed), ...(details ? {details}: {})});
@@ -85,6 +85,7 @@ try {
         overflowingElements:[...document.querySelectorAll('main *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1 && !(e.closest('.gallery-controls') && getComputedStyle(e.closest('.gallery-controls')).overflowX==='auto')).slice(0,8).map(e=>e.tagName+'.'+e.className),
         brokenImages:[...document.images].filter(i=>!i.complete || !i.naturalWidth).map(i=>i.src),
         media:[...document.querySelectorAll('img,video,source')].map(e=>e.getAttribute('src')).filter(Boolean),
+        headerSource:document.querySelector('.hero-selected .hero-photo')?.getAttribute('src'),
         title:document.title, description:document.querySelector('meta[name=description]')?.content,
         canonical:document.querySelector('link[rel=canonical]')?.href, robots:document.querySelector('meta[name=robots]')?.content,
         h1:document.querySelectorAll('h1').length,
@@ -94,6 +95,7 @@ try {
       }));
       result.responsive.push({width,overflow:state.overflow,overflowingElements:state.overflowingElements});
       check(`HTTP ${width}`,response.status()===(is404?404:200));
+      if(!route) check(`User-selected header ${width}`,state.headerSource===`${base}/assets/phase3/header-main-1600.webp`);
       check(`No overflow ${width}`,!state.overflow && state.overflowingElements.length===0);
       check(`No broken images ${width}`,state.brokenImages.length===0,state.brokenImages);
       check(`Media consent ${width}`,state.media.every(src=>allowedMedia.includes(src.slice(base.length))));
