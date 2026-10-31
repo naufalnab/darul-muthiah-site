@@ -1,0 +1,83 @@
+{
+  "method": "Cold-cache desktop 1440; 150ms latency, 1.6Mbps down, 750Kbps up, 4x CPU; localhost lab, not field CWV",
+  "results": [
+    {
+      "page": "index",
+      "path": "/",
+      "fcpMs": 1960,
+      "lcpMs": 1976,
+      "lcpElement": "IMG.hero-photo",
+      "cls": 0,
+      "domContentLoadedMs": 1846,
+      "loadTimeMs": 1912,
+      "fcpRating": "NEEDS_IMPROVEMENT",
+      "lcpRating": "GOOD",
+      "clsRating": "GOOD"
+    },
+    {
+      "page": "profil",
+      "path": "/profil",
+      "fcpMs": 2424,
+      "lcpMs": 2424,
+      "lcpElement": "IMG.",
+      "cls": 0,
+      "domContentLoadedMs": 1641,
+      "loadTimeMs": 2288,
+      "fcpRating": "NEEDS_IMPROVEMENT",
+      "lcpRating": "GOOD",
+      "clsRating": "GOOD"
+    },
+    {
+      "page": "pengajian",
+      "path": "/pengajian",
+      "fcpMs": 1788,
+      "lcpMs": 1788,
+      "lcpElement": "IMG.",
+      "cls": 0,
+      "domContentLoadedMs": 1731,
+      "loadTimeMs": 1732,
+      "fcpRating": "GOOD",
+      "lcpRating": "GOOD",
+      "clsRating": "GOOD"
+    },
+    {
+      "page": "kemasukan",
+      "path": "/kemasukan",
+      "fcpMs": 1276,
+      "lcpMs": 1428,
+      "lcpElement": "IMG.",
+      "cls": 0,
+      "domContentLoadedMs": 1228,
+      "loadTimeMs": 1404,
+      "fcpRating": "GOOD",
+      "lcpRating": "GOOD",
+      "clsRating": "GOOD"
+    },
+    {
+      "page": "galeri",
+      "path": "/galeri",
+      "fcpMs": 1540,
+      "lcpMs": 1540,
+      "lcpElement": "H1.",
+      "cls": 0,
+      "domContentLoadedMs": 1463,
+      "loadTimeMs": 1464,
+      "fcpRating": "GOOD",
+      "lcpRating": "GOOD",
+      "clsRating": "GOOD"
+    },
+    {
+      "page": "hubungi",
+      "path": "/hubungi",
+      "fcpMs": 1296,
+      "lcpMs": 1296,
+      "lcpElement": "H1.",
+      "cls": 0,
+      "domContentLoadedMs": 1248,
+      "loadTimeMs": 1249,
+      "fcpRating": "GOOD",
+      "lcpRating": "GOOD",
+      "clsRating": "GOOD"
+    }
+  ]
+}
