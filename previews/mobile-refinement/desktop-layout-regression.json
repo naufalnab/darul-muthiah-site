@@ -1,0 +1,199 @@
+{
+  "baselineCommit": "78cfed2",
+  "method": "Fresh baseline build from tracked commit; compare exact element rectangles, font sizes and document height; separate browser page per capture to avoid srcset cache and sticky screenshot rasterization differences",
+  "comparisons": [
+    {
+      "page": "index",
+      "width": 1024,
+      "baselineHeight": 4620,
+      "afterHeight": 4620,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "index",
+      "width": 1280,
+      "baselineHeight": 4585,
+      "afterHeight": 4585,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "index",
+      "width": 1440,
+      "baselineHeight": 4628,
+      "afterHeight": 4628,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "index",
+      "width": 1920,
+      "baselineHeight": 4653,
+      "afterHeight": 4653,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "profil",
+      "width": 1024,
+      "baselineHeight": 4786,
+      "afterHeight": 4786,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "profil",
+      "width": 1280,
+      "baselineHeight": 4734,
+      "afterHeight": 4734,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "profil",
+      "width": 1440,
+      "baselineHeight": 4819,
+      "afterHeight": 4819,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "profil",
+      "width": 1920,
+      "baselineHeight": 4842,
+      "afterHeight": 4842,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "pengajian",
+      "width": 1024,
+      "baselineHeight": 3908,
+      "afterHeight": 3908,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "pengajian",
+      "width": 1280,
+      "baselineHeight": 3861,
+      "afterHeight": 3861,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "pengajian",
+      "width": 1440,
+      "baselineHeight": 3884,
+      "afterHeight": 3884,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "pengajian",
+      "width": 1920,
+      "baselineHeight": 3897,
+      "afterHeight": 3897,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "kemasukan",
+      "width": 1024,
+      "baselineHeight": 4696,
+      "afterHeight": 4696,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "kemasukan",
+      "width": 1280,
+      "baselineHeight": 4627,
+      "afterHeight": 4627,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "kemasukan",
+      "width": 1440,
+      "baselineHeight": 4644,
+      "afterHeight": 4644,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "kemasukan",
+      "width": 1920,
+      "baselineHeight": 4654,
+      "afterHeight": 4654,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "galeri",
+      "width": 1024,
+      "baselineHeight": 6002,
+      "afterHeight": 6002,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "galeri",
+      "width": 1280,
+      "baselineHeight": 5954,
+      "afterHeight": 5954,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "galeri",
+      "width": 1440,
+      "baselineHeight": 5984,
+      "afterHeight": 5984,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "galeri",
+      "width": 1920,
+      "baselineHeight": 6001,
+      "afterHeight": 6001,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "hubungi",
+      "width": 1024,
+      "baselineHeight": 3969,
+      "afterHeight": 3969,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "hubungi",
+      "width": 1280,
+      "baselineHeight": 3851,
+      "afterHeight": 3851,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "hubungi",
+      "width": 1440,
+      "baselineHeight": 3876,
+      "afterHeight": 3876,
+      "differences": [],
+      "passed": true
+    },
+    {
+      "page": "hubungi",
+      "width": 1920,
+      "baselineHeight": 3888,
+      "afterHeight": 3888,
+      "differences": [],
+      "passed": true
+    }
+  ],
+  "passed": true
+}

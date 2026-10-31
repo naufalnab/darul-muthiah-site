@@ -1,0 +1,168 @@
+{
+  "kind": "static integrity; no browser or performance measurements",
+  "base": "/darul-muthiah-site",
+  "htmlFiles": 12,
+  "checks": [
+    {
+      "name": "Exact safe-preview hashes and media policy",
+      "passed": true
+    },
+    {
+      "name": "404.html: metadata and held contact/Form",
+      "passed": true
+    },
+    {
+      "name": "404.html: all internal links, anchors and assets exist",
+      "passed": true
+    },
+    {
+      "name": "404.html: image alternatives and dimensions",
+      "passed": true
+    },
+    {
+      "name": "galeri/index.html: metadata and held contact/Form",
+      "passed": true
+    },
+    {
+      "name": "galeri/index.html: all internal links, anchors and assets exist",
+      "passed": true
+    },
+    {
+      "name": "galeri/index.html: image alternatives and dimensions",
+      "passed": true
+    },
+    {
+      "name": "galeri.html: metadata and held contact/Form",
+      "passed": true
+    },
+    {
+      "name": "galeri.html: all internal links, anchors and assets exist",
+      "passed": true
+    },
+    {
+      "name": "galeri.html: image alternatives and dimensions",
+      "passed": true
+    },
+    {
+      "name": "hubungi/index.html: metadata and held contact/Form",
+      "passed": true
+    },
+    {
+      "name": "hubungi/index.html: all internal links, anchors and assets exist",
+      "passed": true
+    },
+    {
+      "name": "hubungi/index.html: image alternatives and dimensions",
+      "passed": true
+    },
+    {
+      "name": "hubungi.html: metadata and held contact/Form",
+      "passed": true
+    },
+    {
+      "name": "hubungi.html: all internal links, anchors and assets exist",
+      "passed": true
+    },
+    {
+      "name": "hubungi.html: image alternatives and dimensions",
+      "passed": true
+    },
+    {
+      "name": "index.html: metadata and held contact/Form",
+      "passed": true
+    },
+    {
+      "name": "index.html: all internal links, anchors and assets exist",
+      "passed": true
+    },
+    {
+      "name": "index.html: image alternatives and dimensions",
+      "passed": true
+    },
+    {
+      "name": "kemasukan/index.html: metadata and held contact/Form",
+      "passed": true
+    },
+    {
+      "name": "kemasukan/index.html: all internal links, anchors and assets exist",
+      "passed": true
+    },
+    {
+      "name": "kemasukan/index.html: image alternatives and dimensions",
+      "passed": true
+    },
+    {
+      "name": "kemasukan.html: metadata and held contact/Form",
+      "passed": true
+    },
+    {
+      "name": "kemasukan.html: all internal links, anchors and assets exist",
+      "passed": true
+    },
+    {
+      "name": "kemasukan.html: image alternatives and dimensions",
+      "passed": true
+    },
+    {
+      "name": "pengajian/index.html: metadata and held contact/Form",
+      "passed": true
+    },
+    {
+      "name": "pengajian/index.html: all internal links, anchors and assets exist",
+      "passed": true
+    },
+    {
+      "name": "pengajian/index.html: image alternatives and dimensions",
+      "passed": true
+    },
+    {
+      "name": "pengajian.html: metadata and held contact/Form",
+      "passed": true
+    },
+    {
+      "name": "pengajian.html: all internal links, anchors and assets exist",
+      "passed": true
+    },
+    {
+      "name": "pengajian.html: image alternatives and dimensions",
+      "passed": true
+    },
+    {
+      "name": "profil/index.html: metadata and held contact/Form",
+      "passed": true
+    },
+    {
+      "name": "profil/index.html: all internal links, anchors and assets exist",
+      "passed": true
+    },
+    {
+      "name": "profil/index.html: image alternatives and dimensions",
+      "passed": true
+    },
+    {
+      "name": "profil.html: metadata and held contact/Form",
+      "passed": true
+    },
+    {
+      "name": "profil.html: all internal links, anchors and assets exist",
+      "passed": true
+    },
+    {
+      "name": "profil.html: image alternatives and dimensions",
+      "passed": true
+    },
+    {
+      "name": "Six client alumni profiles and one verbatim attributed testimonial",
+      "passed": true
+    },
+    {
+      "name": "Reviewed institutional gallery and gated actions",
+      "passed": true
+    },
+    {
+      "name": "All real release approvals remain false and publication stays internal",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

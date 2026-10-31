@@ -1,0 +1,53 @@
+{
+  "method": "Cold-cache Chromium mobile 390x844, DPR2, 150ms latency, 1.6Mbps down/750Kbps up, CPU4x. Local static server; lab observations, not field CWV.",
+  "results": [
+    {
+      "page": "index",
+      "fcp": 3060,
+      "lcp": 3060,
+      "cls": 0,
+      "transferBytes": 243015,
+      "initialVideoRequests": 0
+    },
+    {
+      "page": "profil",
+      "fcp": 3068,
+      "lcp": 3068,
+      "cls": 0,
+      "transferBytes": 222473,
+      "initialVideoRequests": 0
+    },
+    {
+      "page": "pengajian",
+      "fcp": 2016,
+      "lcp": 2016,
+      "cls": 0,
+      "transferBytes": 139991,
+      "initialVideoRequests": 0
+    },
+    {
+      "page": "kemasukan",
+      "fcp": 2468,
+      "lcp": 3592,
+      "cls": 0,
+      "transferBytes": 405063,
+      "initialVideoRequests": 0
+    },
+    {
+      "page": "galeri",
+      "fcp": 1696,
+      "lcp": 1696,
+      "cls": 0,
+      "transferBytes": 423227,
+      "initialVideoRequests": 0
+    },
+    {
+      "page": "hubungi",
+      "fcp": 1628,
+      "lcp": 1628,
+      "cls": 0,
+      "transferBytes": 99337,
+      "initialVideoRequests": 0
+    }
+  ]
+}

@@ -10,7 +10,7 @@ interface Props {
   sizes?: string;
   fetchpriority?: 'high' | 'low' | 'auto';
 }
-const { src, alt, loading = 'lazy', sizes = '(max-width: 750px) 100vw, (max-width: 1280px) 45vw, 560px', ...attributes } = Astro.props;
+const { src, alt, loading = 'lazy', sizes = '(max-width: 767px) 100vw, (max-width: 1280px) 45vw, 560px', ...attributes } = Astro.props;
 // Task-authorized documentation only; approval flags still block official release.
 const approved = Object.hasOwn(reviewedAssets, src.slice(1));
 const variants = [480, 800].map(width => ({ width, url: src.replace('/assets/', '/assets/refinement/').replace('.webp', `-${width}.webp`) }))

@@ -1,7 +1,7 @@
----
-import ConsentImage from './ConsentImage.astro';
----
-<ConsentImage class="hero-photo" src="/assets/hero-kelas.webp" width="1008" height="756"
-  alt="Pelajar MADUM mengikuti pengajian Al-Quran di dalam kelas dengan bimbingan tenaga pengajar"
-  sizes="(max-width: 750px) 90vw, (max-width: 1280px) 46vw, 560px"
-  fetchpriority="high" loading="eager" />
+<!-- Header selected explicitly by the user; full composition, without a photo-documentation claim. -->
+<img class="hero-photo" src="/assets/phase3/header-main-1600.webp"
+  srcset="/assets/phase3/header-main-800.webp 800w, /assets/phase3/header-main-1600.webp 1600w"
+  sizes="(max-width: 767px) calc(100vw - 40px), 100vw"
+  width="1600" height="900"
+  alt="Visual header pilihan MADUM: sekumpulan wanita dan pelajar membaca Al-Quran bersama"
+  fetchpriority="high" loading="eager" decoding="async" />

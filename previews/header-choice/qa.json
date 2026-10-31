@@ -1,0 +1,1548 @@
+{
+  "base": "",
+  "viewports": [
+    320,
+    360,
+    375,
+    390,
+    414,
+    430,
+    751,
+    767,
+    768,
+    1024,
+    1280,
+    1440,
+    1920
+  ],
+  "pages": [
+    {
+      "page": "index",
+      "checks": [
+        {
+          "name": "HTTP 320",
+          "passed": true
+        },
+        {
+          "name": "User-selected header 320",
+          "passed": true
+        },
+        {
+          "name": "No overflow 320",
+          "passed": true
+        },
+        {
+          "name": "No broken images 320",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 320",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 320",
+          "passed": true
+        },
+        {
+          "name": "Metadata 320",
+          "passed": true
+        },
+        {
+          "name": "Main control touch targets 320",
+          "passed": true
+        },
+        {
+          "name": "HTTP 360",
+          "passed": true
+        },
+        {
+          "name": "User-selected header 360",
+          "passed": true
+        },
+        {
+          "name": "No overflow 360",
+          "passed": true
+        },
+        {
+          "name": "No broken images 360",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 360",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 360",
+          "passed": true
+        },
+        {
+          "name": "Metadata 360",
+          "passed": true
+        },
+        {
+          "name": "Main control touch targets 360",
+          "passed": true
+        },
+        {
+          "name": "HTTP 375",
+          "passed": true
+        },
+        {
+          "name": "User-selected header 375",
+          "passed": true
+        },
+        {
+          "name": "No overflow 375",
+          "passed": true
+        },
+        {
+          "name": "No broken images 375",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 375",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 375",
+          "passed": true
+        },
+        {
+          "name": "Metadata 375",
+          "passed": true
+        },
+        {
+          "name": "Main control touch targets 375",
+          "passed": true
+        },
+        {
+          "name": "HTTP 390",
+          "passed": true
+        },
+        {
+          "name": "User-selected header 390",
+          "passed": true
+        },
+        {
+          "name": "No overflow 390",
+          "passed": true
+        },
+        {
+          "name": "No broken images 390",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 390",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 390",
+          "passed": true
+        },
+        {
+          "name": "Metadata 390",
+          "passed": true
+        },
+        {
+          "name": "Main control touch targets 390",
+          "passed": true
+        },
+        {
+          "name": "axe 390",
+          "passed": true
+        },
+        {
+          "name": "Lab LCP/CLS 390",
+          "passed": true
+        },
+        {
+          "name": "HTTP 414",
+          "passed": true
+        },
+        {
+          "name": "User-selected header 414",
+          "passed": true
+        },
+        {
+          "name": "No overflow 414",
+          "passed": true
+        },
+        {
+          "name": "No broken images 414",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 414",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 414",
+          "passed": true
+        },
+        {
+          "name": "Metadata 414",
+          "passed": true
+        },
+        {
+          "name": "Main control touch targets 414",
+          "passed": true
+        },
+        {
+          "name": "HTTP 430",
+          "passed": true
+        },
+        {
+          "name": "User-selected header 430",
+          "passed": true
+        },
+        {
+          "name": "No overflow 430",
+          "passed": true
+        },
+        {
+          "name": "No broken images 430",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 430",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 430",
+          "passed": true
+        },
+        {
+          "name": "Metadata 430",
+          "passed": true
+        },
+        {
+          "name": "Main control touch targets 430",
+          "passed": true
+        },
+        {
+          "name": "HTTP 751",
+          "passed": true
+        },
+        {
+          "name": "User-selected header 751",
+          "passed": true
+        },
+        {
+          "name": "No overflow 751",
+          "passed": true
+        },
+        {
+          "name": "No broken images 751",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 751",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 751",
+          "passed": true
+        },
+        {
+          "name": "Metadata 751",
+          "passed": true
+        },
+        {
+          "name": "Hero stacks at boundary 751",
+          "passed": true
+        },
+        {
+          "name": "HTTP 767",
+          "passed": true
+        },
+        {
+          "name": "User-selected header 767",
+          "passed": true
+        },
+        {
+          "name": "No overflow 767",
+          "passed": true
+        },
+        {
+          "name": "No broken images 767",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 767",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 767",
+          "passed": true
+        },
+        {
+          "name": "Metadata 767",
+          "passed": true
+        },
+        {
+          "name": "Hero stacks at boundary 767",
+          "passed": true
+        },
+        {
+          "name": "HTTP 768",
+          "passed": true
+        },
+        {
+          "name": "User-selected header 768",
+          "passed": true
+        },
+        {
+          "name": "No overflow 768",
+          "passed": true
+        },
+        {
+          "name": "No broken images 768",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 768",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 768",
+          "passed": true
+        },
+        {
+          "name": "Metadata 768",
+          "passed": true
+        },
+        {
+          "name": "HTTP 1024",
+          "passed": true
+        },
+        {
+          "name": "User-selected header 1024",
+          "passed": true
+        },
+        {
+          "name": "No overflow 1024",
+          "passed": true
+        },
+        {
+          "name": "No broken images 1024",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 1024",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 1024",
+          "passed": true
+        },
+        {
+          "name": "Metadata 1024",
+          "passed": true
+        },
+        {
+          "name": "HTTP 1280",
+          "passed": true
+        },
+        {
+          "name": "User-selected header 1280",
+          "passed": true
+        },
+        {
+          "name": "No overflow 1280",
+          "passed": true
+        },
+        {
+          "name": "No broken images 1280",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 1280",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 1280",
+          "passed": true
+        },
+        {
+          "name": "Metadata 1280",
+          "passed": true
+        },
+        {
+          "name": "HTTP 1440",
+          "passed": true
+        },
+        {
+          "name": "User-selected header 1440",
+          "passed": true
+        },
+        {
+          "name": "No overflow 1440",
+          "passed": true
+        },
+        {
+          "name": "No broken images 1440",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 1440",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 1440",
+          "passed": true
+        },
+        {
+          "name": "Metadata 1440",
+          "passed": true
+        },
+        {
+          "name": "axe 1440",
+          "passed": true
+        },
+        {
+          "name": "Lab LCP/CLS 1440",
+          "passed": true
+        },
+        {
+          "name": "HTTP 1920",
+          "passed": true
+        },
+        {
+          "name": "User-selected header 1920",
+          "passed": true
+        },
+        {
+          "name": "No overflow 1920",
+          "passed": true
+        },
+        {
+          "name": "No broken images 1920",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 1920",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 1920",
+          "passed": true
+        },
+        {
+          "name": "Metadata 1920",
+          "passed": true
+        },
+        {
+          "name": "Keyboard skip link",
+          "passed": true
+        },
+        {
+          "name": "Skip focuses main",
+          "passed": true
+        },
+        {
+          "name": "Menu opens by keyboard",
+          "passed": true
+        },
+        {
+          "name": "Expanded menu accessibility",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Native modal menu and scroll lock",
+          "passed": true
+        },
+        {
+          "name": "One menu CTA and hidden sticky",
+          "passed": true
+        },
+        {
+          "name": "aria-controls resolves to open modal",
+          "passed": true
+        },
+        {
+          "name": "Modal keyboard focus contained",
+          "passed": true
+        },
+        {
+          "name": "Escape restores focus",
+          "passed": true
+        },
+        {
+          "name": "Menu releases scroll lock",
+          "passed": true
+        },
+        {
+          "name": "Sticky hidden above hero",
+          "passed": true
+        },
+        {
+          "name": "Sticky appears after hero",
+          "passed": true
+        },
+        {
+          "name": "Sticky hidden while menu open",
+          "passed": true
+        },
+        {
+          "name": "Menu prevents background scroll",
+          "passed": true
+        },
+        {
+          "name": "Backdrop click closes menu",
+          "passed": true
+        },
+        {
+          "name": "Editing hides persistent CTA",
+          "passed": true
+        },
+        {
+          "name": "Short editing viewport keeps CTA hidden",
+          "passed": true
+        },
+        {
+          "name": "Close button restores focus",
+          "passed": true
+        },
+        {
+          "name": "Menu link navigates and closes",
+          "passed": true
+        },
+        {
+          "name": "Back resets navigation state",
+          "passed": true
+        },
+        {
+          "name": "Forward/back does not retain scroll lock",
+          "passed": true
+        },
+        {
+          "name": "Visible final CTA suppresses persistent duplicate",
+          "passed": true
+        },
+        {
+          "name": "Footer leaves room for persistent CTA",
+          "passed": true
+        },
+        {
+          "name": "Touch opens hamburger menu",
+          "passed": true
+        },
+        {
+          "name": "Touch closes hamburger menu",
+          "passed": true
+        },
+        {
+          "name": "Landscape menu scrolls within viewport",
+          "passed": true
+        },
+        {
+          "name": "Resize closes menu",
+          "passed": true
+        },
+        {
+          "name": "Canceled responsive candidates have exact reviewed bytes",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Canceled video metadata transfers have exact reviewed bytes",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "No console errors",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "No runtime exceptions",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "No failed assets/requests",
+          "passed": true,
+          "details": []
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "canceledImages": [],
+      "canceledVideos": [],
+      "accessibility": [
+        {
+          "width": 390,
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": [
+                [
+                  ".btn-outline > .arrow[aria-hidden=\"true\"]"
+                ],
+                [
+                  ".hero-meta-item:nth-child(1) > .tiny-icon[aria-hidden=\"true\"]"
+                ],
+                [
+                  ".hero-meta-item:nth-child(2) > .tiny-icon[aria-hidden=\"true\"]"
+                ],
+                [
+                  ".pillar:nth-child(2) > .pillar-symbol[aria-hidden=\"true\"]"
+                ],
+                [
+                  ".pillar:nth-child(3) > .pillar-symbol[aria-hidden=\"true\"]"
+                ],
+                [
+                  ".pillar:nth-child(4) > .pillar-symbol[aria-hidden=\"true\"]"
+                ],
+                [
+                  ".gallery-layout > .gallery-item:nth-child(1) > .image-caption"
+                ],
+                [
+                  ".gallery-pair > .gallery-item:nth-child(1) > .image-caption"
+                ],
+                [
+                  ".gallery-item:nth-child(2) > .image-caption"
+                ],
+                [
+                  ".gallery-item:nth-child(3) > .image-caption"
+                ]
+              ]
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "nodes": [
+                [
+                  "article:nth-child(1) > .program-bottom > .circle-arrow[href$=\"kemasukan#pertanyaan\"]"
+                ],
+                [
+                  "a[aria-label=\"Maklumat Syahadah Al-Quran\"]"
+                ],
+                [
+                  "a[aria-label=\"Maklumat SPM Fast Track JAIS\"]"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": [
+                [
+                  ".hero-note"
+                ],
+                [
+                  "#hero-heading"
+                ],
+                [
+                  "em"
+                ],
+                [
+                  ".btn-outline > .arrow[aria-hidden=\"true\"]"
+                ],
+                [
+                  ".hero-meta-item:nth-child(1)"
+                ],
+                [
+                  ".hero-meta-item:nth-child(1) > .tiny-icon[aria-hidden=\"true\"]"
+                ],
+                [
+                  ".hero-meta-item:nth-child(2)"
+                ],
+                [
+                  ".hero-meta-item:nth-child(2) > .tiny-icon[aria-hidden=\"true\"]"
+                ],
+                [
+                  ".pillar:nth-child(2) > .pillar-symbol[aria-hidden=\"true\"]"
+                ],
+                [
+                  ".pillar:nth-child(3) > .pillar-symbol[aria-hidden=\"true\"]"
+                ],
+                [
+                  ".pillar:nth-child(4) > .pillar-symbol[aria-hidden=\"true\"]"
+                ],
+                [
+                  ".gallery-layout > .gallery-item:nth-child(1) > .image-caption"
+                ],
+                [
+                  ".gallery-pair > .gallery-item:nth-child(1) > .image-caption"
+                ],
+                [
+                  ".gallery-item:nth-child(2) > .image-caption"
+                ],
+                [
+                  ".gallery-item:nth-child(3) > .image-caption"
+                ]
+              ]
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "nodes": [
+                [
+                  "article:nth-child(1) > .program-bottom > .circle-arrow[href$=\"kemasukan#pertanyaan\"]"
+                ],
+                [
+                  "a[aria-label=\"Maklumat Syahadah Al-Quran\"]"
+                ],
+                [
+                  "a[aria-label=\"Maklumat SPM Fast Track JAIS\"]"
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "responsive": [
+        {
+          "width": 320,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 360,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 375,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 390,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 414,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 430,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 751,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 767,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 768,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 1024,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 1280,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 1440,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 1920,
+          "overflow": false,
+          "overflowingElements": []
+        }
+      ],
+      "performance": [
+        {
+          "width": 390,
+          "lcp": 92,
+          "cls": 0,
+          "fcp": 92
+        },
+        {
+          "width": 1440,
+          "lcp": 84,
+          "cls": 0,
+          "fcp": 84
+        }
+      ],
+      "passed": true
+    },
+    {
+      "page": "kemasukan",
+      "checks": [
+        {
+          "name": "HTTP 320",
+          "passed": true
+        },
+        {
+          "name": "No overflow 320",
+          "passed": true
+        },
+        {
+          "name": "No broken images 320",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 320",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 320",
+          "passed": true
+        },
+        {
+          "name": "Metadata 320",
+          "passed": true
+        },
+        {
+          "name": "Main control touch targets 320",
+          "passed": true
+        },
+        {
+          "name": "HTTP 360",
+          "passed": true
+        },
+        {
+          "name": "No overflow 360",
+          "passed": true
+        },
+        {
+          "name": "No broken images 360",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 360",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 360",
+          "passed": true
+        },
+        {
+          "name": "Metadata 360",
+          "passed": true
+        },
+        {
+          "name": "Main control touch targets 360",
+          "passed": true
+        },
+        {
+          "name": "HTTP 375",
+          "passed": true
+        },
+        {
+          "name": "No overflow 375",
+          "passed": true
+        },
+        {
+          "name": "No broken images 375",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 375",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 375",
+          "passed": true
+        },
+        {
+          "name": "Metadata 375",
+          "passed": true
+        },
+        {
+          "name": "Main control touch targets 375",
+          "passed": true
+        },
+        {
+          "name": "HTTP 390",
+          "passed": true
+        },
+        {
+          "name": "No overflow 390",
+          "passed": true
+        },
+        {
+          "name": "No broken images 390",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 390",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 390",
+          "passed": true
+        },
+        {
+          "name": "Metadata 390",
+          "passed": true
+        },
+        {
+          "name": "Main control touch targets 390",
+          "passed": true
+        },
+        {
+          "name": "axe 390",
+          "passed": true
+        },
+        {
+          "name": "Lab LCP/CLS 390",
+          "passed": true
+        },
+        {
+          "name": "HTTP 414",
+          "passed": true
+        },
+        {
+          "name": "No overflow 414",
+          "passed": true
+        },
+        {
+          "name": "No broken images 414",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 414",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 414",
+          "passed": true
+        },
+        {
+          "name": "Metadata 414",
+          "passed": true
+        },
+        {
+          "name": "Main control touch targets 414",
+          "passed": true
+        },
+        {
+          "name": "HTTP 430",
+          "passed": true
+        },
+        {
+          "name": "No overflow 430",
+          "passed": true
+        },
+        {
+          "name": "No broken images 430",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 430",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 430",
+          "passed": true
+        },
+        {
+          "name": "Metadata 430",
+          "passed": true
+        },
+        {
+          "name": "Main control touch targets 430",
+          "passed": true
+        },
+        {
+          "name": "HTTP 751",
+          "passed": true
+        },
+        {
+          "name": "No overflow 751",
+          "passed": true
+        },
+        {
+          "name": "No broken images 751",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 751",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 751",
+          "passed": true
+        },
+        {
+          "name": "Metadata 751",
+          "passed": true
+        },
+        {
+          "name": "HTTP 767",
+          "passed": true
+        },
+        {
+          "name": "No overflow 767",
+          "passed": true
+        },
+        {
+          "name": "No broken images 767",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 767",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 767",
+          "passed": true
+        },
+        {
+          "name": "Metadata 767",
+          "passed": true
+        },
+        {
+          "name": "HTTP 768",
+          "passed": true
+        },
+        {
+          "name": "No overflow 768",
+          "passed": true
+        },
+        {
+          "name": "No broken images 768",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 768",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 768",
+          "passed": true
+        },
+        {
+          "name": "Metadata 768",
+          "passed": true
+        },
+        {
+          "name": "HTTP 1024",
+          "passed": true
+        },
+        {
+          "name": "No overflow 1024",
+          "passed": true
+        },
+        {
+          "name": "No broken images 1024",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 1024",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 1024",
+          "passed": true
+        },
+        {
+          "name": "Metadata 1024",
+          "passed": true
+        },
+        {
+          "name": "HTTP 1280",
+          "passed": true
+        },
+        {
+          "name": "No overflow 1280",
+          "passed": true
+        },
+        {
+          "name": "No broken images 1280",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 1280",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 1280",
+          "passed": true
+        },
+        {
+          "name": "Metadata 1280",
+          "passed": true
+        },
+        {
+          "name": "HTTP 1440",
+          "passed": true
+        },
+        {
+          "name": "No overflow 1440",
+          "passed": true
+        },
+        {
+          "name": "No broken images 1440",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 1440",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 1440",
+          "passed": true
+        },
+        {
+          "name": "Metadata 1440",
+          "passed": true
+        },
+        {
+          "name": "axe 1440",
+          "passed": true
+        },
+        {
+          "name": "Lab LCP/CLS 1440",
+          "passed": true
+        },
+        {
+          "name": "HTTP 1920",
+          "passed": true
+        },
+        {
+          "name": "No overflow 1920",
+          "passed": true
+        },
+        {
+          "name": "No broken images 1920",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Media consent 1920",
+          "passed": true
+        },
+        {
+          "name": "No unverified contact/Form links 1920",
+          "passed": true
+        },
+        {
+          "name": "Metadata 1920",
+          "passed": true
+        },
+        {
+          "name": "Keyboard skip link",
+          "passed": true
+        },
+        {
+          "name": "Skip focuses main",
+          "passed": true
+        },
+        {
+          "name": "Menu opens by keyboard",
+          "passed": true
+        },
+        {
+          "name": "Expanded menu accessibility",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Native modal menu and scroll lock",
+          "passed": true
+        },
+        {
+          "name": "One menu CTA and hidden sticky",
+          "passed": true
+        },
+        {
+          "name": "aria-controls resolves to open modal",
+          "passed": true
+        },
+        {
+          "name": "Modal keyboard focus contained",
+          "passed": true
+        },
+        {
+          "name": "Escape restores focus",
+          "passed": true
+        },
+        {
+          "name": "Menu releases scroll lock",
+          "passed": true
+        },
+        {
+          "name": "Sticky hidden above hero",
+          "passed": true
+        },
+        {
+          "name": "Sticky appears after hero",
+          "passed": true
+        },
+        {
+          "name": "Sticky hidden while menu open",
+          "passed": true
+        },
+        {
+          "name": "Menu prevents background scroll",
+          "passed": true
+        },
+        {
+          "name": "Backdrop click closes menu",
+          "passed": true
+        },
+        {
+          "name": "Editing hides persistent CTA",
+          "passed": true
+        },
+        {
+          "name": "Short editing viewport keeps CTA hidden",
+          "passed": true
+        },
+        {
+          "name": "Close button restores focus",
+          "passed": true
+        },
+        {
+          "name": "Menu link navigates and closes",
+          "passed": true
+        },
+        {
+          "name": "Back resets navigation state",
+          "passed": true
+        },
+        {
+          "name": "Forward/back does not retain scroll lock",
+          "passed": true
+        },
+        {
+          "name": "Form area suppresses sticky CTA",
+          "passed": true
+        },
+        {
+          "name": "Accessible poster summary retains sourced programs",
+          "passed": true
+        },
+        {
+          "name": "Phone input and full-width form controls",
+          "passed": true
+        },
+        {
+          "name": "Visible final CTA suppresses persistent duplicate",
+          "passed": true
+        },
+        {
+          "name": "Footer leaves room for persistent CTA",
+          "passed": true
+        },
+        {
+          "name": "Touch opens hamburger menu",
+          "passed": true
+        },
+        {
+          "name": "Touch closes hamburger menu",
+          "passed": true
+        },
+        {
+          "name": "Landscape menu scrolls within viewport",
+          "passed": true
+        },
+        {
+          "name": "Resize closes menu",
+          "passed": true
+        },
+        {
+          "name": "Registration held",
+          "passed": true
+        },
+        {
+          "name": "Form disabled until contact verified",
+          "passed": true
+        },
+        {
+          "name": "Programmatic submit cannot bypass contact gate",
+          "passed": true
+        },
+        {
+          "name": "Canceled responsive candidates have exact reviewed bytes",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "Canceled video metadata transfers have exact reviewed bytes",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "No console errors",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "No runtime exceptions",
+          "passed": true,
+          "details": []
+        },
+        {
+          "name": "No failed assets/requests",
+          "passed": true,
+          "details": []
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "canceledImages": [],
+      "canceledVideos": [],
+      "accessibility": [
+        {
+          "width": 390,
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": [
+                [
+                  ".inner-hero-inner > div > a[href$=\"#pertanyaan\"] > .arrow[aria-hidden=\"true\"]"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": [
+                [
+                  ".crumbs > a[href=\"/\"]"
+                ],
+                [
+                  ".crumbs > span"
+                ],
+                [
+                  ".inner-hero-inner > div > .eyebrow"
+                ],
+                [
+                  "#kemasukan-hero-title"
+                ],
+                [
+                  "em"
+                ],
+                [
+                  ".inner-lead"
+                ],
+                [
+                  ".inner-hero-inner > div > a[href$=\"#pertanyaan\"] > .arrow[aria-hidden=\"true\"]"
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "responsive": [
+        {
+          "width": 320,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 360,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 375,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 390,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 414,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 430,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 751,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 767,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 768,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 1024,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 1280,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 1440,
+          "overflow": false,
+          "overflowingElements": []
+        },
+        {
+          "width": 1920,
+          "overflow": false,
+          "overflowingElements": []
+        }
+      ],
+      "performance": [
+        {
+          "width": 390,
+          "lcp": 56,
+          "cls": 0,
+          "fcp": 56
+        },
+        {
+          "width": 1440,
+          "lcp": 72,
+          "cls": 0,
+          "fcp": 72
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "linkChecks": [
+    {
+      "path": "/#main-content",
+      "status": 200,
+      "expectedStatus": 200,
+      "target": true,
+      "passed": true
+    },
+    {
+      "path": "/kemasukan",
+      "status": 200,
+      "expectedStatus": 200,
+      "target": true,
+      "passed": true
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "expectedStatus": 200,
+      "target": true,
+      "passed": true
+    },
+    {
+      "path": "/profil",
+      "status": 200,
+      "expectedStatus": 200,
+      "target": true,
+      "passed": true
+    },
+    {
+      "path": "/pengajian",
+      "status": 200,
+      "expectedStatus": 200,
+      "target": true,
+      "passed": true
+    },
+    {
+      "path": "/galeri",
+      "status": 200,
+      "expectedStatus": 200,
+      "target": true,
+      "passed": true
+    },
+    {
+      "path": "/hubungi",
+      "status": 200,
+      "expectedStatus": 200,
+      "target": true,
+      "passed": true
+    },
+    {
+      "path": "/kemasukan#pertanyaan",
+      "status": 200,
+      "expectedStatus": 200,
+      "target": true,
+      "passed": true
+    },
+    {
+      "path": "/hubungi#saluran",
+      "status": 200,
+      "expectedStatus": 200,
+      "target": true,
+      "passed": true
+    },
+    {
+      "path": "/kemasukan#main-content",
+      "status": 200,
+      "expectedStatus": 200,
+      "target": true,
+      "passed": true
+    },
+    {
+      "path": "/assets/refinement/poster-2027-854.webp",
+      "status": 200,
+      "expectedStatus": 200,
+      "target": true,
+      "passed": true
+    },
+    {
+      "path": "/kemasukan",
+      "status": 200,
+      "expectedStatus": 200,
+      "target": true,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

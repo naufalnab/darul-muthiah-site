@@ -1,7 +1,7 @@
 name: Validate internal MADUM preview
 on:
   pull_request:
-    branches: [main]
+    branches: [main, feat/madum-phase3-real-content]
 permissions:
   contents: read
 jobs:
