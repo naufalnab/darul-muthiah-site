@@ -144,3 +144,9 @@ Bentuk kapsul hitam pada sempadan section tidak dapat direproduksi pada screensh
 Implementasi: commit `93a6157` — `feat(madum): refine desktop layouts and restore reviewed documentation`. Bukti QA dan laporan dihantar dalam commit dokumentasi berasingan pada branch yang sama. Draft PR #4 diperbarui; status CI akhir dicatat di PR selepas push. PR kekal Draft, tidak digabung ke main.
 
 Baki keputusan institusi: potret/consent alumni, atribusi testimoni, public media consent, yuran 2027, sejarah akhir, nombor rasmi/e-mel/Facebook, status semasa JAIS/LZS/PITAS, serta borang yang masih bertajuk 2026. Semakan caption/audio video dan reka bentuk mobile diteruskan pada tahap berikutnya. Semua ini dinyatakan secara spesifik; tiada approval dianggap diberikan secara automatik.
+
+### Susulan CI dan kestabilan harness
+
+Run GitHub `41163217498` pada `00e4686` gagal satu pemeriksaan request poster 854px pada Kemasukan; HTTP, decode dan pemeriksaan visual route itu lulus. Pergantian viewport pada dokumen hidup boleh memulakan request srcset sebelum navigasi seterusnya. Harness kini menunggu network idle selepas resize supaya request itu tidak dibatalkan oleh navigasi QA sendiri; jenis error rangkaian turut direkod. Semua assertion request gagal, HTTP dan image decode dikekalkan. Root browser QA selepas pembetulan lulus semula 442/442 + 19 pautan. CI bagi commit akhir diverifikasi dan dipautkan pada Draft PR.
+
+Commit panduan editorial `fff4be5` turut menyelaraskan README, release blockers dan content edit guide dengan polisi review aset semasa; approval institusi tetap false.

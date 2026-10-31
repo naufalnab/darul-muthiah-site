@@ -40,7 +40,7 @@ try {
     const page = await browser.newPage();
     page.on('console', msg=> { if(msg.type()==='error' && !msg.text().includes('404 (Not Found)')) result.consoleErrors.push(msg.text()); });
     page.on('pageerror', err=> result.pageErrors.push(err.message));
-    page.on('requestfailed', req=> result.failedRequests.push(req.url()));
+    page.on('requestfailed', req=> result.failedRequests.push(`${req.failure()?.errorText || 'request failed'} ${req.url()}`));
     page.on('response', res=> { if(res.status()>=400 && !(is404 && res.request().isNavigationRequest())) result.failedRequests.push(`${res.status()} ${res.url()}`); });
     // No external services contacted by the browser QA, including accidental submissions.
     await page.setRequestInterception(true);
@@ -52,6 +52,9 @@ try {
     });
     for (const width of report.viewports) {
       await page.setViewport({width,height:900});
+      // Resizing a live document can start a new responsive-image request.
+      // Let it complete before navigation so the harness does not abort it.
+      await page.waitForNetworkIdle({idleTime:250,timeout:15000});
       const response = await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
       await page.evaluate(async()=> {
         document.querySelectorAll('img').forEach(img=>{ img.loading='eager'; });
@@ -97,6 +100,7 @@ try {
     }
     // Keyboard navigation, focus restoration, and resize closure on every route.
     await page.setViewport({width:390,height:844});
+    await page.waitForNetworkIdle({idleTime:250,timeout:15000});
     await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
     await page.keyboard.press('Tab');
     check('Keyboard skip link',await page.evaluate(()=>document.activeElement?.getAttribute('href')==='#main-content'));

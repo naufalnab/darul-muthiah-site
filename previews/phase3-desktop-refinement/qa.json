@@ -464,15 +464,15 @@
       "performance": [
         {
           "width": 390,
-          "lcp": 420,
+          "lcp": 80,
           "cls": 0,
-          "fcp": 420
+          "fcp": 80
         },
         {
           "width": 1440,
-          "lcp": 140,
+          "lcp": 168,
           "cls": 0,
-          "fcp": 132
+          "fcp": 168
         }
       ],
       "passed": true
@@ -837,15 +837,15 @@
       "performance": [
         {
           "width": 390,
-          "lcp": 80,
+          "lcp": 36,
           "cls": 0,
-          "fcp": 80
+          "fcp": 36
         },
         {
           "width": 1440,
-          "lcp": 68,
+          "lcp": 64,
           "cls": 0,
-          "fcp": 68
+          "fcp": 48
         }
       ],
       "passed": true
@@ -1252,15 +1252,15 @@
       "performance": [
         {
           "width": 390,
-          "lcp": 104,
+          "lcp": 108,
           "cls": 0,
-          "fcp": 104
+          "fcp": 92
         },
         {
           "width": 1440,
-          "lcp": 108,
+          "lcp": 160,
           "cls": 0,
-          "fcp": 108
+          "fcp": 160
         }
       ],
       "passed": true
@@ -1633,15 +1633,15 @@
       "performance": [
         {
           "width": 390,
-          "lcp": 56,
+          "lcp": 80,
           "cls": 0,
-          "fcp": 56
+          "fcp": 80
         },
         {
           "width": 1440,
-          "lcp": 68,
+          "lcp": 60,
           "cls": 0,
-          "fcp": 68
+          "fcp": 48
         }
       ],
       "passed": true
@@ -2026,15 +2026,15 @@
       "performance": [
         {
           "width": 390,
-          "lcp": 88,
+          "lcp": 52,
           "cls": 0,
-          "fcp": 88
+          "fcp": 52
         },
         {
           "width": 1440,
-          "lcp": 120,
+          "lcp": 40,
           "cls": 0,
-          "fcp": 120
+          "fcp": 40
         }
       ],
       "passed": true
@@ -2391,15 +2391,15 @@
       "performance": [
         {
           "width": 390,
-          "lcp": 76,
+          "lcp": 28,
           "cls": 0,
-          "fcp": 76
+          "fcp": 28
         },
         {
           "width": 1440,
-          "lcp": 120,
+          "lcp": 52,
           "cls": 0,
-          "fcp": 120
+          "fcp": 52
         }
       ],
       "passed": true
@@ -2742,15 +2742,15 @@
       "performance": [
         {
           "width": 390,
-          "lcp": 100,
+          "lcp": 40,
           "cls": 0,
-          "fcp": 100
+          "fcp": 40
         },
         {
           "width": 1440,
-          "lcp": 140,
+          "lcp": 56,
           "cls": 0,
-          "fcp": 140
+          "fcp": 56
         }
       ],
       "passed": true
