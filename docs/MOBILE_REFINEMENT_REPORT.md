@@ -2,7 +2,7 @@
 
 ## Baseline dan ruang kerja
 
-Implementasi menggunakan worktree terpisah `MADUM-mobile-refinement`, branch `feat/madum-mobile-refinement`, dari commit desktop stabil `78cfed2cf45f3009a568307d8032fa1d873ef969`. PR ini ditumpuk di atas `feat/madum-phase3-real-content` dan bergantung pada [Draft PR #4](https://github.com/naufalnab/darul-muthiah-site/pull/4). Tidak ada rewrite history, merge, deployment atau perubahan cPanel. Checkout desktop dan perubahan lokal lain tidak disentuh.
+Implementasi menggunakan worktree terpisah `MADUM-mobile-refinement`, branch `feat/madum-mobile-refinement`, dari commit desktop stabil `78cfed2cf45f3009a568307d8032fa1d873ef969`. PR awal ditumpuk di atas `feat/madum-phase3-real-content`. Pemeriksaan GitHub terakhir menemukan [PR #4](https://github.com/naufalnab/darul-muthiah-site/pull/4) telah di-merge oleh proses lain pada 31 Oktober 2026 04:51 UTC sebagai `f465711`. Tree commit tersebut identik dengan baseline `78cfed2` (`30e5065daa5768b135d723271cad920b2c4bcf88`), sehingga tidak ada perubahan source desktop baru untuk diterapkan. Draft PR mobile dialihkan ke `main`; merge strategi ours menghubungkan ancestry squash merge yang isinya sudah ada tanpa mengubah tree implementasi mobile. Tidak ada rewrite history, merge PR mobile ke main, deployment atau perubahan cPanel. Checkout desktop dan perubahan lokal lain tidak disentuh.
 
 Referensi sebelum diberi label berbeda: **UIUX-v1.0** adalah artefak build lama yang tersedia lokal; **Phase3-78cfed2** adalah baseline desktop terakhir. Enam PDF screenshot yang disebut brief tidak tersedia sebagai attachment lokal; gambar pengganti tidak diklaim berasal dari PDF tersebut. [Provenance](../previews/mobile-refinement/before/provenance.json) merekam asal capture. Baseline desktop dibangun ulang dari `git archive` commit tetap untuk perbandingan geometri.
 
@@ -85,4 +85,4 @@ Desktop diperiksa pada 1024/1280/1440/1920 px untuk enam halaman: posisi/ukuran 
 
 Commit implementasi: `a6e69ad`, `10a2616`, `caa27e2`, `3770334`, `36e820c`; `0845020` menambahkan bukti QA dan laporan. Workflow validasi menerima PR bertarget branch Phase3 agar stacked PR mendapatkan CI; workflow deployment tidak diubah.
 
-[Draft PR #5](https://github.com/naufalnab/darul-muthiah-site/pull/5) menggunakan base Phase3 dan bergantung pada Draft PR #4. [Checks PR](https://github.com/naufalnab/darul-muthiah-site/pull/5/checks) menyediakan status CI commit terakhir. PR tetap Draft dan tidak di-merge.
+[Draft PR #5](https://github.com/naufalnab/darul-muthiah-site/pull/5) kini menggunakan base `main` karena Phase3 PR #4 sudah digabung eksternal. [Checks PR](https://github.com/naufalnab/darul-muthiah-site/pull/5/checks) menyediakan status CI commit terakhir. PR tetap Draft dan tidak di-merge.
