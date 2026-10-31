@@ -167,8 +167,9 @@ try {
         await page.$eval('#pertanyaan',e=>e.scrollIntoView({behavior:'instant'}));
         await page.waitForFunction(()=>document.querySelector('.mobile-sticky').hidden);
         check('Form area suppresses sticky CTA',true);
-        if(!base) await page.screenshot({path:path.join(output,'kemasukan-form_390.png')});
+        if(!base) await (await page.$('#inquiry')).screenshot({path:path.join(output,'kemasukan-form_390.png')});
         await page.$eval('.poster-text',e=>e.open=true);
+        if(!base) await (await page.$('.poster-text')).screenshot({path:path.join(output,'kemasukan-poster-summary_390.png')});
         check('Accessible poster summary retains sourced programs',await page.$eval('.poster-text',e=>e.textContent.includes('Hafazan Al-Quran') && e.textContent.includes('Syahadah') && e.textContent.includes('SPM Fast Track')));
         await page.$eval('.poster-text',e=>e.open=false);
         check('Phone input and full-width form controls',await page.evaluate(()=>document.querySelector('#phone').type==='tel' && [...document.querySelectorAll('#inquiry input,#inquiry select')].every(e=>e.getBoundingClientRect().height>=48)));
@@ -178,6 +179,7 @@ try {
         await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
         await page.$eval('.gallery-controls',e=>e.scrollIntoView({behavior:'instant'}));await page.tap('[data-filter="tvet"]');
         check('Touch gallery filter',await page.$$eval('.gallery-card:not([hidden])',e=>e.length===2));
+        await page.waitForNetworkIdle({idleTime:500,timeout:15000});
         if(!base) await page.screenshot({path:path.join(output,'galeri-filter_390.png')});
         await page.click('.gallery-card:not([hidden])');
         check('Lightbox hides sticky CTA',await page.$eval('.mobile-sticky',e=>e.hidden));
@@ -190,6 +192,7 @@ try {
         await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
         await page.$eval('#faq-btn-faq-2',e=>e.scrollIntoView({behavior:'instant',block:'center'}));await page.tap('#faq-btn-faq-2');
         check('Touch FAQ opens',await page.$eval('#faq-btn-faq-2',e=>e.getAttribute('aria-expanded')==='true'));
+        await page.waitForNetworkIdle({idleTime:500,timeout:15000});
         if(!base) await page.screenshot({path:path.join(output,'faq-open_390.png')});
         await page.click('#faq-btn-faq-2');
       }
