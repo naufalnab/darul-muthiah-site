@@ -1,0 +1,432 @@
+{
+  "method": "Diagnostic pixel comparison between saved fullPage/viewport captures with different srcset cache histories; not an assertion of identical rasterization. Exact layout/typography checks are in desktop-layout-regression.json.",
+  "pixelIdenticalCount": 6,
+  "comparisons": [
+    {
+      "page": "index",
+      "width": 1024,
+      "baselineSize": [
+        1024,
+        900
+      ],
+      "afterSize": [
+        1024,
+        900
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        32,
+        78,
+        992,
+        669
+      ]
+    },
+    {
+      "page": "index",
+      "width": 1280,
+      "baselineSize": [
+        1280,
+        900
+      ],
+      "afterSize": [
+        1280,
+        900
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        68,
+        78,
+        1212,
+        140
+      ]
+    },
+    {
+      "page": "index",
+      "width": 1440,
+      "baselineSize": [
+        1440,
+        4628
+      ],
+      "afterSize": [
+        1440,
+        4628
+      ],
+      "pixelIdentical": true,
+      "differenceBounds": null
+    },
+    {
+      "page": "index",
+      "width": 1920,
+      "baselineSize": [
+        1920,
+        4653
+      ],
+      "afterSize": [
+        1920,
+        4653
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        346,
+        12,
+        1610,
+        4628
+      ]
+    },
+    {
+      "page": "profil",
+      "width": 1024,
+      "baselineSize": [
+        1024,
+        900
+      ],
+      "afterSize": [
+        1024,
+        900
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        32,
+        78,
+        992,
+        140
+      ]
+    },
+    {
+      "page": "profil",
+      "width": 1280,
+      "baselineSize": [
+        1280,
+        900
+      ],
+      "afterSize": [
+        1280,
+        900
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        68,
+        78,
+        1212,
+        900
+      ]
+    },
+    {
+      "page": "profil",
+      "width": 1440,
+      "baselineSize": [
+        1440,
+        4819
+      ],
+      "afterSize": [
+        1440,
+        4819
+      ],
+      "pixelIdentical": true,
+      "differenceBounds": null
+    },
+    {
+      "page": "profil",
+      "width": 1920,
+      "baselineSize": [
+        1920,
+        4842
+      ],
+      "afterSize": [
+        1920,
+        4842
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        383,
+        154,
+        1703,
+        4816
+      ]
+    },
+    {
+      "page": "pengajian",
+      "width": 1024,
+      "baselineSize": [
+        1024,
+        900
+      ],
+      "afterSize": [
+        1024,
+        900
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        32,
+        78,
+        992,
+        601
+      ]
+    },
+    {
+      "page": "pengajian",
+      "width": 1280,
+      "baselineSize": [
+        1280,
+        900
+      ],
+      "afterSize": [
+        1280,
+        900
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        68,
+        78,
+        1212,
+        602
+      ]
+    },
+    {
+      "page": "pengajian",
+      "width": 1440,
+      "baselineSize": [
+        1440,
+        3884
+      ],
+      "afterSize": [
+        1440,
+        3884
+      ],
+      "pixelIdentical": true,
+      "differenceBounds": null
+    },
+    {
+      "page": "pengajian",
+      "width": 1920,
+      "baselineSize": [
+        1920,
+        3897
+      ],
+      "afterSize": [
+        1920,
+        3897
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        388,
+        2592,
+        925,
+        3032
+      ]
+    },
+    {
+      "page": "kemasukan",
+      "width": 1024,
+      "baselineSize": [
+        1024,
+        900
+      ],
+      "afterSize": [
+        1024,
+        900
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        32,
+        78,
+        992,
+        140
+      ]
+    },
+    {
+      "page": "kemasukan",
+      "width": 1280,
+      "baselineSize": [
+        1280,
+        900
+      ],
+      "afterSize": [
+        1280,
+        900
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        68,
+        12,
+        1212,
+        840
+      ]
+    },
+    {
+      "page": "kemasukan",
+      "width": 1440,
+      "baselineSize": [
+        1440,
+        4644
+      ],
+      "afterSize": [
+        1440,
+        4644
+      ],
+      "pixelIdentical": true,
+      "differenceBounds": null
+    },
+    {
+      "page": "kemasukan",
+      "width": 1920,
+      "baselineSize": [
+        1920,
+        4654
+      ],
+      "afterSize": [
+        1920,
+        4654
+      ],
+      "pixelIdentical": true,
+      "differenceBounds": null
+    },
+    {
+      "page": "galeri",
+      "width": 1024,
+      "baselineSize": [
+        1024,
+        900
+      ],
+      "afterSize": [
+        1024,
+        900
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        32,
+        78,
+        992,
+        900
+      ]
+    },
+    {
+      "page": "galeri",
+      "width": 1280,
+      "baselineSize": [
+        1280,
+        900
+      ],
+      "afterSize": [
+        1280,
+        900
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        68,
+        78,
+        1212,
+        899
+      ]
+    },
+    {
+      "page": "galeri",
+      "width": 1440,
+      "baselineSize": [
+        1440,
+        5984
+      ],
+      "afterSize": [
+        1440,
+        5984
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        149,
+        867,
+        1043,
+        2916
+      ]
+    },
+    {
+      "page": "galeri",
+      "width": 1920,
+      "baselineSize": [
+        1920,
+        6001
+      ],
+      "afterSize": [
+        1920,
+        6001
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        684,
+        2776,
+        1287,
+        2807
+      ]
+    },
+    {
+      "page": "hubungi",
+      "width": 1024,
+      "baselineSize": [
+        1024,
+        900
+      ],
+      "afterSize": [
+        1024,
+        900
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        32,
+        78,
+        992,
+        515
+      ]
+    },
+    {
+      "page": "hubungi",
+      "width": 1280,
+      "baselineSize": [
+        1280,
+        900
+      ],
+      "afterSize": [
+        1280,
+        900
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        68,
+        78,
+        1212,
+        254
+      ]
+    },
+    {
+      "page": "hubungi",
+      "width": 1440,
+      "baselineSize": [
+        1440,
+        3876
+      ],
+      "afterSize": [
+        1440,
+        3876
+      ],
+      "pixelIdentical": true,
+      "differenceBounds": null
+    },
+    {
+      "page": "hubungi",
+      "width": 1920,
+      "baselineSize": [
+        1920,
+        3888
+      ],
+      "afterSize": [
+        1920,
+        3888
+      ],
+      "pixelIdentical": false,
+      "differenceBounds": [
+        1070,
+        2501,
+        1532,
+        2941
+      ]
+    }
+  ]
+}

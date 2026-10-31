@@ -1,0 +1,41 @@
+{
+  "root": "/Users/mac/Documents/MADUM-mobile-refinement/dist",
+  "origin": "http://127.0.0.1:58300",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "methods": [
+    "Chromium viewport at top",
+    "Chromium viewport after scroll",
+    "Puppeteer fullPage after scroll",
+    "CDP captureBeyondViewport at top"
+  ],
+  "computedFixedElements": [
+    {
+      "element": "HEADER.site-header",
+      "position": "sticky",
+      "display": "block",
+      "hidden": false,
+      "background": "rgba(255, 255, 255, 0.96)",
+      "zIndex": "100",
+      "rect": {
+        "top": 0,
+        "bottom": 69
+      }
+    },
+    {
+      "element": "NAV.mobile-sticky",
+      "position": "fixed",
+      "display": "block",
+      "hidden": false,
+      "background": "rgb(251, 248, 240)",
+      "zIndex": "60",
+      "rect": {
+        "top": 772.25,
+        "bottom": 844
+      }
+    }
+  ],
+  "interpretation": "Native visible browser also inspected through CUA. No black capsule reproduced in normal viewport; full-page fixed-element placement must be interpreted as capture behavior, not a new CSS shape."
+}

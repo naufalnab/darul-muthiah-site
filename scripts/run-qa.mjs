@@ -34,11 +34,15 @@ try {
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
   origin = `http://127.0.0.1:${server.address().port}`;
   browser = await puppeteer.launch({ executablePath:process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless:true, args:['--no-sandbox'] });
-  for (const route of ['','profil','pengajian','kemasukan','galeri','hubungi','missing-phase2-page']) {
+  for (const route of (process.env.QA_ROUTES ? process.env.QA_ROUTES.split(',') : ['','profil','pengajian','kemasukan','galeri','hubungi','missing-phase2-page'])) {
     const is404 = route.startsWith('missing');
-    const result = { page:is404?'404':route||'index', checks:[], consoleErrors:[], pageErrors:[], failedRequests:[], canceledImages:[], accessibility:[], responsive:[], performance:[] };
+    const result = { page:is404?'404':route||'index', checks:[], consoleErrors:[], pageErrors:[], failedRequests:[], canceledImages:[], canceledVideos:[], accessibility:[], responsive:[], performance:[] };
     const check = (name, passed, details) => result.checks.push({name,passed:Boolean(passed), ...(details ? {details}: {})});
     const page = await browser.newPage();
+    const pendingRequests = new Map();
+    page.on('request', req=>pendingRequests.set(req,req.url()));
+    for(const event of ['requestfinished','requestfailed']) page.on(event,req=>pendingRequests.delete(req));
+    const idle = async idleTime => {try {await page.waitForNetworkIdle({idleTime,timeout:15000});} catch(err) {throw new Error(`${route||'index'} network idle: ${JSON.stringify([...pendingRequests.values()])}`,{cause:err});}};
     page.on('console', msg=> { if(msg.type()==='error' && !msg.text().includes('404 (Not Found)')) result.consoleErrors.push(msg.text()); });
     page.on('pageerror', err=> result.pageErrors.push(err.message));
     page.on('requestfailed', req=> {
@@ -49,6 +53,9 @@ try {
       if (error === 'net::ERR_ABORTED' && req.resourceType() === 'image' && url.origin === origin &&
           allowedMedia.includes(url.pathname.slice(base.length))) {
         result.canceledImages.push({url:req.url(),error});
+      } else if(error === 'net::ERR_ABORTED' && req.resourceType() === 'media' && url.origin === origin && allowedMedia.includes(url.pathname.slice(base.length))) {
+        // Chromium may stop a video transfer once explicitly requested metadata is decoded.
+        result.canceledVideos.push({url:req.url(),error});
       } else result.failedRequests.push(`${error} ${req.url()}`);
     });
     page.on('response', res=> { if(res.status()>=400 && !(is404 && res.request().isNavigationRequest())) result.failedRequests.push(`${res.status()} ${res.url()}`); });
@@ -61,10 +68,11 @@ try {
       new PerformanceObserver(list=> {for(const e of list.getEntries()) if(!e.hadRecentInput)window.__metrics.cls+=e.value;}).observe({type:'layout-shift',buffered:true});
     });
     for (const width of report.viewports) {
+      console.log(`CHECK ${route||'index'} ${width}`);
       await page.setViewport({width,height:({320:640,360:800,375:812,390:844,414:896,430:932,768:1024})[width] || 900});
       // Resizing a live document can start a new responsive-image request.
       // Let it complete before navigation so the harness does not abort it.
-      await page.waitForNetworkIdle({idleTime:250,timeout:15000});
+      await idle(250);
       const response = await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
       await page.evaluate(async()=> {
         document.querySelectorAll('img').forEach(img=>{ img.loading='eager'; });
@@ -114,7 +122,7 @@ try {
     }
     // Keyboard navigation, focus restoration, and resize closure on every route.
     await page.setViewport({width:390,height:844});
-    await page.waitForNetworkIdle({idleTime:250,timeout:15000});
+    await idle(250);
     await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
     await page.keyboard.press('Tab');
     check('Keyboard skip link',await page.evaluate(()=>document.activeElement?.getAttribute('href')==='#main-content'));
@@ -181,7 +189,8 @@ try {
         await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
         await page.$eval('.gallery-controls',e=>e.scrollIntoView({behavior:'instant'}));await page.tap('[data-filter="tvet"]');
         check('Touch gallery filter',await page.$$eval('.gallery-card:not([hidden])',e=>e.length===2));
-        await page.waitForNetworkIdle({idleTime:500,timeout:15000});
+        // Let native tap feedback settle; network-idle is unrelated to touch paint.
+        await page.evaluate(()=>new Promise(resolve=>setTimeout(resolve,500)));
         if(!base) await page.screenshot({path:path.join(output,'galeri-filter_390.png')});
         await page.click('.gallery-card:not([hidden])');
         check('Lightbox hides sticky CTA',await page.$eval('.mobile-sticky',e=>e.hidden));
@@ -194,7 +203,8 @@ try {
         await page.goto(`${origin}${base}/${route}`,{waitUntil:'networkidle0'});
         await page.$eval('#faq-btn-faq-2',e=>e.scrollIntoView({behavior:'instant',block:'center'}));await page.tap('#faq-btn-faq-2');
         check('Touch FAQ opens',await page.$eval('#faq-btn-faq-2',e=>e.getAttribute('aria-expanded')==='true'));
-        await page.waitForNetworkIdle({idleTime:500,timeout:15000});
+        // Let native tap feedback settle; network-idle is unrelated to touch paint.
+        await page.evaluate(()=>new Promise(resolve=>setTimeout(resolve,500)));
         if(!base) await page.screenshot({path:path.join(output,'faq-open_390.png')});
         await page.click('#faq-btn-faq-2');
       }
@@ -232,7 +242,8 @@ try {
       await page.click('[data-filter="all"]');
       check('Video controls and lazy media',await page.$$eval('video',items=>items.length===2 && items.every(v=>v.controls && !v.autoplay && v.preload==='none')));
       for(const video of await page.$$('video')) {
-        await video.evaluate(v=>v.load());
+        // Request metadata explicitly only after verifying the production preload=none policy.
+        await video.evaluate(v=>{v.preload='metadata';v.load();});
         await page.waitForFunction(v=>v.readyState>=1 || v.error,{timeout:15000},video);
         check('Video metadata decodes',await video.evaluate(v=>v.readyState>=1 && !v.error));
       }
@@ -252,7 +263,7 @@ try {
       check('FAQ closes with keyboard',await page.$eval('#faq-btn-faq-2',e=>e.getAttribute('aria-expanded')==='false'));
     }
     if(route==='profil') check('Three text-only recognition cards',await page.$$eval('.legal-card',cards=>cards.length===3 && cards.every(c=>!c.querySelector('img'))));
-    for (const canceled of result.canceledImages) {
+    for (const canceled of [...result.canceledImages,...result.canceledVideos]) {
       const response = await fetch(canceled.url);
       const bytes = Buffer.from(await response.arrayBuffer());
       const asset = new URL(canceled.url).pathname.slice(base.length + 1);
@@ -260,6 +271,7 @@ try {
       canceled.hashVerified = response.status === 200 && createHash('sha256').update(bytes).digest('hex') === previewAssets[asset];
     }
     check('Canceled responsive candidates have exact reviewed bytes',result.canceledImages.every(item=>item.hashVerified),result.canceledImages);
+    check('Canceled video metadata transfers have exact reviewed bytes',result.canceledVideos.every(item=>item.hashVerified),result.canceledVideos);
     check('No console errors' ,result.consoleErrors.length===0,result.consoleErrors);
     check('No runtime exceptions',result.pageErrors.length===0,result.pageErrors);
     check('No failed assets/requests',result.failedRequests.length===0,result.failedRequests);
@@ -281,8 +293,9 @@ try {
   report.passed=report.pages.every(p=>p.passed)&&report.linkChecks.every(l=>l.passed);
 } catch (err) {
   report.error = err.message;
+  report.errorStack = err.stack;
   report.blocked = report.pages.length === 0;
-  console.error(`[QA] ${report.blocked ? 'BLOCKED' : 'FAILED'}: ${err.message}`);
+  console.error(`[QA] ${report.blocked ? 'BLOCKED' : 'FAILED'}: ${err.stack}`);
 } finally {
   if(browser)await browser.close();
   if(server.listening) await new Promise(resolve=>server.close(resolve));

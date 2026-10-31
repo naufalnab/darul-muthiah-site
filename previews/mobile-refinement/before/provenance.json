@@ -1,0 +1,16 @@
+[
+  {
+    "label": "UIUX-v1.0",
+    "root": "/Users/mac/Documents/darul-muthiah/dist",
+    "origin": "http://127.0.0.1:49518",
+    "artifactMtime": "2026-10-14T15:16:14.740Z",
+    "source": "Existing v1.0 built artifact, not rebuilt from the later privacy branch"
+  },
+  {
+    "label": "Phase3-78cfed2",
+    "root": "/Users/mac/Documents/MADUM-mobile-refinement/dist",
+    "origin": "http://127.0.0.1:49531",
+    "artifactMtime": "2026-10-31T03:55:34.351Z",
+    "source": "78cfed2cf45f3009a568307d8032fa1d873ef969"
+  }
+]
