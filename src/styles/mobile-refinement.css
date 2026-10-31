@@ -51,8 +51,8 @@ html[data-mobile-menu=open], html[data-mobile-menu=open] body { overflow: hidden
   .hero-actions .btn-outline { border-color: transparent; text-decoration: underline; text-underline-offset: 5px; }
   .hero-visual { order: 4; width: 100%; margin: 8px 0 0; }
   .hero-photo { height: auto; aspect-ratio: 4/3; border-radius: 58px 8px 8px 8px; object-position: center; }
-  .hero-img-outer { border-radius: 66px 12px 12px 12px; padding: 8px; }
-  .hero-visual::before { border-radius: 74px 18px 18px 18px; inset: -7px 12px 12px -7px; }
+  .hero-img-outer { border-radius: 66px 12px 12px 12px; padding: 8px; outline: 1px solid #d2ad6a80; outline-offset: 5px; }
+  .hero-visual::before { display: none; }
   .hero-visual::after { display: none; }
   .photo-credit { position: static; box-shadow: none; margin-top: 12px; font-size: 14px; padding: 2px 12px; background: transparent; }
   .photo-credit small { font-size: 12px; }
