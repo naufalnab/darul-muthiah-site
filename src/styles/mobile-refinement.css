@@ -218,3 +218,7 @@ html[data-mobile-menu=open], html[data-mobile-menu=open] body { overflow: hidden
 @media (max-height: 500px) and (max-width: 767px) {
   .mobile-menu { margin-top: max(8px, env(safe-area-inset-top)); margin-bottom: max(8px, env(safe-area-inset-bottom)); max-height: calc(100dvh - max(8px, env(safe-area-inset-top)) - max(8px, env(safe-area-inset-bottom))); }
 }
+@media (max-width: 767px) {
+  /* Desktop background arcs cross longer mobile copy; the photo frame is sufficient. */
+  .hero::before, .inner-hero::before, .plain-hero::before { display: none; }
+}
