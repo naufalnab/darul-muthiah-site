@@ -4,7 +4,7 @@ Laman web rasmi Maahad Tahfiz Al Quran Darul Muthiah (1) (MADUM), dibangunkan be
 
 Repository ini merupakan **snapshot bersih (clean repository)** yang direka khas untuk keselamatan privasi penuh:
 - **Zero Raw Client Files:** Dokumen PDF dalaman, data peribadi, dan fail arkib mentah disingkirkan sepenuhnya.
-- **Privacy-First Media:** Foto dan video aktiviti pelajar yang belum mendapat persetujuan pelepasan bertulis digantikan dengan **placeholder berjenama netral**.
+- **Media direview mengikut aset:** Dokumentasi website terpilih dipaparkan dalam preview internal melalui allowlist SHA-256 berdasarkan arahan pemilik. Aset lain kekal ditahan; ini tidak meluluskan parental consent atau pelepasan rasmi.
 - **Fail-Closed Publication Gatekeeper:** Sistem kawalan binaan automatik menghalang pelepasan ke khalayak umum tanpa kelulusan institusi yang lengkap.
 
 ---
@@ -106,7 +106,7 @@ export const siteConfig: SiteConfig = {
 ### Mekanisme Keselamatan Automatik:
 1. **Public Build Protection:** Sekiranya `publicationMode` ditukar kepada `'public'`, skrip `scripts/prebuild.mjs` akan membatalkan binaan secara automatik sekiranya mana-mana sekatan pelepasan masih bernilai `false`.
 2. **Leak Prevention:** Skrip pra-binaan mengimbas direktori `public/` bagi menghalang sebarang fail berformat `.pdf`, `.zip`, `.doc` atau fail klien daripada tersalin ke folder output.
-3. **Pengecualian Media Pelajar:** Sehingga kebenaran bertulis ibu bapa/penjaga diperolehi, aset foto dan rakaman video pelajar digantikan dengan placeholder netral berjenama yang mengekalkan nisbah dimensi asal tanpa sebarang risiko privasi.
+3. **Review Media Mengikut Aset:** Preview internal boleh memaparkan dokumentasi website terpilih yang direview dan terikat hash dalam `scripts/lib/documentationAssets.json`. Fail lain kekal dikecualikan. Public build tetap ditolak selagi persetujuan media institusi dan approval lain belum sah; allowlist bukan parental consent.
 
 ---
 
@@ -120,3 +120,7 @@ export const siteConfig: SiteConfig = {
 ## Review fasa 2 — 28 Oktober 2026
 
 [Laporan dan screenshot](docs/PHASE2_REPORT.md), [audit privasi](docs/PHASE2_PRIVACY_AUDIT.md), dan [semakan kontak](docs/PHASE2_CONTACT_REVIEW.md). Publication mode kekal internal; semua approval false. Preview hanya daripada build yang lulus allowlist. Jangan hidangkan root repo atau public/ sebagai laman statik, dan kekalkan pelayan dev pada loopback.
+
+## Desktop refinement — 31 Oktober 2026
+
+[Laporan semasa](docs/PHASE3_DESKTOP_REFINEMENT_REPORT.md) mengatasi penerangan preview media dalam laporan fasa terdahulu. Foto asli, 12 foto galeri dan dua video kini dipulihkan secara terpilih; potret alumni dan aktivasi QR/borang kekal ditahan. [Screenshot dan QA root/Pages](previews/phase3-desktop-refinement/) disimpan berasingan daripada bukti lama.

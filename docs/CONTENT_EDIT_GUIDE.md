@@ -132,3 +132,9 @@ Selepas sebarang fail di atas disimpan, jalankan arahan berikut di terminal untu
 pnpm run build
 ```
 Hasil binaan terkini akan berada di dalam direktori `dist/` dan sedia untuk dimuat naik ke pelayan hosting.
+
+## Review media preview internal (31 Oktober 2026)
+
+Penambahan foto pada `gallery.ts` sahaja tidak memberi izin paparan. Semak provenance/konteks, pilih dokumentasi website yang dibenarkan pemilik, buang EXIF/XMP daripada derivative, dan masukkan SHA-256 tepat dalam `scripts/lib/documentationAssets.json`. Jangan memasukkan dokumen mentah, tandatangan, ID atau potret yang nama pemiliknya belum disahkan. Hash mesti dikemas kini hanya selepas review kandungan semula, bukan sekadar untuk menjadikan build lulus.
+
+`ConsentImage` menggunakan allowlist itu untuk foto; audit build turut memeriksa setiap src/srcset/poster dan sumber video. Video wajib controls, preload=none dan tanpa autoplay. Approval public release, persetujuan media institusi, mapping potret, testimoni serta aktivasi borang kekal berasingan. Rujuk [laporan refinement](PHASE3_DESKTOP_REFINEMENT_REPORT.md) dan provenance di `qa/desktop-media-provenance.json`.
